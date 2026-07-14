@@ -1,0 +1,17 @@
+{
+  "name": "Tudo Express Brasil",
+  "short_name": "Tudo Express",
+  "description": "Produtos úteis, naturais e selecionados para facilitar a rotina.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#073b9b",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
