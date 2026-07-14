@@ -68,7 +68,7 @@ Crie `.env.local` baseado no `.env.example`:
 ```env
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
 NEXT_PUBLIC_SUPABASE_URL=https://seu-projeto.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=sua-chave-anon-publica
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sua-chave-publica
 ```
 
 Rode:
@@ -110,7 +110,7 @@ Resumo:
 ```env
 NEXT_PUBLIC_SITE_URL=https://tudoexpressbrasil.com.br
 NEXT_PUBLIC_SUPABASE_URL=https://seu-projeto.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=sua-chave-anon-publica
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sua-chave-publica
 ```
 
 5. Faça deploy.

@@ -7,13 +7,13 @@ Este projeto usa Supabase para autenticação, banco de dados e imagens dos prod
 Crie um projeto no Supabase e copie:
 
 - Project URL
-- anon public key
+- publishable key
 
 Esses valores entram no `.env.local` e na Vercel:
 
 ```env
 NEXT_PUBLIC_SUPABASE_URL=https://seu-projeto.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=sua-chave-anon-publica
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sua-chave-publica
 ```
 
 ## 2. Rodar o SQL
