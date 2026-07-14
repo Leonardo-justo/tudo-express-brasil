@@ -28,5 +28,8 @@
 .feature-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
 .marketplace-cta{min-width:220px}
 .marketplace-cta img{width:30px;height:30px;object-fit:contain;border-radius:10px;background:#fff}
+.marketplace-logo[src*="logo-mercado-livre.png"],.marketplace-cta img[src*="logo-mercado-livre.png"]{width:48px;height:34px;border-radius:10px}
+.channel-ml .channel-logo{flex-basis:96px;width:96px}
+.channel-ml .channel-logo img{width:100%;height:100%;object-fit:contain}
 @media(max-width:720px){.brand-logo-mark{width:46px;height:46px}.brand-logo-mark img{transform:scale(1.55)}}
 @media(max-width:520px){.feature-actions{display:grid}.marketplace-cta{width:100%;min-width:0}}
