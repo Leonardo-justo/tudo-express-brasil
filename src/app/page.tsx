@@ -121,7 +121,18 @@ export default async function Home() {
                 <li><span>✓</span> Seleção com foco em custo-benefício</li>
                 <li><span>✓</span> Compra segura em canais conhecidos</li>
               </ul>
-              <a className="btn btn-light" href="https://lista.mercadolivre.com.br/_CustId_1305039689" target="_blank" rel="noopener noreferrer">Explorar todos os produtos <span>→</span></a>
+              <div className="feature-actions">
+                <a className="btn btn-light marketplace-cta" href="https://lista.mercadolivre.com.br/_CustId_1305039689" target="_blank" rel="noopener noreferrer">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/assets/logo-mercado-livre-clean.svg" alt="" />
+                  Explorar no Mercado Livre <span>→</span>
+                </a>
+                <a className="btn btn-light marketplace-cta" href="https://shopee.com.br/shop/950896809" target="_blank" rel="noopener noreferrer">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/assets/logo-shopee-clean.svg" alt="" />
+                  Explorar na Shopee <span>→</span>
+                </a>
+              </div>
             </Reveal>
           </div>
         </section>
