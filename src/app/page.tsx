@@ -134,8 +134,20 @@ export default async function Home() {
               <p>Você encontra a Tudo Express Brasil nos canais que já conhece e confia.</p>
             </Reveal>
             <div className="channel-grid">
-              <a className="channel-card channel-ml reveal visible" href="https://lista.mercadolivre.com.br/_CustId_1305039689" target="_blank" rel="noopener noreferrer"><span className="channel-icon">ML</span><div><small>Loja oficial</small><h3>Mercado Livre</h3><p>Compra protegida, envio acompanhado e várias formas de pagamento.</p><strong>Acessar loja <span>→</span></strong></div></a>
-              <a className="channel-card channel-shopee reveal visible" href="https://shopee.com.br/shop/950896809" target="_blank" rel="noopener noreferrer"><span className="channel-icon">S</span><div><small>Loja oficial</small><h3>Shopee</h3><p>Ofertas, cupons e uma experiência de compra rápida pelo app.</p><strong>Acessar loja <span>→</span></strong></div></a>
+              <a className="channel-card channel-ml reveal visible" href="https://lista.mercadolivre.com.br/_CustId_1305039689" target="_blank" rel="noopener noreferrer">
+                <span className="channel-icon channel-logo">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/assets/logo-mercado-livre.png" alt="Mercado Livre" />
+                </span>
+                <div><small>Loja oficial</small><h3>Mercado Livre</h3><p>Compra protegida, envio acompanhado e várias formas de pagamento.</p><strong>Acessar loja <span>→</span></strong></div>
+              </a>
+              <a className="channel-card channel-shopee reveal visible" href="https://shopee.com.br/shop/950896809" target="_blank" rel="noopener noreferrer">
+                <span className="channel-icon channel-logo">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/assets/logo-shopee.png" alt="Shopee" />
+                </span>
+                <div><small>Loja oficial</small><h3>Shopee</h3><p>Ofertas, cupons e uma experiência de compra rápida pelo app.</p><strong>Acessar loja <span>→</span></strong></div>
+              </a>
             </div>
           </div>
         </section>
@@ -155,7 +167,10 @@ export default async function Home() {
 
       <footer className="site-footer">
         <div className="container footer-grid">
-          <div><a className="brand brand-footer" href="#inicio"><span className="brand-mark">TE</span><span><strong>Tudo Express</strong><small>Brasil</small></span></a><p>Escolhas inteligentes para uma rotina mais simples.</p></div>
+          <div><a className="brand brand-footer" href="#inicio"><span className="brand-mark brand-logo-mark">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/assets/logo-tudo-express.png" alt="" />
+          </span><span><strong>Tudo Express</strong><small>Brasil</small></span></a><p>Escolhas inteligentes para uma rotina mais simples.</p></div>
           <div><h3>Navegue</h3><a href="#produtos">Produtos</a><a href="#como-comprar">Como comprar</a><a href="#sobre">Sobre nós</a></div>
           <div><h3>Atendimento</h3><a href="https://wa.me/5517981468455" target="_blank" rel="noopener noreferrer">WhatsApp</a><a href="mailto:tudoexpressbrasil@gmail.com">tudoexpressbrasil@gmail.com</a></div>
         </div>

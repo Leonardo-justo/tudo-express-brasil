@@ -30,16 +30,22 @@ export async function getPublicProducts(): Promise<Product[]> {
 export function getProductBuyLinks(product: Product) {
   return [
     {
+      logoAlt: "Logo do Mercado Livre",
+      logoSrc: "/assets/logo-mercado-livre.png",
       label: "Ver no Mercado Livre",
       href: product.mercado_livre_url
     },
     {
+      logoAlt: "Logo da Shopee",
+      logoSrc: "/assets/logo-shopee.png",
       label: "Ver na Shopee",
       href: product.shopee_url
     },
     {
+      logoAlt: "WhatsApp",
+      logoSrc: null,
       label: "Comprar pelo WhatsApp",
       href: product.whatsapp_url
     }
-  ].filter((link): link is { label: string; href: string } => Boolean(link.href));
+  ].filter((link): link is { logoAlt: string; logoSrc: string | null; label: string; href: string } => Boolean(link.href));
 }

@@ -13,7 +13,10 @@ export function SiteHeader() {
     <header className="site-header">
       <div className="container nav-wrap">
         <a className="brand" href="#inicio" aria-label="Tudo Express Brasil - início" onClick={closeMenu}>
-          <span className="brand-mark" aria-hidden="true">TE</span>
+          <span className="brand-mark brand-logo-mark" aria-hidden="true">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/assets/logo-tudo-express.png" alt="" />
+          </span>
           <span>
             <strong>Tudo Express</strong>
             <small>Brasil</small>

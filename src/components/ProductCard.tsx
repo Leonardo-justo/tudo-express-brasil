@@ -30,7 +30,14 @@ export function ProductCard({ product }: ProductCardProps) {
           <div className="product-links">
             {links.map((link) => (
               <a key={link.label} href={link.href} target="_blank" rel="noopener noreferrer">
-                {link.label} <span aria-hidden="true">↗</span>
+                <span className="buy-link-label">
+                  {link.logoSrc ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img className="marketplace-logo" src={link.logoSrc} alt={link.logoAlt} />
+                  ) : null}
+                  {link.label}
+                </span>
+                <span aria-hidden="true">↗</span>
               </a>
             ))}
           </div>

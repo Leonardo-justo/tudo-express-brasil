@@ -288,7 +288,10 @@ export function AdminClient() {
     <main className="admin-shell">
       <header className="admin-topbar">
         <Link className="brand" href="/">
-          <span className="brand-mark">TE</span>
+          <span className="brand-mark brand-logo-mark">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/assets/logo-tudo-express.png" alt="" />
+          </span>
           <span><strong>Tudo Express</strong><small>Admin</small></span>
         </Link>
         <div>
