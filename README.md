@@ -1,56 +1,127 @@
 # Tudo Express Brasil
 
-Site institucional e vitrine de produtos da Tudo Express Brasil.
+Site institucional com vitrine dinâmica e painel administrativo para a Tudo Express Brasil.
 
-O projeto é estático, responsivo e preparado para publicação na Vercel com domínio próprio, sitemap, robots.txt, metadados sociais e SEO técnico básico.
+O projeto usa:
+
+- Next.js
+- Vercel
+- Supabase Auth
+- Supabase Database
+- Supabase Storage
+
+O tema visual original foi preservado. A principal evolução está na estrutura: os produtos deixam de ficar fixos no código e passam a ser gerenciados pelo painel `/admin`.
+
+## Funcionalidades
+
+- Site público responsivo para computador, tablet e celular.
+- Produtos vindos do Supabase.
+- Produtos de fallback para o site não ficar vazio enquanto o Supabase não estiver configurado.
+- Painel `/admin` com login.
+- Cadastro, edição, ativação/desativação e exclusão de produtos.
+- Upload de imagem para o Supabase Storage.
+- Campo para link do Mercado Livre.
+- Campo para link da Shopee.
+- Campo para link do WhatsApp.
+- SEO técnico, sitemap, robots, Open Graph e dados estruturados.
 
 ## Estrutura
 
-- `index.html`: conteúdo principal, SEO, metadados e dados estruturados.
-- `css/styles.css`: identidade visual, layout e responsividade.
-- `js/script.js`: menu mobile, animações e ano automático do rodapé.
-- `assets/`: imagens e produtos do cliente.
-- `robots.txt`: orientação para mecanismos de busca.
-- `sitemap.xml`: mapa do site para indexação.
-- `vercel.json`: configuração de publicação, URLs limpas, cache e headers.
-- `site.webmanifest` e `favicon.svg`: identidade básica para navegador/dispositivo.
-
-## Publicação na Vercel
-
-1. Suba o projeto para o GitHub.
-2. Na Vercel, clique em “Add New Project”.
-3. Importe o repositório `tudo-express-brasil`.
-4. Framework Preset: `Other`.
-5. Build Command: deixe vazio.
-6. Output Directory: deixe vazio.
-7. Clique em “Deploy”.
-
-## Domínio
-
-Domínio planejado:
-
 ```text
-https://tudoexpressbrasil.com.br/
+src/app
+  page.tsx           Site público
+  admin/page.tsx     Entrada do administrador
+  globals.css        Tema visual do site e admin
+
+src/components
+  ProductCard.tsx
+  Reveal.tsx
+  SiteHeader.tsx
+  admin/AdminClient.tsx
+
+src/lib
+  products.ts        Busca produtos públicos
+  seed-products.ts   Produtos de fallback
+  supabase.ts        Cliente Supabase
+
+supabase/migrations
+  SQL para banco, segurança e storage
+
+public
+  assets/
+  robots.txt
+  sitemap.xml
+  favicon.svg
+  site.webmanifest
 ```
 
-Depois do deploy na Vercel:
+## Rodar localmente
 
-1. Abra o projeto na Vercel.
-2. Vá em “Settings” > “Domains”.
-3. Adicione `tudoexpressbrasil.com.br`.
-4. Siga os registros DNS indicados pela Vercel no provedor do domínio.
-5. Aguarde a propagação.
+Instale dependências:
+
+```bash
+npm install
+```
+
+Crie `.env.local` baseado no `.env.example`:
+
+```env
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+NEXT_PUBLIC_SUPABASE_URL=https://seu-projeto.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=sua-chave-anon-publica
+```
+
+Rode:
+
+```bash
+npm run dev
+```
+
+Abra:
+
+```text
+http://localhost:3000
+http://localhost:3000/admin
+```
+
+## Supabase
+
+Siga o guia:
+
+```text
+docs/supabase-admin.md
+```
+
+Resumo:
+
+1. Criar projeto no Supabase.
+2. Rodar o SQL em `supabase/migrations/202607140001_create_products_admin.sql`.
+3. Criar usuário em Authentication > Users.
+4. Cadastrar esse usuário em `public.app_admins`.
+5. Configurar as variáveis na Vercel.
+
+## Deploy na Vercel
+
+1. Suba o projeto para o GitHub.
+2. Importe o repositório na Vercel.
+3. Framework: Next.js.
+4. Configure as variáveis:
+
+```env
+NEXT_PUBLIC_SITE_URL=https://tudoexpressbrasil.com.br
+NEXT_PUBLIC_SUPABASE_URL=https://seu-projeto.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=sua-chave-anon-publica
+```
+
+5. Faça deploy.
+6. Em Settings > Domains, vincule `tudoexpressbrasil.com.br`.
 
 ## SEO
 
-Arquivos importantes:
+Depois do domínio ativo:
 
-- `sitemap.xml`: `https://tudoexpressbrasil.com.br/sitemap.xml`
-- `robots.txt`: `https://tudoexpressbrasil.com.br/robots.txt`
-- URL canônica: `https://tudoexpressbrasil.com.br/`
+- sitemap: `https://tudoexpressbrasil.com.br/sitemap.xml`
+- robots: `https://tudoexpressbrasil.com.br/robots.txt`
+- admin bloqueado para indexação: `/admin`
 
-Após o domínio estar ativo, recomenda-se cadastrar o site no Google Search Console e enviar o sitemap.
-
-## Manutenção
-
-Para adicionar novos produtos, duplique um bloco `.product-card` no `index.html`, troque imagem, nome, descrição e link de compra.
+Recomendação: cadastrar no Google Search Console e enviar o sitemap.
