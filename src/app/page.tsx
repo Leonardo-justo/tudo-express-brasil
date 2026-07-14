@@ -1,7 +1,8 @@
-import { ProductCard } from "@/components/ProductCard";
+import { ProductCarousel } from "@/components/ProductCarousel";
 import { Reveal } from "@/components/Reveal";
 import { SiteHeader } from "@/components/SiteHeader";
 import { getPublicProducts } from "@/lib/products";
+import { MERCADO_LIVRE_STORE_URL, SHOPEE_STORE_URL } from "@/lib/store-links";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://tudoexpressbrasil.com.br";
 
@@ -61,7 +62,16 @@ export default async function Home() {
               <p>Produtos úteis, naturais e selecionados com cuidado — e a segurança de comprar nos maiores marketplaces do Brasil.</p>
               <div className="hero-actions">
                 <a className="btn btn-primary" href="#produtos">Conhecer produtos <span aria-hidden="true">→</span></a>
-                <a className="btn btn-ghost" href="https://lista.mercadolivre.com.br/_CustId_1305039689" target="_blank" rel="noopener noreferrer">Visitar loja oficial</a>
+                <a className="btn btn-ghost marketplace-cta" href={MERCADO_LIVRE_STORE_URL} target="_blank" rel="noopener noreferrer">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/assets/logo-mercado-livre.png" alt="" />
+                  Mercado Livre
+                </a>
+                <a className="btn btn-ghost marketplace-cta" href={SHOPEE_STORE_URL} target="_blank" rel="noopener noreferrer">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/assets/logo-shopee-clean.svg" alt="" />
+                  Shopee
+                </a>
               </div>
               <div className="hero-proof">
                 <div className="avatar-stack" aria-hidden="true"><span>✓</span><span>★</span><span>♥</span></div>
@@ -97,11 +107,7 @@ export default async function Home() {
               <div><span className="eyebrow"><i /> Seleção Onda Mel</span><h2>Do apiário para a sua mesa</h2></div>
               <p>Mel puro em diferentes floradas e combinações para você encontrar o seu favorito.</p>
             </Reveal>
-            <div className="product-grid">
-              {products.map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </div>
+            <ProductCarousel products={products} />
           </div>
         </section>
 
@@ -109,7 +115,7 @@ export default async function Home() {
           <div className="container feature-grid">
             <Reveal className="feature-media">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/assets/banner-suporte.png" alt="Suporte universal para celular e tablet" loading="lazy" />
+              <img src="/assets/banner-suporte-clean.png" alt="Suporte universal para celular e tablet" loading="lazy" />
               <span className="feature-badge">Utilidade<br /><strong>todo dia</strong></span>
             </Reveal>
             <Reveal className="feature-copy">
@@ -122,12 +128,12 @@ export default async function Home() {
                 <li><span>✓</span> Compra segura em canais conhecidos</li>
               </ul>
               <div className="feature-actions">
-                <a className="btn btn-light marketplace-cta" href="https://lista.mercadolivre.com.br/_CustId_1305039689" target="_blank" rel="noopener noreferrer">
+                <a className="btn btn-light marketplace-cta" href={MERCADO_LIVRE_STORE_URL} target="_blank" rel="noopener noreferrer">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src="/assets/logo-mercado-livre.png" alt="" />
                   Explorar no Mercado Livre <span>→</span>
                 </a>
-                <a className="btn btn-light marketplace-cta" href="https://shopee.com.br/shop/950896809" target="_blank" rel="noopener noreferrer">
+                <a className="btn btn-light marketplace-cta" href={SHOPEE_STORE_URL} target="_blank" rel="noopener noreferrer">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src="/assets/logo-shopee-clean.svg" alt="" />
                   Explorar na Shopee <span>→</span>
@@ -145,14 +151,14 @@ export default async function Home() {
               <p>Você encontra a Tudo Express Brasil nos canais que já conhece e confia.</p>
             </Reveal>
             <div className="channel-grid">
-              <a className="channel-card channel-ml reveal visible" href="https://lista.mercadolivre.com.br/_CustId_1305039689" target="_blank" rel="noopener noreferrer">
+              <a className="channel-card channel-ml reveal visible" href={MERCADO_LIVRE_STORE_URL} target="_blank" rel="noopener noreferrer">
                 <span className="channel-icon channel-logo">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src="/assets/logo-mercado-livre.png" alt="Mercado Livre" />
                 </span>
                 <div><small>Loja oficial</small><h3>Mercado Livre</h3><p>Compra protegida, envio acompanhado e várias formas de pagamento.</p><strong>Acessar loja <span>→</span></strong></div>
               </a>
-              <a className="channel-card channel-shopee reveal visible" href="https://shopee.com.br/shop/950896809" target="_blank" rel="noopener noreferrer">
+              <a className="channel-card channel-shopee reveal visible" href={SHOPEE_STORE_URL} target="_blank" rel="noopener noreferrer">
                 <span className="channel-icon channel-logo">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src="/assets/logo-shopee-clean.svg" alt="Shopee" />
@@ -174,6 +180,36 @@ export default async function Home() {
             </div>
           </Reveal>
         </section>
+
+        <section className="reviews section" id="avaliacoes">
+          <div className="container">
+            <Reveal className="section-head centered">
+              <span className="eyebrow"><i /> Avaliações no Google</span>
+              <h2>Quem compra recomenda.</h2>
+              <p>Alguns comentários de clientes que já passaram pela Tudo Express Brasil.</p>
+            </Reveal>
+            <div className="reviews-grid">
+              {[
+                ["Jo Rodrigues", "Os produtos são excelentes, recomendo muito."],
+                ["Henrique Hilton Ribeiro", "Excelente produto e atendimento rápido."],
+                ["Charles Favaro", "Muito bom, compra tranquila e entrega acompanhada."],
+                ["Marcos", "Excelente! Voltarei a comprar."]
+              ].map(([name, text]) => (
+                <article className="review-card" key={name}>
+                  <div className="review-stars" aria-label="5 estrelas">★★★★★</div>
+                  <p>{text}</p>
+                  <strong>{name}</strong>
+                  <small>Google</small>
+                </article>
+              ))}
+            </div>
+            <div className="reviews-action">
+              <a className="btn btn-primary" href="https://www.google.com/maps/place//data=!4m3!3m2!1s0x94bc53903a9937eb:0xb78e26ae9f8c959!12e1?source=g.page.m.ia._&laa=nmx-review-solicitation-ia2" target="_blank" rel="noopener noreferrer">
+                Avaliar no Google <span>→</span>
+              </a>
+            </div>
+          </div>
+        </section>
       </main>
 
       <footer className="site-footer">
@@ -181,7 +217,10 @@ export default async function Home() {
           <div><a className="brand brand-footer" href="#inicio"><span className="brand-mark brand-logo-mark">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/assets/logo-tudo-express.png" alt="" />
-          </span><span><strong>Tudo Express</strong><small>Brasil</small></span></a><p>Escolhas inteligentes para uma rotina mais simples.</p></div>
+          </span><span><strong>Tudo Express</strong><small>Brasil</small></span></a><p>Escolhas inteligentes para uma rotina mais simples.</p>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img className="footer-avatar" src="/assets/avatar-carrinho.png" alt="Mascote da Tudo Express Brasil" />
+          </div>
           <div><h3>Navegue</h3><a href="#produtos">Produtos</a><a href="#como-comprar">Como comprar</a><a href="#sobre">Sobre nós</a></div>
           <div><h3>Atendimento</h3><a href="https://wa.me/5517981468455" target="_blank" rel="noopener noreferrer">WhatsApp</a><a href="mailto:tudoexpressbrasil@gmail.com">tudoexpressbrasil@gmail.com</a></div>
         </div>

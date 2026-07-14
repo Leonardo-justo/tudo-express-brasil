@@ -41,6 +41,10 @@ export function SiteHeader() {
             Fale conosco
           </a>
         </nav>
+        <a className="header-avatar" href="https://wa.me/5517981468455" target="_blank" rel="noopener noreferrer" aria-label="Falar com a Tudo Express Brasil">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/assets/avatar-carrinho.png" alt="" />
+        </a>
       </div>
     </header>
   );

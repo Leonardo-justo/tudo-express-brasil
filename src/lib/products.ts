@@ -1,5 +1,6 @@
 import { seedProducts } from "@/lib/seed-products";
 import { createSupabaseClient, isSupabaseConfigured } from "@/lib/supabase";
+import { SHOPEE_STORE_URL } from "@/lib/store-links";
 import type { Product } from "@/types/product";
 
 export async function getPublicProducts(): Promise<Product[]> {
@@ -39,7 +40,7 @@ export function getProductBuyLinks(product: Product) {
       logoAlt: "Logo da Shopee",
       logoSrc: "/assets/logo-shopee-clean.svg",
       label: "Ver na Shopee",
-      href: product.shopee_url
+      href: product.shopee_url || SHOPEE_STORE_URL
     },
     {
       logoAlt: "WhatsApp",

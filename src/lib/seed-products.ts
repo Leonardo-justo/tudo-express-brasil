@@ -1,4 +1,5 @@
 import type { Product } from "@/types/product";
+import { SHOPEE_STORE_URL } from "@/lib/store-links";
 
 export const seedProducts: Product[] = [
   {
@@ -12,7 +13,7 @@ export const seedProducts: Product[] = [
     tag: "Novidade",
     tag_variant: "default",
     mercado_livre_url: "https://www.mercadolivre.com.br/mel-puro-com-propolis-onda-mel-500g/up/MLBU4130443166",
-    shopee_url: null,
+    shopee_url: SHOPEE_STORE_URL,
     whatsapp_url: null,
     is_active: true,
     is_featured: true,
@@ -29,7 +30,7 @@ export const seedProducts: Product[] = [
     tag: "Floral",
     tag_variant: "soft",
     mercado_livre_url: "https://www.mercadolivre.com.br/mel-puro-onda-mel-laranjeira-500g/up/MLBU4101000879",
-    shopee_url: null,
+    shopee_url: SHOPEE_STORE_URL,
     whatsapp_url: null,
     is_active: true,
     is_featured: true,
@@ -46,7 +47,7 @@ export const seedProducts: Product[] = [
     tag: "Clássico",
     tag_variant: "dark",
     mercado_livre_url: "https://www.mercadolivre.com.br/mel-puro-onda-mel-silvestre-500g/up/MLBU4162463179",
-    shopee_url: null,
+    shopee_url: SHOPEE_STORE_URL,
     whatsapp_url: null,
     is_active: true,
     is_featured: true,
@@ -63,7 +64,7 @@ export const seedProducts: Product[] = [
     tag: "Prático",
     tag_variant: "blue",
     mercado_livre_url: "https://www.mercadolivre.com.br/mel-puro-em-blister-sache-onda-mel-32g/up/MLBU4130517538",
-    shopee_url: null,
+    shopee_url: SHOPEE_STORE_URL,
     whatsapp_url: null,
     is_active: true,
     is_featured: true,
