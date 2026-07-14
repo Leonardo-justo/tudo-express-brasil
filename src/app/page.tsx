@@ -137,14 +137,14 @@ export default async function Home() {
               <a className="channel-card channel-ml reveal visible" href="https://lista.mercadolivre.com.br/_CustId_1305039689" target="_blank" rel="noopener noreferrer">
                 <span className="channel-icon channel-logo">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/assets/logo-mercado-livre.png" alt="Mercado Livre" />
+                  <img src="/assets/logo-mercado-livre-clean.svg" alt="Mercado Livre" />
                 </span>
                 <div><small>Loja oficial</small><h3>Mercado Livre</h3><p>Compra protegida, envio acompanhado e várias formas de pagamento.</p><strong>Acessar loja <span>→</span></strong></div>
               </a>
               <a className="channel-card channel-shopee reveal visible" href="https://shopee.com.br/shop/950896809" target="_blank" rel="noopener noreferrer">
                 <span className="channel-icon channel-logo">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/assets/logo-shopee.png" alt="Shopee" />
+                  <img src="/assets/logo-shopee-clean.svg" alt="Shopee" />
                 </span>
                 <div><small>Loja oficial</small><h3>Shopee</h3><p>Ofertas, cupons e uma experiência de compra rápida pelo app.</p><strong>Acessar loja <span>→</span></strong></div>
               </a>

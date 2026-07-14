@@ -31,13 +31,13 @@ export function getProductBuyLinks(product: Product) {
   return [
     {
       logoAlt: "Logo do Mercado Livre",
-      logoSrc: "/assets/logo-mercado-livre.png",
+      logoSrc: "/assets/logo-mercado-livre-clean.svg",
       label: "Ver no Mercado Livre",
       href: product.mercado_livre_url
     },
     {
       logoAlt: "Logo da Shopee",
-      logoSrc: "/assets/logo-shopee.png",
+      logoSrc: "/assets/logo-shopee-clean.svg",
       label: "Ver na Shopee",
       href: product.shopee_url
     },
