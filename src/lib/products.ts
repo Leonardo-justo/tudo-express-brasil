@@ -30,15 +30,15 @@ export async function getPublicProducts(): Promise<Product[]> {
 export function getProductBuyLinks(product: Product) {
   return [
     {
-      label: "Mercado Livre",
+      label: "Ver no Mercado Livre",
       href: product.mercado_livre_url
     },
     {
-      label: "Shopee",
+      label: "Ver na Shopee",
       href: product.shopee_url
     },
     {
-      label: "WhatsApp",
+      label: "Comprar pelo WhatsApp",
       href: product.whatsapp_url
     }
   ].filter((link): link is { label: string; href: string } => Boolean(link.href));
