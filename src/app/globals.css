@@ -68,3 +68,33 @@
 .btn{border-radius:15px}.btn img{flex:0 0 auto}.marketplace-cta{min-height:52px;border:1px solid rgba(7,59,155,.12);box-shadow:0 12px 26px rgba(7,59,155,.08)}.marketplace-cta img{width:34px;height:34px;padding:5px;border:1px solid rgba(7,59,155,.08);border-radius:11px}
 .channel-card{border:1px solid rgba(7,59,155,.1);box-shadow:0 16px 42px rgba(7,59,155,.08)}.channel-icon{border:1px solid rgba(7,59,155,.08)}
 @media(max-width:720px){.brand-logo-mark{width:50px;height:50px}.product-info p{min-height:auto}.product-image{height:245px}}
+
+/* Padronização final: ícones SVG Lucide e logos clean dos marketplaces */
+.inline-icon,
+.avatar-stack svg,
+.floating-card svg,
+.trust-grid svg,
+.feature-copy li svg,
+.social-links svg,
+.review-stars svg,
+.whatsapp svg,
+.buy-link-arrow svg{width:20px;height:20px;stroke-width:2.4;display:block}
+.btn .inline-icon{width:18px;height:18px}
+.avatar-stack svg{width:16px;height:16px}.floating-card svg{width:19px;height:19px}.trust-grid svg{width:20px;height:20px}.feature-copy li svg{width:15px;height:15px}.social-links svg{width:19px;height:19px}.whatsapp svg{width:19px;height:19px}.buy-link-arrow svg{width:14px;height:14px}
+.review-stars{display:flex;align-items:center;gap:3px;color:#ffc814;letter-spacing:0;font-size:0;margin-bottom:14px}
+.review-stars svg{width:18px;height:18px;fill:currentColor;stroke:currentColor}
+.social-links span,.avatar-stack span,.floating-card>span,.trust-grid>div>span,.feature-copy li span,.whatsapp span{line-height:0}
+.marketplace-logo,
+.marketplace-logo[src*="logo-mercado-livre"],
+.marketplace-logo[src*="logo-shopee"]{flex:0 0 auto;width:auto!important;height:24px!important;max-width:42px!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;object-fit:contain;transition:transform .2s ease}
+.buy-link-label{gap:12px}
+.product-links a:hover .marketplace-logo{transform:translateY(-1px) scale(1.03)}
+.marketplace-cta img{flex:0 0 auto;width:auto!important;height:24px!important;max-width:54px!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;object-fit:contain}
+.channel-logo,
+.channel-ml .channel-logo,
+.channel-shopee .channel-logo{flex:0 0 96px;width:96px;height:72px;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;overflow:visible}
+.channel-logo img,
+.channel-ml .channel-logo img,
+.channel-shopee .channel-logo img{width:auto!important;height:40px!important;max-width:96px!important;border-radius:0!important;object-fit:contain;transform:none!important}
+.product-carousel-track{transition:transform .65s cubic-bezier(.22,1,.36,1);animation:none!important}
+.product-carousel:hover .product-carousel-track{animation-play-state:running}

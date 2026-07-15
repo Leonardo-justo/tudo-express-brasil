@@ -1,3 +1,4 @@
+import { ArrowUpRight } from "lucide-react";
 import { getProductBuyLinks } from "@/lib/products";
 import type { Product } from "@/types/product";
 
@@ -37,13 +38,18 @@ export function ProductCard({ product }: ProductCardProps) {
                   ) : null}
                   {link.label}
                 </span>
-                <span className="buy-link-arrow" aria-hidden="true">↗</span>
+                <span className="buy-link-arrow" aria-hidden="true">
+                  <ArrowUpRight />
+                </span>
               </a>
             ))}
           </div>
         ) : (
           <a className="fallback-buy-link" href="https://wa.me/5517981468455" target="_blank" rel="noopener noreferrer">
-            Consultar disponibilidade <span className="buy-link-arrow" aria-hidden="true">↗</span>
+            Consultar disponibilidade
+            <span className="buy-link-arrow" aria-hidden="true">
+              <ArrowUpRight />
+            </span>
           </a>
         )}
       </div>

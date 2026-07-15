@@ -1,3 +1,17 @@
+import {
+  ArrowRight,
+  Camera,
+  Check,
+  Heart,
+  Music2,
+  PackageCheck,
+  Phone,
+  Play,
+  ShieldCheck,
+  Star,
+  Truck,
+  Zap
+} from "lucide-react";
 import { ProductCarousel } from "@/components/ProductCarousel";
 import { Reveal } from "@/components/Reveal";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -61,10 +75,10 @@ export default async function Home() {
               <h1>Escolhas que deixam o seu dia mais <em>simples.</em></h1>
               <p>Produtos úteis, naturais e selecionados com cuidado — e a segurança de comprar nos maiores marketplaces do Brasil.</p>
               <div className="hero-actions">
-                <a className="btn btn-primary" href="#produtos">Conhecer produtos <span aria-hidden="true">→</span></a>
+                <a className="btn btn-primary" href="#produtos">Conhecer produtos <ArrowRight className="inline-icon" aria-hidden="true" /></a>
                 <a className="btn btn-ghost marketplace-cta" href={MERCADO_LIVRE_STORE_URL} target="_blank" rel="noopener noreferrer">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/assets/logo-mercado-livre.png" alt="" />
+                  <img src="/assets/logo-mercado-livre-clean.svg" alt="" />
                   Mercado Livre
                 </a>
                 <a className="btn btn-ghost marketplace-cta" href={SHOPEE_STORE_URL} target="_blank" rel="noopener noreferrer">
@@ -74,7 +88,11 @@ export default async function Home() {
                 </a>
               </div>
               <div className="hero-proof">
-                <div className="avatar-stack" aria-hidden="true"><span>✓</span><span>★</span><span>♥</span></div>
+                <div className="avatar-stack" aria-hidden="true">
+                  <span><Check /></span>
+                  <span><Star /></span>
+                  <span><Heart /></span>
+                </div>
                 <p><strong>Compra protegida</strong><br />pelo Mercado Livre e Shopee</p>
               </div>
             </Reveal>
@@ -86,18 +104,18 @@ export default async function Home() {
               <img className="hero-product hero-product-main" src="/assets/mel-propolis.png" alt="Mel com própolis Onda Mel de 500 gramas" />
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img className="hero-product hero-product-side" src="/assets/mel-laranjeira.png" alt="Mel florada de laranjeira Onda Mel de 500 gramas" />
-              <div className="floating-card card-natural"><span>🍯</span><div><strong>100% natural</strong><small>Sabor e qualidade</small></div></div>
-              <div className="floating-card card-fast"><span>⚡</span><div><strong>Compra fácil</strong><small>Em poucos cliques</small></div></div>
+              <div className="floating-card card-natural"><span><PackageCheck /></span><div><strong>100% natural</strong><small>Sabor e qualidade</small></div></div>
+              <div className="floating-card card-fast"><span><Zap /></span><div><strong>Compra fácil</strong><small>Em poucos cliques</small></div></div>
             </Reveal>
           </div>
         </section>
 
         <section className="trust-strip" aria-label="Vantagens de comprar conosco">
           <div className="container trust-grid">
-            <div><span>✓</span><p><strong>Seleção cuidadosa</strong><small>Produtos que fazem sentido</small></p></div>
-            <div><span>▣</span><p><strong>Pagamento protegido</strong><small>Compra nos marketplaces</small></p></div>
-            <div><span>↗</span><p><strong>Entrega acompanhada</strong><small>Do pedido até sua casa</small></p></div>
-            <div><span>♡</span><p><strong>Atendimento próximo</strong><small>Estamos no WhatsApp</small></p></div>
+            <div><span><Check /></span><p><strong>Seleção cuidadosa</strong><small>Produtos que fazem sentido</small></p></div>
+            <div><span><ShieldCheck /></span><p><strong>Pagamento protegido</strong><small>Compra nos marketplaces</small></p></div>
+            <div><span><Truck /></span><p><strong>Entrega acompanhada</strong><small>Do pedido até sua casa</small></p></div>
+            <div><span><Heart /></span><p><strong>Atendimento próximo</strong><small>Estamos no WhatsApp</small></p></div>
           </div>
         </section>
 
@@ -123,20 +141,20 @@ export default async function Home() {
               <h2>Produtos que resolvem.<br />Sem complicação.</h2>
               <p>Na Tudo Express Brasil, cada item entra na nossa seleção por um motivo: ser útil de verdade. Da cozinha ao home office, buscamos boas escolhas para tornar sua rotina mais prática.</p>
               <ul>
-                <li><span>✓</span> Itens úteis e funcionais</li>
-                <li><span>✓</span> Seleção com foco em custo-benefício</li>
-                <li><span>✓</span> Compra segura em canais conhecidos</li>
+                <li><span><Check /></span> Itens úteis e funcionais</li>
+                <li><span><Check /></span> Seleção com foco em custo-benefício</li>
+                <li><span><Check /></span> Compra segura em canais conhecidos</li>
               </ul>
               <div className="feature-actions">
                 <a className="btn btn-light marketplace-cta" href={MERCADO_LIVRE_STORE_URL} target="_blank" rel="noopener noreferrer">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/assets/logo-mercado-livre.png" alt="" />
-                  Explorar no Mercado Livre <span>→</span>
+                  <img src="/assets/logo-mercado-livre-clean.svg" alt="" />
+                  Explorar no Mercado Livre <ArrowRight className="inline-icon" aria-hidden="true" />
                 </a>
                 <a className="btn btn-light marketplace-cta" href={SHOPEE_STORE_URL} target="_blank" rel="noopener noreferrer">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src="/assets/logo-shopee-clean.svg" alt="" />
-                  Explorar na Shopee <span>→</span>
+                  Explorar na Shopee <ArrowRight className="inline-icon" aria-hidden="true" />
                 </a>
               </div>
             </Reveal>
@@ -154,16 +172,16 @@ export default async function Home() {
               <a className="channel-card channel-ml reveal visible" href={MERCADO_LIVRE_STORE_URL} target="_blank" rel="noopener noreferrer">
                 <span className="channel-icon channel-logo">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/assets/logo-mercado-livre.png" alt="Mercado Livre" />
+                  <img src="/assets/logo-mercado-livre-clean.svg" alt="Mercado Livre" />
                 </span>
-                <div><small>Loja oficial</small><h3>Mercado Livre</h3><p>Compra protegida, envio acompanhado e várias formas de pagamento.</p><strong>Acessar loja <span>→</span></strong></div>
+                <div><small>Loja oficial</small><h3>Mercado Livre</h3><p>Compra protegida, envio acompanhado e várias formas de pagamento.</p><strong>Acessar loja <ArrowRight className="inline-icon" aria-hidden="true" /></strong></div>
               </a>
               <a className="channel-card channel-shopee reveal visible" href={SHOPEE_STORE_URL} target="_blank" rel="noopener noreferrer">
                 <span className="channel-icon channel-logo">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src="/assets/logo-shopee-clean.svg" alt="Shopee" />
                 </span>
-                <div><small>Loja oficial</small><h3>Shopee</h3><p>Ofertas, cupons e uma experiência de compra rápida pelo app.</p><strong>Acessar loja <span>→</span></strong></div>
+                <div><small>Loja oficial</small><h3>Shopee</h3><p>Ofertas, cupons e uma experiência de compra rápida pelo app.</p><strong>Acessar loja <ArrowRight className="inline-icon" aria-hidden="true" /></strong></div>
               </a>
             </div>
           </div>
@@ -173,10 +191,10 @@ export default async function Home() {
           <Reveal className="container social-box">
             <div><span className="eyebrow eyebrow-light"><i /> Acompanhe de perto</span><h2>Novidades, dicas e<br />produtos em movimento.</h2></div>
             <div className="social-links">
-              <a href="https://www.instagram.com/tudoexpressbrasil?igsh=MTV3dXhsamlocnU4Yw==" target="_blank" rel="noopener noreferrer"><span>◎</span>Instagram</a>
-              <a href="https://www.tiktok.com/@tudoexpressbrasil" target="_blank" rel="noopener noreferrer"><span>♪</span>TikTok</a>
-              <a href="https://www.youtube.com/@TudoExpressBrasil/shorts" target="_blank" rel="noopener noreferrer"><span>▶</span>YouTube</a>
-              <a href="https://www.google.com/maps/place//data=!4m3!3m2!1s0x94bc53903a9937eb:0xb78e26ae9f8c959!12e1?source=g.page.m.ia._&laa=nmx-review-solicitation-ia2" target="_blank" rel="noopener noreferrer"><span>★</span>Avalie no Google</a>
+              <a href="https://www.instagram.com/tudoexpressbrasil?igsh=MTV3dXhsamlocnU4Yw==" target="_blank" rel="noopener noreferrer"><span><Camera /></span>Instagram</a>
+              <a href="https://www.tiktok.com/@tudoexpressbrasil" target="_blank" rel="noopener noreferrer"><span><Music2 /></span>TikTok</a>
+              <a href="https://www.youtube.com/@TudoExpressBrasil/shorts" target="_blank" rel="noopener noreferrer"><span><Play /></span>YouTube</a>
+              <a href="https://www.google.com/maps/place//data=!4m3!3m2!1s0x94bc53903a9937eb:0xb78e26ae9f8c959!12e1?source=g.page.m.ia._&laa=nmx-review-solicitation-ia2" target="_blank" rel="noopener noreferrer"><span><Star /></span>Avalie no Google</a>
             </div>
           </Reveal>
         </section>
@@ -196,7 +214,11 @@ export default async function Home() {
                 ["Marcos", "Excelente! Voltarei a comprar."]
               ].map(([name, text]) => (
                 <article className="review-card" key={name}>
-                  <div className="review-stars" aria-label="5 estrelas">★★★★★</div>
+                  <div className="review-stars" aria-label="5 estrelas">
+                    {Array.from({ length: 5 }, (_, index) => (
+                      <Star key={index} />
+                    ))}
+                  </div>
                   <p>{text}</p>
                   <strong>{name}</strong>
                   <small>Google</small>
@@ -205,7 +227,7 @@ export default async function Home() {
             </div>
             <div className="reviews-action">
               <a className="btn btn-primary" href="https://www.google.com/maps/place//data=!4m3!3m2!1s0x94bc53903a9937eb:0xb78e26ae9f8c959!12e1?source=g.page.m.ia._&laa=nmx-review-solicitation-ia2" target="_blank" rel="noopener noreferrer">
-                Avaliar no Google <span>→</span>
+                Avaliar no Google <ArrowRight className="inline-icon" aria-hidden="true" />
               </a>
             </div>
           </div>
@@ -227,7 +249,7 @@ export default async function Home() {
         <div className="container footer-bottom"><p>© {new Date().getFullYear()} Tudo Express Brasil. Todos os direitos reservados.</p><p>Compra processada com segurança pelos marketplaces parceiros.</p></div>
       </footer>
 
-      <a className="whatsapp" href="https://wa.me/5517981468455" target="_blank" rel="noopener noreferrer" aria-label="Falar com a Tudo Express Brasil pelo WhatsApp"><span>✆</span><em>Podemos ajudar?</em></a>
+      <a className="whatsapp" href="https://wa.me/5517981468455" target="_blank" rel="noopener noreferrer" aria-label="Falar com a Tudo Express Brasil pelo WhatsApp"><span><Phone /></span><em>Podemos ajudar?</em></a>
     </>
   );
 }
