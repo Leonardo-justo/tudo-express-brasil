@@ -83,7 +83,7 @@ export default async function Home() {
                 </a>
                 <a className="btn btn-ghost marketplace-cta" href={SHOPEE_STORE_URL} target="_blank" rel="noopener noreferrer">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/assets/logo-shopee-clean.svg" alt="" />
+                  <img src="/assets/logo-shopee-oficial.jpg" alt="" />
                   Shopee
                 </a>
               </div>
@@ -153,7 +153,7 @@ export default async function Home() {
                 </a>
                 <a className="btn btn-light marketplace-cta" href={SHOPEE_STORE_URL} target="_blank" rel="noopener noreferrer">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/assets/logo-shopee-clean.svg" alt="" />
+                  <img src="/assets/logo-shopee-oficial.jpg" alt="" />
                   Explorar na Shopee <ArrowRight className="inline-icon" aria-hidden="true" />
                 </a>
               </div>
@@ -179,7 +179,7 @@ export default async function Home() {
               <a className="channel-card channel-shopee reveal visible" href={SHOPEE_STORE_URL} target="_blank" rel="noopener noreferrer">
                 <span className="channel-icon channel-logo">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/assets/logo-shopee-clean.svg" alt="Shopee" />
+                  <img src="/assets/logo-shopee-oficial.jpg" alt="Shopee" />
                 </span>
                 <div><small>Loja oficial</small><h3>Shopee</h3><p>Ofertas, cupons e uma experiência de compra rápida pelo app.</p><strong>Acessar loja <ArrowRight className="inline-icon" aria-hidden="true" /></strong></div>
               </a>

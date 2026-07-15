@@ -38,7 +38,7 @@ export function getProductBuyLinks(product: Product) {
     },
     {
       logoAlt: "Logo da Shopee",
-      logoSrc: "/assets/logo-shopee-clean.svg",
+      logoSrc: "/assets/logo-shopee-oficial.jpg",
       label: "Ver na Shopee",
       href: product.shopee_url || SHOPEE_STORE_URL
     },

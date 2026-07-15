@@ -69,7 +69,7 @@
 .channel-card{border:1px solid rgba(7,59,155,.1);box-shadow:0 16px 42px rgba(7,59,155,.08)}.channel-icon{border:1px solid rgba(7,59,155,.08)}
 @media(max-width:720px){.brand-logo-mark{width:50px;height:50px}.product-info p{min-height:auto}.product-image{height:245px}}
 
-/* Padronização final: ícones SVG Lucide e logos clean dos marketplaces */
+/* Padronização final: ícones SVG Lucide e marcas dos marketplaces */
 .inline-icon,
 .avatar-stack svg,
 .floating-card svg,
@@ -86,16 +86,16 @@
 .social-links span,.avatar-stack span,.floating-card>span,.trust-grid>div>span,.feature-copy li span,.whatsapp span{line-height:0}
 .marketplace-logo,
 .marketplace-logo[src*="logo-mercado-livre"],
-.marketplace-logo[src*="logo-shopee"]{flex:0 0 auto;width:auto!important;height:24px!important;max-width:42px!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;object-fit:contain;transition:transform .2s ease}
+.marketplace-logo[src*="logo-shopee"]{flex:0 0 30px;width:30px!important;height:30px!important;max-width:30px!important;padding:0!important;border:0!important;border-radius:9px!important;background:transparent!important;box-shadow:0 5px 14px rgba(7,59,155,.1)!important;object-fit:cover;transition:transform .2s ease}
 .buy-link-label{gap:12px}
 .product-links a:hover .marketplace-logo{transform:translateY(-1px) scale(1.03)}
-.marketplace-cta img{flex:0 0 auto;width:auto!important;height:24px!important;max-width:54px!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;object-fit:contain}
+.marketplace-cta img{flex:0 0 30px;width:30px!important;height:30px!important;max-width:30px!important;padding:0!important;border:0!important;border-radius:9px!important;background:transparent!important;box-shadow:0 5px 14px rgba(7,59,155,.1)!important;object-fit:cover}
 .channel-logo,
 .channel-ml .channel-logo,
-.channel-shopee .channel-logo{flex:0 0 96px;width:96px;height:72px;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;overflow:visible}
+.channel-shopee .channel-logo{display:grid;place-items:center;flex:0 0 76px;width:76px;height:76px;padding:0!important;border:1px solid rgba(7,59,155,.08)!important;border-radius:22px!important;background:rgba(255,255,255,.78)!important;box-shadow:0 16px 30px rgba(7,59,155,.1)!important;overflow:hidden}
 .channel-logo img,
 .channel-ml .channel-logo img,
-.channel-shopee .channel-logo img{width:auto!important;height:40px!important;max-width:96px!important;border-radius:0!important;object-fit:contain;transform:none!important}
+.channel-shopee .channel-logo img{width:46px!important;height:46px!important;max-width:46px!important;border-radius:14px!important;object-fit:cover;transform:none!important}
 .product-carousel-track{transition:transform .65s cubic-bezier(.22,1,.36,1);animation:none!important}
 .product-carousel:hover .product-carousel-track{animation-play-state:running}
 
@@ -110,6 +110,10 @@
 .product-card:hover .product-image-sache img{transform:scale(.94)}
 .product-tag{max-width:calc(100% - 32px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .marketplace-cta{white-space:nowrap}
+.product-links a,.fallback-buy-link{min-height:52px}
+.buy-link-arrow{flex-basis:28px;width:28px;height:28px}
+.header-avatar{width:60px;height:60px}
 @media(max-width:720px){.feature-actions .marketplace-cta{min-width:0}.product-carousel{margin-inline:0}.product-carousel-track{padding-inline:0}}
+@media(max-width:520px){.product-carousel-item{width:calc(100vw - 44px);flex-basis:calc(100vw - 44px)}.product-links a,.fallback-buy-link{width:100%}}
 @media(max-width:420px){.hero-actions .btn{width:100%;min-width:0}.product-links a,.fallback-buy-link{font-size:11px!important;padding-inline:9px!important}.buy-link-label{gap:9px}}
 @media(min-width:961px){.hero-actions{gap:10px}.hero-actions .btn{padding-inline:16px}.hero-actions .marketplace-cta{padding-inline:15px}.feature-actions .marketplace-cta{flex:1 1 0;min-width:0}}
