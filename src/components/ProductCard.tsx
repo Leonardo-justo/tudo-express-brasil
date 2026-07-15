@@ -13,24 +13,40 @@ const tagClassName = {
   blue: "product-tag tag-blue"
 };
 
+function getTagClassName(product: Product) {
+  const normalizedTag = product.tag.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+  if (normalizedTag === "novidade") {
+    return "product-tag tag-dark";
+  }
+
+  if (normalizedTag === "classico") {
+    return "product-tag";
+  }
+
+  return tagClassName[product.tag_variant] ?? "product-tag";
+}
+
 export function ProductCard({ product }: ProductCardProps) {
   const links = getProductBuyLinks(product);
   const imageClassName = `product-image ${product.image_url.includes("mel-sache") ? "product-image-sache" : ""}`.trim();
 
   return (
     <article className="product-card reveal visible">
-      <span className={tagClassName[product.tag_variant] ?? "product-tag"}>{product.tag}</span>
+      <span className={getTagClassName(product)}>{product.tag}</span>
       <div className={imageClassName}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={product.image_url || "/assets/mel-propolis.png"} alt={`Imagem do produto ${product.name}`} loading="lazy" />
       </div>
       <div className="product-info">
         <small>{product.category} • {product.weight}</small>
-        <h3>{product.name}</h3>
+        <h3><a className="product-detail-link" href={`/produtos/${product.slug}`}>{product.name}</a></h3>
         <p>{product.short_description}</p>
-        {links.length > 0 ? (
-          <div className="product-links">
-            {links.map((link) => (
+        <div className="product-links">
+          {links
+            .filter((link) => link.href || link.unavailableLabel)
+            .map((link) => (
+              link.href ? (
               <a key={link.label} href={link.href} target="_blank" rel="noopener noreferrer">
                 <span className="buy-link-label">
                   {link.logoSrc ? (
@@ -43,16 +59,20 @@ export function ProductCard({ product }: ProductCardProps) {
                   <ArrowUpRight />
                 </span>
               </a>
+              ) : (
+                <span className="unavailable-buy-link" key={link.label}>
+                  <span className="buy-link-label">
+                    {link.logoSrc ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img className="marketplace-logo" src={link.logoSrc} alt={link.logoAlt} />
+                    ) : null}
+                    {link.unavailableLabel}
+                  </span>
+                  <span className="buy-link-status">Sem link</span>
+                </span>
+              )
             ))}
-          </div>
-        ) : (
-          <a className="fallback-buy-link" href="https://wa.me/5517981468455" target="_blank" rel="noopener noreferrer">
-            Consultar disponibilidade
-            <span className="buy-link-arrow" aria-hidden="true">
-              <ArrowUpRight />
-            </span>
-          </a>
-        )}
+        </div>
       </div>
     </article>
   );

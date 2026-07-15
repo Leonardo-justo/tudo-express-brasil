@@ -5,6 +5,8 @@ import Link from "next/link";
 import { createSupabaseClient, isSupabaseConfigured } from "@/lib/supabase";
 import type { Product, ProductFormValues } from "@/types/product";
 
+type MessageKind = "success" | "error" | "info";
+
 const emptyProduct: ProductFormValues = {
   name: "",
   slug: "",
@@ -44,6 +46,62 @@ function normalizeProduct(values: ProductFormValues) {
   };
 }
 
+function readFileAsDataUrl(file: File) {
+  return new Promise<string>((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result));
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+function loadImage(dataUrl: string) {
+  return new Promise<HTMLImageElement>((resolve, reject) => {
+    const image = new Image();
+    image.onload = () => resolve(image);
+    image.onerror = reject;
+    image.src = dataUrl;
+  });
+}
+
+async function optimizeImage(file: File) {
+  if (!file.type.startsWith("image/") || file.type.includes("gif") || file.type.includes("svg")) {
+    return file;
+  }
+
+  const dataUrl = await readFileAsDataUrl(file);
+  const image = await loadImage(dataUrl);
+  const maxSize = 1600;
+  const scale = Math.min(1, maxSize / Math.max(image.width, image.height));
+  const width = Math.max(1, Math.round(image.width * scale));
+  const height = Math.max(1, Math.round(image.height * scale));
+  const canvas = document.createElement("canvas");
+  canvas.width = width;
+  canvas.height = height;
+  const context = canvas.getContext("2d");
+
+  if (!context) {
+    return file;
+  }
+
+  context.drawImage(image, 0, 0, width, height);
+
+  return new Promise<File>((resolve) => {
+    canvas.toBlob(
+      (blob) => {
+        if (!blob) {
+          resolve(file);
+          return;
+        }
+
+        resolve(new File([blob], `${file.name.replace(/\.[^.]+$/, "")}.webp`, { type: "image/webp" }));
+      },
+      "image/webp",
+      0.84
+    );
+  });
+}
+
 export function AdminClient() {
   const supabase = useMemo(() => createSupabaseClient(), []);
   const [email, setEmail] = useState("");
@@ -54,6 +112,8 @@ export function AdminClient() {
   const [form, setForm] = useState<ProductFormValues>(emptyProduct);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [message, setMessage] = useState("");
+  const [messageKind, setMessageKind] = useState<MessageKind>("info");
+  const [previewUrl, setPreviewUrl] = useState("/assets/mel-propolis.png");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -81,6 +141,20 @@ export function AdminClient() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [signedIn]);
 
+  function setAdminMessage(text: string, kind: MessageKind = "info") {
+    setMessage(text);
+    setMessageKind(kind);
+  }
+
+  function updateImageFile(file: File | null) {
+    if (previewUrl.startsWith("blob:")) {
+      URL.revokeObjectURL(previewUrl);
+    }
+
+    setImageFile(file);
+    setPreviewUrl(file ? URL.createObjectURL(file) : "");
+  }
+
   async function login(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
@@ -94,7 +168,7 @@ export function AdminClient() {
     const { error } = await supabase.auth.signInWithPassword({ email, password });
 
     if (error) {
-      setMessage("Não foi possível entrar. Confira e-mail, senha e permissão de administrador.");
+      setAdminMessage("Não foi possível entrar. Confira e-mail, senha e permissão de administrador.", "error");
     }
 
     setLoading(false);
@@ -104,6 +178,7 @@ export function AdminClient() {
     await supabase?.auth.signOut();
     setProducts([]);
     setForm(emptyProduct);
+    updateImageFile(null);
   }
 
   async function loadProducts() {
@@ -120,7 +195,7 @@ export function AdminClient() {
       .order("created_at", { ascending: false });
 
     if (error) {
-      setMessage("Não foi possível carregar produtos. Verifique se o SQL foi aplicado no Supabase.");
+      setAdminMessage("Não foi possível carregar produtos. Verifique se o SQL foi aplicado no Supabase.", "error");
     } else {
       setProducts((data || []) as Product[]);
     }
@@ -133,12 +208,13 @@ export function AdminClient() {
       return form.image_url;
     }
 
-    const extension = imageFile.name.split(".").pop() || "png";
+    const optimizedFile = await optimizeImage(imageFile);
+    const extension = optimizedFile.name.split(".").pop() || "webp";
     const fileName = `${crypto.randomUUID()}.${extension}`;
 
     const { error } = await supabase.storage
       .from("product-images")
-      .upload(fileName, imageFile, {
+      .upload(fileName, optimizedFile, {
         cacheControl: "31536000",
         upsert: false
       });
@@ -173,12 +249,12 @@ export function AdminClient() {
         throw error;
       }
 
-      setMessage(form.id ? "Produto atualizado com sucesso." : "Produto cadastrado com sucesso.");
+      setAdminMessage(form.id ? "Produto atualizado com sucesso." : "Produto cadastrado com sucesso.", "success");
       setForm(emptyProduct);
-      setImageFile(null);
+      updateImageFile(null);
       await loadProducts();
     } catch (error) {
-      setMessage(error instanceof Error ? error.message : "Não foi possível salvar o produto.");
+      setAdminMessage(error instanceof Error ? error.message : "Não foi possível salvar o produto.", "error");
     } finally {
       setLoading(false);
     }
@@ -194,9 +270,9 @@ export function AdminClient() {
     const { error } = await supabase.from("products").delete().eq("id", product.id);
 
     if (error) {
-      setMessage("Não foi possível excluir o produto.");
+      setAdminMessage("Não foi possível excluir o produto.", "error");
     } else {
-      setMessage("Produto excluído.");
+      setAdminMessage("Produto excluído.", "success");
       await loadProducts();
     }
 
@@ -216,8 +292,9 @@ export function AdminClient() {
       .eq("id", product.id);
 
     if (error) {
-      setMessage("Não foi possível alterar o status.");
+      setAdminMessage("Não foi possível alterar o status.", "error");
     } else {
+      setAdminMessage(product.is_active ? "Produto desativado." : "Produto ativado.", "success");
       await loadProducts();
     }
 
@@ -231,7 +308,23 @@ export function AdminClient() {
       shopee_url: product.shopee_url || "",
       whatsapp_url: product.whatsapp_url || ""
     });
-    setImageFile(null);
+    updateImageFile(null);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function duplicateProduct(product: Product) {
+    setForm({
+      ...product,
+      id: undefined,
+      name: `${product.name} - cópia`,
+      slug: `${product.slug}-copia`,
+      mercado_livre_url: product.mercado_livre_url || "",
+      shopee_url: product.shopee_url || "",
+      whatsapp_url: product.whatsapp_url || "",
+      sort_order: product.sort_order + 1
+    });
+    updateImageFile(null);
+    setAdminMessage("Produto duplicado no formulário. Revise os dados e salve como novo item.", "info");
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
@@ -242,6 +335,8 @@ export function AdminClient() {
       ...(field === "name" && !current.id ? { slug: slugify(String(value)) } : {})
     }));
   }
+
+  const imagePreviewUrl = previewUrl || form.image_url || "/assets/mel-propolis.png";
 
   if (!isSupabaseConfigured || !supabase) {
     return (
@@ -274,7 +369,7 @@ export function AdminClient() {
             Senha
             <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} required />
           </label>
-          {message ? <p className="admin-message">{message}</p> : null}
+          {message ? <p className={`admin-message ${messageKind}`}>{message}</p> : null}
           <button className="btn btn-primary" type="submit" disabled={loading}>
             {loading ? "Entrando..." : "Entrar"}
           </button>
@@ -310,7 +405,7 @@ export function AdminClient() {
         <form className="admin-card product-form" onSubmit={saveProduct}>
           <div className="admin-section-title">
             <h2>{form.id ? "Editar produto" : "Novo produto"}</h2>
-            {form.id ? <button type="button" onClick={() => setForm(emptyProduct)}>Limpar</button> : null}
+            {form.id ? <button type="button" onClick={() => { setForm(emptyProduct); updateImageFile(null); }}>Limpar</button> : null}
           </div>
 
           <label>
@@ -355,12 +450,20 @@ export function AdminClient() {
 
           <label>
             Imagem por upload
-            <input type="file" accept="image/*" onChange={(event) => setImageFile(event.target.files?.[0] || null)} />
+            <input type="file" accept="image/*" onChange={(event) => updateImageFile(event.target.files?.[0] || null)} />
           </label>
           <label>
             Ou URL da imagem
             <input value={form.image_url} onChange={(event) => updateField("image_url", event.target.value)} placeholder="/assets/mel-propolis.png" />
           </label>
+          <div className="admin-image-preview">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={imagePreviewUrl} alt="Prévia do produto" />
+            <div>
+              <strong>Prévia da imagem</strong>
+              <small>Uploads grandes são convertidos para WebP antes de salvar.</small>
+            </div>
+          </div>
 
           <label>
             Link Mercado Livre
@@ -386,7 +489,7 @@ export function AdminClient() {
             </label>
           </div>
 
-          {message ? <p className="admin-message">{message}</p> : null}
+          {message ? <p className={`admin-message ${messageKind}`}>{message}</p> : null}
           <button className="btn btn-primary" type="submit" disabled={loading}>
             {loading ? "Salvando..." : form.id ? "Salvar alterações" : "Cadastrar produto"}
           </button>
@@ -412,6 +515,7 @@ export function AdminClient() {
                     <p>{product.short_description}</p>
                     <div className="admin-actions">
                       <button type="button" onClick={() => editProduct(product)}>Editar</button>
+                      <button type="button" onClick={() => duplicateProduct(product)}>Duplicar</button>
                       <button type="button" onClick={() => void toggleActive(product)}>{product.is_active ? "Desativar" : "Ativar"}</button>
                       <button type="button" className="danger" onClick={() => void removeProduct(product)}>Excluir</button>
                     </div>
