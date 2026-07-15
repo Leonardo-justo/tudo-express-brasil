@@ -290,7 +290,7 @@ export function AdminClient() {
         <Link className="brand" href="/">
           <span className="brand-mark brand-logo-mark">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/assets/logo-tudo-express.png" alt="" />
+            <img src="/assets/logo-tudo-express-transparente-trim.png" alt="" />
           </span>
           <span><strong>Tudo Express</strong><small>Admin</small></span>
         </Link>

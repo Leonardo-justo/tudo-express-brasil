@@ -78,7 +78,7 @@ export default async function Home() {
                 <a className="btn btn-primary" href="#produtos">Conhecer produtos <ArrowRight className="inline-icon" aria-hidden="true" /></a>
                 <a className="btn btn-ghost marketplace-cta" href={MERCADO_LIVRE_STORE_URL} target="_blank" rel="noopener noreferrer">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/assets/logo-mercado-livre-oficial.png" alt="" />
+                  <img src="/assets/logo-mercado-livre-transparente-trim.png" alt="" />
                   Mercado Livre
                 </a>
                 <a className="btn btn-ghost marketplace-cta" href={SHOPEE_STORE_URL} target="_blank" rel="noopener noreferrer">
@@ -148,7 +148,7 @@ export default async function Home() {
               <div className="feature-actions">
                 <a className="btn btn-light marketplace-cta" href={MERCADO_LIVRE_STORE_URL} target="_blank" rel="noopener noreferrer">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/assets/logo-mercado-livre-oficial.png" alt="" />
+                  <img src="/assets/logo-mercado-livre-transparente-trim.png" alt="" />
                   Explorar no Mercado Livre <ArrowRight className="inline-icon" aria-hidden="true" />
                 </a>
                 <a className="btn btn-light marketplace-cta" href={SHOPEE_STORE_URL} target="_blank" rel="noopener noreferrer">
@@ -172,7 +172,7 @@ export default async function Home() {
               <a className="channel-card channel-ml reveal visible" href={MERCADO_LIVRE_STORE_URL} target="_blank" rel="noopener noreferrer">
                 <span className="channel-icon channel-logo">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/assets/logo-mercado-livre-oficial.png" alt="Mercado Livre" />
+                  <img src="/assets/logo-mercado-livre-transparente-trim.png" alt="Mercado Livre" />
                 </span>
                 <div><small>Loja oficial</small><h3>Mercado Livre</h3><p>Compra protegida, envio acompanhado e várias formas de pagamento.</p><strong>Acessar loja <ArrowRight className="inline-icon" aria-hidden="true" /></strong></div>
               </a>
@@ -238,10 +238,10 @@ export default async function Home() {
         <div className="container footer-grid">
           <div><a className="brand brand-footer" href="#inicio"><span className="brand-mark brand-logo-mark">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/assets/logo-tudo-express.png" alt="" />
+            <img src="/assets/logo-tudo-express-transparente-trim.png" alt="" />
           </span><span><strong>Tudo Express</strong><small>Brasil</small></span></a><p>Escolhas inteligentes para uma rotina mais simples.</p>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img className="footer-avatar" src="/assets/avatar-carrinho.png" alt="Mascote da Tudo Express Brasil" />
+            <img className="footer-avatar" src="/assets/avatar-carrinho-transparente-trim.png" alt="Mascote da Tudo Express Brasil" />
           </div>
           <div><h3>Navegue</h3><a href="#produtos">Produtos</a><a href="#como-comprar">Como comprar</a><a href="#sobre">Sobre nós</a></div>
           <div><h3>Atendimento</h3><a href="https://wa.me/5517981468455" target="_blank" rel="noopener noreferrer">WhatsApp</a><a href="mailto:tudoexpressbrasil@gmail.com">tudoexpressbrasil@gmail.com</a></div>

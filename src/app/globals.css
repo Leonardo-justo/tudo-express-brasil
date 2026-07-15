@@ -117,3 +117,18 @@
 @media(max-width:520px){.product-carousel-item{width:calc(100vw - 44px);flex-basis:calc(100vw - 44px)}.product-links a,.fallback-buy-link{width:100%}}
 @media(max-width:420px){.hero-actions .btn{width:100%;min-width:0}.product-links a,.fallback-buy-link{font-size:11px!important;padding-inline:9px!important}.buy-link-label{gap:9px}}
 @media(min-width:961px){.hero-actions{gap:10px}.hero-actions .btn{padding-inline:16px}.hero-actions .marketplace-cta{padding-inline:15px}.feature-grid{grid-template-columns:.95fr 1.05fr;gap:60px}.feature-actions{gap:10px}.feature-actions .marketplace-cta{flex:1 1 0;min-width:0;padding-inline:16px}}
+
+/* Assets com fundo transparente: sem moldura branca em logos/avatar */
+.brand-logo-mark{width:72px!important;height:58px!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;overflow:visible!important}
+.brand-logo-mark img{width:100%!important;height:100%!important;object-fit:contain!important;transform:none!important}
+.header-avatar{width:70px!important;height:70px!important;margin-left:14px!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;overflow:visible!important}
+.header-avatar img{width:100%!important;height:100%!important;object-fit:contain!important;object-position:center!important;filter:drop-shadow(0 8px 14px rgba(7,59,155,.13))}
+.footer-avatar{width:120px!important;height:120px!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;object-fit:contain!important;filter:drop-shadow(0 12px 18px rgba(7,59,155,.14))}
+.marketplace-logo,.marketplace-cta img{background:transparent!important;border:0!important;box-shadow:none!important;object-fit:contain!important}
+.marketplace-logo[src*="mercado-livre"],.marketplace-cta img[src*="mercado-livre"]{width:34px!important;height:26px!important;max-width:34px!important;border-radius:0!important;box-shadow:none!important}
+.marketplace-logo[src*="shopee"],.marketplace-cta img[src*="shopee"]{width:30px!important;height:30px!important;max-width:30px!important;border-radius:8px!important;box-shadow:none!important}
+.channel-logo,.channel-ml .channel-logo,.channel-shopee .channel-logo{background:transparent!important;border:0!important;box-shadow:none!important;overflow:visible!important}
+.channel-logo img,.channel-ml .channel-logo img,.channel-shopee .channel-logo img{object-fit:contain!important;filter:drop-shadow(0 8px 14px rgba(7,59,155,.1))}
+.channel-logo img[src*="mercado-livre"]{width:68px!important;height:52px!important;max-width:68px!important;border-radius:0!important}
+.channel-logo img[src*="shopee"]{width:50px!important;height:50px!important;max-width:50px!important;border-radius:12px!important}
+@media(max-width:720px){.brand-logo-mark{width:62px!important;height:50px!important}.header-avatar{display:none!important}.footer-avatar{width:104px!important;height:104px!important}}

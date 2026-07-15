@@ -32,7 +32,7 @@ export function getProductBuyLinks(product: Product) {
   return [
     {
       logoAlt: "Logo do Mercado Livre",
-      logoSrc: "/assets/logo-mercado-livre-oficial.png",
+      logoSrc: "/assets/logo-mercado-livre-transparente-trim.png",
       label: "Ver no Mercado Livre",
       href: product.mercado_livre_url
     },
