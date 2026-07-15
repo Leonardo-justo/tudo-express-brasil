@@ -15,11 +15,12 @@ const tagClassName = {
 
 export function ProductCard({ product }: ProductCardProps) {
   const links = getProductBuyLinks(product);
+  const imageClassName = `product-image ${product.image_url.includes("mel-sache") ? "product-image-sache" : ""}`.trim();
 
   return (
     <article className="product-card reveal visible">
       <span className={tagClassName[product.tag_variant] ?? "product-tag"}>{product.tag}</span>
-      <div className="product-image">
+      <div className={imageClassName}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={product.image_url || "/assets/mel-propolis.png"} alt={`Imagem do produto ${product.name}`} loading="lazy" />
       </div>
