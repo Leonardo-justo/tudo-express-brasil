@@ -37,13 +37,13 @@ export function ProductCard({ product }: ProductCardProps) {
                   ) : null}
                   {link.label}
                 </span>
-                <span aria-hidden="true">↗</span>
+                <span className="buy-link-arrow" aria-hidden="true">↗</span>
               </a>
             ))}
           </div>
         ) : (
-          <a href="https://wa.me/5517981468455" target="_blank" rel="noopener noreferrer">
-            Consultar disponibilidade <span aria-hidden="true">↗</span>
+          <a className="fallback-buy-link" href="https://wa.me/5517981468455" target="_blank" rel="noopener noreferrer">
+            Consultar disponibilidade <span className="buy-link-arrow" aria-hidden="true">↗</span>
           </a>
         )}
       </div>

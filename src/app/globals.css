@@ -44,3 +44,27 @@
 @media(max-width:520px){.feature-actions{display:grid}.marketplace-cta{width:100%;min-width:0}}
 @media(max-width:960px){.header-avatar{width:54px;height:54px}.reviews-grid{grid-template-columns:1fr 1fr}.product-carousel-item{width:255px;flex-basis:255px}}
 @media(max-width:720px){.header-avatar{display:none}.product-carousel{margin-inline:-14px}.product-carousel-track{padding-inline:14px}.reviews-grid{grid-template-columns:1fr}.review-card p{min-height:auto}}
+
+/* Refinamento visual dos assets oficiais e dos cards de produto */
+.brand-logo-mark{width:58px;height:58px;padding:7px;border-radius:18px;background:#fff;box-shadow:0 14px 32px rgba(7,59,155,.13)}
+.brand-logo-mark img{transform:none;width:100%;height:100%;object-fit:contain}
+.brand strong{font-size:18px}.brand small{letter-spacing:4px}
+.header-avatar{width:68px;height:68px;border:1px solid rgba(7,59,155,.1);background:linear-gradient(145deg,#fff,#eef5ff)}
+.header-avatar img{width:100%;height:100%;object-fit:cover;object-position:center}
+.footer-avatar{width:112px;height:112px;border-radius:24px;background:#fff;object-fit:cover;object-position:center;box-shadow:0 18px 35px rgba(7,59,155,.14)}
+.product-carousel-item{display:flex}.product-carousel-item .product-card{width:100%}
+.product-card{display:flex;flex-direction:column;min-height:100%;border:1px solid rgba(7,59,155,.13);border-radius:26px;background:linear-gradient(180deg,#fff 0%,#f8fbff 100%);box-shadow:0 18px 45px rgba(7,59,155,.1)}
+.product-card:hover{transform:translateY(-6px);box-shadow:0 26px 65px rgba(7,59,155,.16)}
+.product-image{height:285px;background:radial-gradient(circle at 50% 36%,#fff 0%,#fff8db 42%,#edf5ff 100%);border-bottom:1px solid rgba(7,59,155,.08)}
+.product-info{display:flex;flex:1;flex-direction:column;padding:24px}
+.product-info small{color:#0b3f9e;font-size:10px}.product-info h3{font-size:20px;margin-top:7px}.product-info p{min-height:58px;margin-bottom:18px}
+.product-links{display:grid;gap:10px;margin-top:auto;padding-top:18px;border-top:1px solid rgba(7,59,155,.1)}
+.product-links a,.fallback-buy-link{display:flex!important;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:48px;padding:8px 10px!important;border:1px solid rgba(7,59,155,.12)!important;border-radius:15px;background:#fff;color:#092b70!important;font-size:12px!important;font-weight:900;box-shadow:0 10px 24px rgba(7,59,155,.06);transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+.product-links a+a{border-top:1px solid rgba(7,59,155,.12)!important}
+.product-links a:hover,.fallback-buy-link:hover{transform:translateY(-2px);border-color:rgba(7,59,155,.32)!important;box-shadow:0 16px 32px rgba(7,59,155,.12)}
+.buy-link-label{gap:11px;line-height:1.2}
+.marketplace-logo{flex:0 0 34px;width:34px!important;height:34px!important;padding:5px;border:1px solid rgba(7,59,155,.08);border-radius:11px;background:#f8fbff;box-shadow:none;transition:transform .2s ease}
+.buy-link-arrow{display:grid;place-items:center;flex:0 0 26px;width:26px;height:26px;border-radius:999px;background:#eef5ff;color:var(--blue);font-size:12px}
+.btn{border-radius:15px}.btn img{flex:0 0 auto}.marketplace-cta{min-height:52px;border:1px solid rgba(7,59,155,.12);box-shadow:0 12px 26px rgba(7,59,155,.08)}.marketplace-cta img{width:34px;height:34px;padding:5px;border:1px solid rgba(7,59,155,.08);border-radius:11px}
+.channel-card{border:1px solid rgba(7,59,155,.1);box-shadow:0 16px 42px rgba(7,59,155,.08)}.channel-icon{border:1px solid rgba(7,59,155,.08)}
+@media(max-width:720px){.brand-logo-mark{width:50px;height:50px}.product-info p{min-height:auto}.product-image{height:245px}}
