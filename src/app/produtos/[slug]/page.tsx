@@ -79,7 +79,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
   }
 
   const imageUrl = product.image_url.startsWith("http") ? product.image_url : `${siteUrl}${product.image_url}`;
-  const links = getProductBuyLinks(product);
+  const links = getProductBuyLinks(product).filter((link) => link.href);
   const productJsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -120,8 +120,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
               <span><Truck /> Entrega acompanhada</span>
             </div>
             <div className="product-detail-links">
-              {links.filter((link) => link.href || link.unavailableLabel).map((link) => (
-                link.href ? (
+              {links.map((link) => (
                   <TrackedOutboundLink
                     eventName="product_outbound_click"
                     eventProperties={{
@@ -130,7 +129,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                       product_slug: product.slug
                     }}
                     key={link.label}
-                    href={link.href}
+                    href={link.href!}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -143,18 +142,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
                     </span>
                     <ArrowUpRight aria-hidden="true" />
                   </TrackedOutboundLink>
-                ) : (
-                  <span className="unavailable-buy-link" key={link.label}>
-                    <span className="buy-link-label">
-                      {link.logoSrc ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img className="marketplace-logo" src={link.logoSrc} alt={link.logoAlt} />
-                      ) : null}
-                      {link.unavailableLabel}
-                    </span>
-                    <span className="buy-link-status">Sem link</span>
-                  </span>
-                )
               ))}
             </div>
           </div>

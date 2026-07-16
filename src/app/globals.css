@@ -238,3 +238,15 @@
 .social-brand-icon-dark{background:#111!important}
 @media(max-width:720px){.hero-actions{grid-template-columns:1fr!important}.hero-actions .marketplace-cta{width:100%;justify-content:flex-start;padding:12px 16px!important}.product-image{height:220px!important}.product-info{padding:16px!important}.channel-card{min-height:0!important;padding:22px!important;display:grid!important;grid-template-columns:50px 1fr;gap:18px!important}.channel-icon{width:50px!important;height:50px!important;flex-basis:50px!important}.channel-card h3{font-size:22px!important}.social-box{padding:30px 22px!important}.social h2{font-size:31px!important}.social-links{grid-template-columns:1fr!important;margin-top:24px!important}.social-links a{min-height:56px!important}}
 @media(max-width:460px){.product-image{height:245px!important}.channel-card{padding:20px!important;border-radius:18px!important}.channel-card p{font-size:12px!important}.marketplace-logo[src*="mercado-livre"],.marketplace-cta img[src*="mercado-livre"]{width:36px!important;height:28px!important}.marketplace-logo[src*="shopee"],.marketplace-cta img[src*="shopee"]{width:32px!important;height:32px!important}}
+
+/* Cards com links opcionais e espacos mais compactos */
+.product-info{display:flex!important;flex-direction:column!important;flex:1!important}
+.product-info p{min-height:50px!important}
+.product-links{margin-top:auto!important}
+.social.section{padding-bottom:58px!important}
+.reviews{padding-top:58px!important}
+.reviews .section-head{margin-bottom:34px!important}
+.product-carousel-dots,.review-carousel-dots{gap:5px!important;margin-top:12px!important}
+.product-carousel-dots button,.review-carousel-dots button{width:7px!important;height:7px!important}
+.product-carousel-dots button.active,.review-carousel-dots button.active{width:20px!important}
+@media(max-width:720px){.product-info p{min-height:0!important}.social.section{padding-bottom:44px!important}.reviews{padding-top:48px!important}.product-carousel-dots,.review-carousel-dots{gap:4px!important}}

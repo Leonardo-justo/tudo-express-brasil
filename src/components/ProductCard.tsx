@@ -29,7 +29,7 @@ function getTagClassName(product: Product) {
 }
 
 export function ProductCard({ product }: ProductCardProps) {
-  const links = getProductBuyLinks(product);
+  const links = getProductBuyLinks(product).filter((link) => link.href);
   const imageClassName = `product-image ${product.image_url.includes("sache") || product.image_url.includes("blister") ? "product-image-sache" : ""}`.trim();
 
   return (
@@ -40,14 +40,12 @@ export function ProductCard({ product }: ProductCardProps) {
         <img src={product.image_url || "/assets/mel-propolis.png"} alt={product.name} loading="lazy" />
       </div>
       <div className="product-info">
-        <small>{product.category} • {product.weight}</small>
+        <small>{product.category} &bull; {product.weight}</small>
         <h3><a className="product-detail-link" href={`/produtos/${product.slug}`}>{product.name}</a></h3>
         <p>{product.short_description}</p>
-        <div className="product-links">
-          {links
-            .filter((link) => link.href || link.unavailableLabel)
-            .map((link) => (
-              link.href ? (
+        {links.length ? (
+          <div className="product-links">
+            {links.map((link) => (
               <TrackedOutboundLink
                 eventName="product_outbound_click"
                 eventProperties={{
@@ -55,7 +53,7 @@ export function ProductCard({ product }: ProductCardProps) {
                   product_name: product.name,
                   product_slug: product.slug
                 }}
-                href={link.href}
+                href={link.href!}
                 key={link.label}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -71,20 +69,9 @@ export function ProductCard({ product }: ProductCardProps) {
                   <ArrowUpRight />
                 </span>
               </TrackedOutboundLink>
-              ) : (
-                <span className="unavailable-buy-link" key={link.label}>
-                  <span className="buy-link-label">
-                    {link.logoSrc ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img className="marketplace-logo" src={link.logoSrc} alt={link.logoAlt} />
-                    ) : null}
-                    {link.unavailableLabel}
-                  </span>
-                  <span className="buy-link-status">Sem link</span>
-                </span>
-              )
             ))}
-        </div>
+          </div>
+        ) : null}
       </div>
     </article>
   );
