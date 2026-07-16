@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     siteName: "Tudo Express Brasil",
     images: [
       {
-        url: "/assets/mascote-mercado-livre.png",
+        url: "/assets/og-tudo-express.jpg",
         width: 1024,
         height: 683,
         alt: "Mascote da Tudo Express Brasil"
@@ -32,13 +32,13 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Tudo Express Brasil | Produtos úteis no Mercado Livre e Shopee",
     description: "Produtos úteis, naturais e selecionados para facilitar sua rotina com compra segura nos canais oficiais.",
-    images: ["/assets/mascote-mercado-livre.png"]
+    images: ["/assets/og-tudo-express.jpg"]
   },
   icons: {
     icon: [
-      { url: "/favicon.svg", type: "image/svg+xml" },
       { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
-      { url: "/icon-512.png", sizes: "512x512", type: "image/png" }
+      { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
+      { url: "/favicon.svg", type: "image/svg+xml" }
     ],
     apple: "/apple-touch-icon.png"
   },

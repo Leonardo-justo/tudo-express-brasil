@@ -103,23 +103,25 @@ export function ProductCarousel({ ariaLabel = "Carrossel de produtos", products 
           </div>
         ) : null}
       </div>
+
       <div className="product-carousel" aria-label={ariaLabel}>
-      <div
-        ref={trackRef}
-        className="product-carousel-track"
-        onTransitionEnd={handleTransitionEnd}
-        style={{
-          transform: `translateX(-${activeIndex * stepSize}px)`,
-          transition: transitionEnabled ? undefined : "none"
-        }}
-      >
-        {carouselProducts.map((product, index) => (
-          <div className="product-carousel-item" key={`${product.id}-${index}`}>
-            <ProductCard product={product} />
-          </div>
-        ))}
+        <div
+          ref={trackRef}
+          className="product-carousel-track"
+          onTransitionEnd={handleTransitionEnd}
+          style={{
+            transform: `translateX(-${activeIndex * stepSize}px)`,
+            transition: transitionEnabled ? undefined : "none"
+          }}
+        >
+          {carouselProducts.map((product, index) => (
+            <div className="product-carousel-item" key={`${product.id}-${index}`}>
+              <ProductCard product={product} />
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+
       {products.length > 1 ? (
         <div className="product-carousel-dots" aria-label="Indicadores do carrossel">
           {products.map((product, index) => (

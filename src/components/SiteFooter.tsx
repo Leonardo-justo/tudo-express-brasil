@@ -19,7 +19,7 @@ export function SiteFooter() {
             </Link>
             <p>Escolhas inteligentes para uma rotina mais simples.</p>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img className="footer-avatar" src="/assets/avatar-carrinho-transparente-trim.png" alt="Mascote da Tudo Express Brasil" />
+            <img className="footer-avatar" src="/assets/avatar-carrinho-optimized.png" alt="Mascote da Tudo Express Brasil" />
           </div>
           <div>
             <h3>Navegue</h3>

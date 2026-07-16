@@ -97,32 +97,32 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
   return (
     <>
-    <SiteHeader />
-    <main className="product-page">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }} />
-      <section className="container product-detail">
-        <Link className="product-back" href="/#produtos">
-          <ArrowLeft aria-hidden="true" /> Voltar para produtos
-        </Link>
-        <div className="product-detail-grid">
-          <div className="product-detail-media">
-            <span className={getDetailTagClassName(product.tag, product.tag_variant)}>
-              {product.tag}
-            </span>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={product.image_url || "/assets/mel-propolis.png"} alt={product.name} />
-          </div>
-          <div className="product-detail-copy">
-            <span className="eyebrow"><i /> {product.category} • {product.weight || "Produto selecionado"}</span>
-            <h1>{product.name}</h1>
-            <p>{product.short_description}</p>
-            <div className="product-detail-benefits">
-              <span><Check /> Seleção cuidadosa</span>
-              <span><ShieldCheck /> Compra segura</span>
-              <span><Truck /> Entrega acompanhada</span>
+      <SiteHeader />
+      <main className="product-page">
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }} />
+        <section className="container product-detail">
+          <Link className="product-back" href="/#produtos">
+            <ArrowLeft aria-hidden="true" /> Voltar para produtos
+          </Link>
+          <div className="product-detail-grid">
+            <div className="product-detail-media">
+              <span className={getDetailTagClassName(product.tag, product.tag_variant)}>
+                {product.tag}
+              </span>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={product.image_url || "/assets/mel-propolis.png"} alt={product.name} />
             </div>
-            <div className="product-detail-links">
-              {links.map((link) => (
+            <div className="product-detail-copy">
+              <span className="eyebrow"><i /> {product.category} &bull; {product.weight || "Produto selecionado"}</span>
+              <h1>{product.name}</h1>
+              <p>{product.short_description}</p>
+              <div className="product-detail-benefits">
+                <span><Check /> Seleção cuidadosa</span>
+                <span><ShieldCheck /> Compra segura</span>
+                <span><Truck /> Entrega acompanhada</span>
+              </div>
+              <div className="product-detail-links">
+                {links.map((link) => (
                   <TrackedOutboundLink
                     eventName="product_outbound_click"
                     eventProperties={{
@@ -145,12 +145,12 @@ export default async function ProductPage({ params }: ProductPageProps) {
                     </span>
                     <ArrowUpRight aria-hidden="true" />
                   </TrackedOutboundLink>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-      </section>
-    </main>
+        </section>
+      </main>
     </>
   );
 }

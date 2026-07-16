@@ -518,20 +518,24 @@ export function AdminClient() {
           <label>
             Link Mercado Livre
             <input value={form.mercado_livre_url || ""} onChange={(event) => updateField("mercado_livre_url", event.target.value)} placeholder="https://..." />
+            <small className="field-help">Se ficar vazio, o botão do Mercado Livre não aparece no card.</small>
           </label>
           <label>
             Link Shopee
             <input value={form.shopee_url || ""} onChange={(event) => updateField("shopee_url", event.target.value)} placeholder="https://..." />
+            <small className="field-help">Se ficar vazio, o botão da Shopee não aparece no card.</small>
           </label>
           <label>
             Link WhatsApp
             <input value={form.whatsapp_url || ""} onChange={(event) => updateField("whatsapp_url", event.target.value)} placeholder="https://wa.me/..." />
+            <small className="field-help">Opcional: se vazio, o site gera uma mensagem automática com o nome do produto.</small>
           </label>
 
           <div className="form-row">
             <label>
               Ordem
               <input type="number" value={form.sort_order} onChange={(event) => updateField("sort_order", Number(event.target.value))} />
+              <small className="field-help">Números menores aparecem primeiro no catálogo.</small>
             </label>
             <label className="checkbox-label">
               <input type="checkbox" checked={form.is_active} onChange={(event) => updateField("is_active", event.target.checked)} />
