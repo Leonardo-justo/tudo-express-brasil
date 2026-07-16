@@ -40,20 +40,21 @@ const fallbackReviews: GoogleReview[] = [
 const fallbackPlaceUrl =
   "https://www.google.com/maps/place//data=!4m3!3m2!1s0x94bc53903a9937eb:0xb78e26ae9f8c959!12e1?source=g.page.m.ia._&laa=nmx-review-solicitation-ia2";
 
-type GooglePlaceDetailsResponse = {
-  result?: {
+type GooglePlaceDetailsNewResponse = {
+  googleMapsUri?: string;
+  rating?: number;
+  reviews?: Array<{
+    authorAttribution?: {
+      displayName?: string;
+      photoUri?: string;
+    };
     rating?: number;
-    reviews?: Array<{
-      author_name?: string;
-      profile_photo_url?: string;
-      rating?: number;
-      relative_time_description?: string;
+    relativePublishTimeDescription?: string;
+    text?: {
       text?: string;
-    }>;
-    url?: string;
-    user_ratings_total?: number;
-  };
-  status?: string;
+    };
+  }>;
+  userRatingCount?: number;
 };
 
 function fallbackGoogleReviews(): GoogleReviewsData {
@@ -74,16 +75,16 @@ export async function getGoogleReviews(): Promise<GoogleReviewsData> {
     return fallbackGoogleReviews();
   }
 
-  const params = new URLSearchParams({
-    place_id: placeId,
-    fields: "rating,user_ratings_total,reviews,url",
-    language: "pt-BR",
-    reviews_sort: "newest",
-    key: apiKey
-  });
-
   try {
-    const response = await fetch(`https://maps.googleapis.com/maps/api/place/details/json?${params.toString()}`, {
+    const params = new URLSearchParams({
+      languageCode: "pt-BR"
+    });
+
+    const response = await fetch(`https://places.googleapis.com/v1/places/${placeId}?${params.toString()}`, {
+      headers: {
+        "X-Goog-Api-Key": apiKey,
+        "X-Goog-FieldMask": "rating,userRatingCount,reviews,googleMapsUri"
+      },
       next: { revalidate: 60 * 60 * 12 }
     });
 
@@ -91,27 +92,27 @@ export async function getGoogleReviews(): Promise<GoogleReviewsData> {
       return fallbackGoogleReviews();
     }
 
-    const data = (await response.json()) as GooglePlaceDetailsResponse;
+    const data = (await response.json()) as GooglePlaceDetailsNewResponse;
 
-    if (data.status !== "OK" || !data.result) {
+    if (!data.rating && !data.reviews?.length) {
       return fallbackGoogleReviews();
     }
 
-    const reviews = (data.result.reviews || [])
-      .filter((review) => review.text)
+    const reviews = (data.reviews || [])
+      .filter((review) => review.text?.text)
       .slice(0, 4)
       .map((review) => ({
-        authorName: review.author_name || "Cliente Google",
-        profilePhotoUrl: review.profile_photo_url,
+        authorName: review.authorAttribution?.displayName || "Cliente Google",
+        profilePhotoUrl: review.authorAttribution?.photoUri,
         rating: review.rating || 5,
-        relativeTimeDescription: review.relative_time_description,
-        text: review.text || ""
+        relativeTimeDescription: review.relativePublishTimeDescription,
+        text: review.text?.text || ""
       }));
 
     return {
-      placeUrl: data.result.url || fallbackPlaceUrl,
-      rating: data.result.rating ?? null,
-      totalReviews: data.result.user_ratings_total ?? null,
+      placeUrl: data.googleMapsUri || fallbackPlaceUrl,
+      rating: data.rating ?? null,
+      totalReviews: data.userRatingCount ?? null,
       reviews: reviews.length ? reviews : fallbackReviews,
       source: reviews.length ? "google" : "fallback"
     };
