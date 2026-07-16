@@ -5,28 +5,28 @@ import { useEffect, useMemo, useRef, useState } from "react";
 
 const reviewImages = [
   {
-    alt: "Avaliação de Marcos Alexandre no Google",
-    src: "/assets/reviews/avaliacao-marcos-alexandre.png"
-  },
-  {
-    alt: "Avaliação de Lucia Freire no Google",
-    src: "/assets/reviews/avaliacao-lucia-freire.png"
-  },
-  {
-    alt: "Avaliação de Agatha Rafaela no Google",
-    src: "/assets/reviews/avaliacao-agatha-rafaela.png"
-  },
-  {
-    alt: "Avaliação de Paulo Borys Oliveira no Google",
-    src: "/assets/reviews/avaliacao-paulo-borys.png"
+    alt: "Avaliação de Diane Redmil2 no Google",
+    src: "/assets/reviews/avaliacao-diane-redmil2.png"
   },
   {
     alt: "Avaliação de Fernanda Rodrigues no Google",
     src: "/assets/reviews/avaliacao-fernanda-rodrigues.png"
   },
   {
-    alt: "Avaliação de Diane Redmil2 no Google",
-    src: "/assets/reviews/avaliacao-diane-redmil2.png"
+    alt: "Avaliação de Henrique Hilton Ribeiro no Google",
+    src: "/assets/reviews/avaliacao-henrique-hilton.png"
+  },
+  {
+    alt: "Avaliação de Charles Favero no Google",
+    src: "/assets/reviews/avaliacao-charles-favero.png"
+  },
+  {
+    alt: "Avaliação de Marcos Alexandre no Google",
+    src: "/assets/reviews/avaliacao-marcos-alexandre.png"
+  },
+  {
+    alt: "Avaliação de Paulo Borys Oliveira no Google",
+    src: "/assets/reviews/avaliacao-paulo-borys.png"
   }
 ];
 
