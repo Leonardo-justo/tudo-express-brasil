@@ -68,7 +68,7 @@ export default async function Home() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }} />
-      <a className="skip-link" href="#conteudo">Ir para o conteÃºdo</a>
+      <a className="skip-link" href="#conteudo">Ir para o conteúdo</a>
       <SiteHeader />
 
       <main id="conteudo">
@@ -78,7 +78,7 @@ export default async function Home() {
             <Reveal className="hero-copy">
               <span className="eyebrow"><i /> Curadoria para a vida real</span>
               <h1>Escolhas que deixam o seu dia mais <em>simples.</em></h1>
-              <p>Produtos Ãºteis, naturais e selecionados com cuidado â€” e a seguranÃ§a de comprar nos maiores marketplaces do Brasil.</p>
+              <p>Produtos úteis, naturais e selecionados com cuidado — e a segurança de comprar nos maiores marketplaces do Brasil.</p>
               <div className="hero-actions">
                 <a className="btn btn-primary" href="#produtos">Conhecer produtos <ArrowRight className="inline-icon" aria-hidden="true" /></a>
                 <a className="btn btn-ghost marketplace-cta" href={MERCADO_LIVRE_STORE_URL} target="_blank" rel="noopener noreferrer">
@@ -106,29 +106,29 @@ export default async function Home() {
               <div className="honey-ring ring-one" />
               <div className="honey-ring ring-two" />
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img className="hero-product hero-product-main" src="/assets/mel-propolis.png" alt="Mel com prÃ³polis Onda Mel de 500 gramas" />
+              <img className="hero-product hero-product-main" src="/assets/mel-propolis.png" alt="Mel com própolis Onda Mel de 500 gramas" />
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img className="hero-product hero-product-side" src="/assets/mel-laranjeira.png" alt="Mel florada de laranjeira Onda Mel de 500 gramas" />
               <div className="floating-card card-natural"><span><PackageCheck /></span><div><strong>100% natural</strong><small>Sabor e qualidade</small></div></div>
-              <div className="floating-card card-fast"><span><Zap /></span><div><strong>Compra fÃ¡cil</strong><small>Em poucos cliques</small></div></div>
+              <div className="floating-card card-fast"><span><Zap /></span><div><strong>Compra fácil</strong><small>Em poucos cliques</small></div></div>
             </Reveal>
           </div>
         </section>
 
         <section className="trust-strip" aria-label="Vantagens de comprar conosco">
           <div className="container trust-grid">
-            <div><span><Check /></span><p><strong>SeleÃ§Ã£o cuidadosa</strong><small>Produtos que fazem sentido</small></p></div>
+            <div><span><Check /></span><p><strong>Seleção cuidadosa</strong><small>Produtos que fazem sentido</small></p></div>
             <div><span><ShieldCheck /></span><p><strong>Pagamento protegido</strong><small>Compra nos marketplaces</small></p></div>
-            <div><span><Truck /></span><p><strong>Entrega acompanhada</strong><small>Do pedido atÃ© sua casa</small></p></div>
-            <div><span><Heart /></span><p><strong>Atendimento prÃ³ximo</strong><small>Estamos no WhatsApp</small></p></div>
+            <div><span><Truck /></span><p><strong>Entrega acompanhada</strong><small>Do pedido até sua casa</small></p></div>
+            <div><span><Heart /></span><p><strong>Atendimento próximo</strong><small>Estamos no WhatsApp</small></p></div>
           </div>
         </section>
 
         <section className="products section" id="produtos">
           <div className="container">
             <Reveal className="section-head">
-              <div><span className="eyebrow"><i /> SeleÃ§Ã£o Onda Mel</span><h2>Do apiÃ¡rio para a sua mesa</h2></div>
-              <p>Mel puro em diferentes floradas e combinaÃ§Ãµes para vocÃª encontrar o seu favorito.</p>
+              <div><span className="eyebrow"><i /> Seleção Onda Mel</span><h2>Do apiário para a sua mesa</h2></div>
+              <p>Mel puro em diferentes floradas e combinações para você encontrar o seu favorito.</p>
             </Reveal>
             <ProductCarousel ariaLabel="Carrossel de produtos Onda Mel" products={honeyProducts} />
           </div>
@@ -142,12 +142,12 @@ export default async function Home() {
               <span className="feature-badge">Utilidade<br /><strong>todo dia</strong></span>
             </Reveal>
             <Reveal className="feature-copy">
-              <span className="eyebrow eyebrow-light"><i /> Muito alÃ©m do mel</span>
-              <h2>Produtos que resolvem.<br />Sem complicaÃ§Ã£o.</h2>
-              <p>Na Tudo Express Brasil, cada item entra na nossa seleÃ§Ã£o por um motivo: ser Ãºtil de verdade. Da cozinha ao home office, buscamos boas escolhas para tornar sua rotina mais prÃ¡tica.</p>
+              <span className="eyebrow eyebrow-light"><i /> Muito além do mel</span>
+              <h2>Produtos que resolvem.<br />Sem complicação.</h2>
+              <p>Na Tudo Express Brasil, cada item entra na nossa seleção por um motivo: ser útil de verdade. Da cozinha ao home office, buscamos boas escolhas para tornar sua rotina mais prática.</p>
               <ul>
-                <li><span><Check /></span> Itens Ãºteis e funcionais</li>
-                <li><span><Check /></span> SeleÃ§Ã£o com foco em custo-benefÃ­cio</li>
+                <li><span><Check /></span> Itens úteis e funcionais</li>
+                <li><span><Check /></span> Seleção com foco em custo-benefício</li>
                 <li><span><Check /></span> Compra segura em canais conhecidos</li>
               </ul>
               <div className="feature-actions">
@@ -169,10 +169,10 @@ export default async function Home() {
         <section className="products utility-products section" id="utilidades">
           <div className="container">
             <Reveal className="section-head">
-              <div><span className="eyebrow"><i /> Utilidades selecionadas</span><h2>Produtos Ãºteis para a rotina</h2></div>
-              <p>Itens prÃ¡ticos para casa, organizaÃ§Ã£o, cuidado pessoal e acessÃ³rios que resolvem pequenas necessidades do dia a dia.</p>
+              <div><span className="eyebrow"><i /> Utilidades selecionadas</span><h2>Produtos úteis para a rotina</h2></div>
+              <p>Itens práticos para casa, organização, cuidado pessoal e acessórios que resolvem pequenas necessidades do dia a dia.</p>
             </Reveal>
-            <ProductCarousel ariaLabel="Carrossel de produtos Ãºteis e utilidades" products={utilityProducts} />
+            <ProductCarousel ariaLabel="Carrossel de produtos úteis e utilidades" products={utilityProducts} />
           </div>
         </section>
 
@@ -181,7 +181,7 @@ export default async function Home() {
             <Reveal className="section-head centered">
               <span className="eyebrow"><i /> Simples e seguro</span>
               <h2>Escolha onde comprar</h2>
-              <p>VocÃª encontra a Tudo Express Brasil nos canais que jÃ¡ conhece e confia.</p>
+              <p>Você encontra a Tudo Express Brasil nos canais que já conhece e confia.</p>
             </Reveal>
             <div className="channel-grid">
               <a className="channel-card channel-ml reveal visible" href={MERCADO_LIVRE_STORE_URL} target="_blank" rel="noopener noreferrer">
@@ -189,14 +189,14 @@ export default async function Home() {
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src="/assets/logo-mercado-livre-transparente-trim.png" alt="Mercado Livre" />
                 </span>
-                <div><small>Loja oficial</small><h3>Mercado Livre</h3><p>Compra protegida, envio acompanhado e vÃ¡rias formas de pagamento.</p><strong>Acessar loja <ArrowRight className="inline-icon" aria-hidden="true" /></strong></div>
+                <div><small>Loja oficial</small><h3>Mercado Livre</h3><p>Compra protegida, envio acompanhado e várias formas de pagamento.</p><strong>Acessar loja <ArrowRight className="inline-icon" aria-hidden="true" /></strong></div>
               </a>
               <a className="channel-card channel-shopee reveal visible" href={SHOPEE_STORE_URL} target="_blank" rel="noopener noreferrer">
                 <span className="channel-icon channel-logo">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src="/assets/logo-shopee-oficial.jpg" alt="Shopee" />
                 </span>
-                <div><small>Loja oficial</small><h3>Shopee</h3><p>Ofertas, cupons e uma experiÃªncia de compra rÃ¡pida pelo app.</p><strong>Acessar loja <ArrowRight className="inline-icon" aria-hidden="true" /></strong></div>
+                <div><small>Loja oficial</small><h3>Shopee</h3><p>Ofertas, cupons e uma experiência de compra rápida pelo app.</p><strong>Acessar loja <ArrowRight className="inline-icon" aria-hidden="true" /></strong></div>
               </a>
             </div>
           </div>
@@ -240,10 +240,10 @@ export default async function Home() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img className="footer-avatar" src="/assets/avatar-carrinho-transparente-trim.png" alt="Mascote da Tudo Express Brasil" />
           </div>
-          <div><h3>Navegue</h3><a href="#produtos">Produtos</a><a href="#como-comprar">Como comprar</a><a href="#sobre">Sobre nÃ³s</a></div>
+          <div><h3>Navegue</h3><a href="#produtos">Produtos</a><a href="#como-comprar">Como comprar</a><a href="#sobre">Sobre nós</a></div>
           <div><h3>Atendimento</h3><a href="https://wa.me/5517981468455" target="_blank" rel="noopener noreferrer">WhatsApp</a><a href="mailto:tudoexpressbrasil@gmail.com">tudoexpressbrasil@gmail.com</a></div>
         </div>
-        <div className="container footer-bottom"><p>Â© {new Date().getFullYear()} Tudo Express Brasil. Todos os direitos reservados.</p><p>Compra processada com seguranÃ§a pelos marketplaces parceiros.</p></div>
+        <div className="container footer-bottom"><p>© {new Date().getFullYear()} Tudo Express Brasil. Todos os direitos reservados.</p><p>Compra processada com segurança pelos marketplaces parceiros.</p></div>
       </footer>
 
       <a className="whatsapp" href="https://wa.me/5517981468455" target="_blank" rel="noopener noreferrer" aria-label="Falar com a Tudo Express Brasil pelo WhatsApp"><span><Phone /></span><em>Podemos ajudar?</em></a>
