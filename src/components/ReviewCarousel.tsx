@@ -108,7 +108,6 @@ export function ReviewCarousel() {
       </div>
       <div className="review-carousel-panel">
         <div className="review-carousel-toolbar">
-          <p>Avaliações reais do Google</p>
           <div className="review-carousel-controls" aria-label="Controles do carrossel de avaliações">
             <button type="button" onClick={goToPrevious} aria-label="Avaliação anterior">
               <ArrowLeft />
