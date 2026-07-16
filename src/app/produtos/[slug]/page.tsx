@@ -3,9 +3,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight, Check, ShieldCheck, Truck } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
+import { TrackedOutboundLink } from "@/components/TrackedOutboundLink";
 import { getProductBuyLinks, getProductBySlug, getProductSlugs } from "@/lib/products";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://tudoexpressbrasil.com.br";
+const siteUrl = "https://tudoexpressbrasil.com.br";
 
 type ProductPageProps = {
   params: Promise<{ slug: string }>;
@@ -107,7 +108,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
               {product.tag}
             </span>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={product.image_url || "/assets/mel-propolis.png"} alt={`Imagem do produto ${product.name}`} />
+            <img src={product.image_url || "/assets/mel-propolis.png"} alt={product.name} />
           </div>
           <div className="product-detail-copy">
             <span className="eyebrow"><i /> {product.category} • {product.weight || "Produto selecionado"}</span>
@@ -121,7 +122,18 @@ export default async function ProductPage({ params }: ProductPageProps) {
             <div className="product-detail-links">
               {links.filter((link) => link.href || link.unavailableLabel).map((link) => (
                 link.href ? (
-                  <a key={link.label} href={link.href} target="_blank" rel="noopener noreferrer">
+                  <TrackedOutboundLink
+                    eventName="product_outbound_click"
+                    eventProperties={{
+                      channel: link.channel,
+                      product_name: product.name,
+                      product_slug: product.slug
+                    }}
+                    key={link.label}
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     <span className="buy-link-label">
                       {link.logoSrc ? (
                         // eslint-disable-next-line @next/next/no-img-element
@@ -130,7 +142,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                       {link.label}
                     </span>
                     <ArrowUpRight aria-hidden="true" />
-                  </a>
+                  </TrackedOutboundLink>
                 ) : (
                   <span className="unavailable-buy-link" key={link.label}>
                     <span className="buy-link-label">

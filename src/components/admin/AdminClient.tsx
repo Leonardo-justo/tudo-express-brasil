@@ -561,7 +561,7 @@ export function AdminClient() {
               {products.map((product) => (
                 <article className={`admin-product${product.is_active ? "" : " inactive"}`} key={product.id}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={product.image_url || "/assets/mel-propolis.png"} alt="" />
+                  <img src={product.image_url || "/assets/mel-propolis.png"} alt={`Imagem do produto ${product.name}`} />
                   <div>
                     <strong>{product.name}</strong>
                     <small>{product.category} • {product.weight || "sem peso"} • ordem {product.sort_order}</small>

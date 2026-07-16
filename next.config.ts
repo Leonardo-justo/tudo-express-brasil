@@ -5,6 +5,10 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
+        hostname: "vxupacabyonpnkxhmkzh.supabase.co"
+      },
+      {
+        protocol: "https",
         hostname: "**.supabase.co"
       },
       {
@@ -16,6 +20,31 @@ const nextConfig: NextConfig = {
         hostname: "down-br.img.susercontent.com"
       }
     ]
+  },
+  async redirects() {
+    return [
+      {
+        source: "/hello-world",
+        destination: "/",
+        permanent: true
+      },
+      {
+        source: "/a-sua-loja-no-mercado-pago/home",
+        destination: "/",
+        permanent: true
+      },
+      {
+        source: "/:path*",
+        has: [
+          {
+            type: "host",
+            value: "www.tudoexpressbrasil.com.br"
+          }
+        ],
+        destination: "https://tudoexpressbrasil.com.br/:path*",
+        permanent: true
+      }
+    ];
   }
 };
 

@@ -5,7 +5,6 @@
   Heart,
   Music2,
   PackageCheck,
-  Phone,
   Play,
   ShieldCheck,
   Star,
@@ -15,11 +14,12 @@
 import { ProductCarousel } from "@/components/ProductCarousel";
 import { Reveal } from "@/components/Reveal";
 import { ReviewCarousel } from "@/components/ReviewCarousel";
+import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { getPublicProducts } from "@/lib/products";
 import { MERCADO_LIVRE_STORE_URL, SHOPEE_STORE_URL } from "@/lib/store-links";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://tudoexpressbrasil.com.br";
+const siteUrl = "https://tudoexpressbrasil.com.br";
 const googleReviewsUrl =
   "https://www.google.com/maps/place//data=!4m3!3m2!1s0x94bc53903a9937eb:0xb78e26ae9f8c959!12e1?source=g.page.m.ia._&laa=nmx-review-solicitation-ia2";
 
@@ -106,7 +106,7 @@ export default async function Home() {
               <div className="honey-ring ring-one" />
               <div className="honey-ring ring-two" />
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img className="hero-product hero-product-main" src="/assets/mel-propolis.png" alt="Mel com própolis Onda Mel de 500 gramas" />
+              <img className="hero-product hero-product-main" src="/assets/mel-propolis.png" alt="Mel com própolis Onda Mel de 500 gramas" fetchPriority="high" />
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img className="hero-product hero-product-side" src="/assets/mel-laranjeira.png" alt="Mel florada de laranjeira Onda Mel de 500 gramas" />
               <div className="floating-card card-natural"><span><PackageCheck /></span><div><strong>100% natural</strong><small>Sabor e qualidade</small></div></div>
@@ -231,22 +231,7 @@ export default async function Home() {
         </section>
       </main>
 
-      <footer className="site-footer">
-        <div className="container footer-grid">
-          <div><a className="brand brand-footer" href="#inicio"><span className="brand-mark brand-logo-mark">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/assets/logo-tudo-express-transparente-trim.png" alt="" />
-          </span><span><strong>Tudo Express</strong><small>Brasil</small></span></a><p>Escolhas inteligentes para uma rotina mais simples.</p>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img className="footer-avatar" src="/assets/avatar-carrinho-transparente-trim.png" alt="Mascote da Tudo Express Brasil" />
-          </div>
-          <div><h3>Navegue</h3><a href="#produtos">Produtos</a><a href="#como-comprar">Como comprar</a><a href="#sobre">Sobre nós</a></div>
-          <div><h3>Atendimento</h3><a href="https://wa.me/5517981468455" target="_blank" rel="noopener noreferrer">WhatsApp</a><a href="mailto:tudoexpressbrasil@gmail.com">tudoexpressbrasil@gmail.com</a></div>
-        </div>
-        <div className="container footer-bottom"><p>© {new Date().getFullYear()} Tudo Express Brasil. Todos os direitos reservados.</p><p>Compra processada com segurança pelos marketplaces parceiros.</p></div>
-      </footer>
-
-      <a className="whatsapp" href="https://wa.me/5517981468455" target="_blank" rel="noopener noreferrer" aria-label="Falar com a Tudo Express Brasil pelo WhatsApp"><span><Phone /></span><em>Podemos ajudar?</em></a>
+      <SiteFooter />
     </>
   );
 }

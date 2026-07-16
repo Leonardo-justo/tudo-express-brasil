@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 
 export function SiteHeader() {
@@ -12,7 +13,7 @@ export function SiteHeader() {
   return (
     <header className="site-header">
       <div className="container nav-wrap">
-        <a className="brand" href="#inicio" aria-label="Tudo Express Brasil - início" onClick={closeMenu}>
+        <Link className="brand" href="/#inicio" aria-label="Tudo Express Brasil - início" onClick={closeMenu}>
           <span className="brand-mark brand-logo-mark" aria-hidden="true">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/assets/logo-tudo-express-transparente-trim.png" alt="" />
@@ -21,7 +22,7 @@ export function SiteHeader() {
             <strong>Tudo Express</strong>
             <small>Brasil</small>
           </span>
-        </a>
+        </Link>
         <button
           className="menu-toggle"
           type="button"
@@ -34,9 +35,9 @@ export function SiteHeader() {
           <span />
         </button>
         <nav className={`main-nav${open ? " open" : ""}`} aria-label="Navegação principal">
-          <a href="#produtos" onClick={closeMenu}>Produtos</a>
-          <a href="#como-comprar" onClick={closeMenu}>Como comprar</a>
-          <a href="#sobre" onClick={closeMenu}>Sobre nós</a>
+          <Link href="/#produtos" onClick={closeMenu}>Produtos</Link>
+          <Link href="/#como-comprar" onClick={closeMenu}>Como comprar</Link>
+          <Link href="/#sobre" onClick={closeMenu}>Sobre nós</Link>
           <a className="nav-cta" href="https://wa.me/5517981468455" target="_blank" rel="noopener noreferrer" onClick={closeMenu}>
             Fale conosco
           </a>

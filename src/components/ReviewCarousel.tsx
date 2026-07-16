@@ -5,28 +5,28 @@ import { useEffect, useMemo, useRef, useState } from "react";
 
 const reviewImages = [
   {
-    alt: "Avaliação de Diane Redmil2 no Google",
-    src: "/assets/reviews/avaliacao-diane-redmil2.png"
+    alt: "Avaliação de cliente no Google: ótima empresa, envio rápido e excelente atendimento",
+    src: "/assets/reviews/avaliacao-diane-redmil2.webp"
   },
   {
-    alt: "Avaliação de Fernanda Rodrigues no Google",
-    src: "/assets/reviews/avaliacao-fernanda-rodrigues.png"
+    alt: "Avaliação de cliente no Google: loja confiável e produtos de boa qualidade",
+    src: "/assets/reviews/avaliacao-fernanda-rodrigues.webp"
   },
   {
-    alt: "Avaliação de Henrique Hilton Ribeiro no Google",
-    src: "/assets/reviews/avaliacao-henrique-hilton.png"
+    alt: "Avaliação de cliente no Google: excelente produto",
+    src: "/assets/reviews/avaliacao-henrique-hilton.webp"
   },
   {
-    alt: "Avaliação de Charles Favero no Google",
-    src: "/assets/reviews/avaliacao-charles-favero.png"
+    alt: "Avaliação de cliente no Google: muito bom",
+    src: "/assets/reviews/avaliacao-charles-favero.webp"
   },
   {
-    alt: "Avaliação de Marcos Alexandre no Google",
-    src: "/assets/reviews/avaliacao-marcos-alexandre.png"
+    alt: "Avaliação de cliente no Google: excelente",
+    src: "/assets/reviews/avaliacao-marcos-alexandre.webp"
   },
   {
-    alt: "Avaliação de Paulo Borys Oliveira no Google",
-    src: "/assets/reviews/avaliacao-paulo-borys.png"
+    alt: "Avaliação de cliente no Google: produto excelente, entrega rápida e super confiável",
+    src: "/assets/reviews/avaliacao-paulo-borys.webp"
   }
 ];
 
@@ -104,7 +104,7 @@ export function ReviewCarousel() {
     <div className="review-carousel-shell">
       <div className="review-score-card">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/assets/reviews/google-resumo-excelente.png" alt="Resumo de avaliações excelentes no Google, com base em 15 avaliações" />
+        <img src="/assets/reviews/google-resumo-excelente.webp" alt="Resumo de avaliações excelentes no Google, com base em 15 avaliações" />
       </div>
       <div className="review-carousel-panel">
         <div className="review-carousel-toolbar">

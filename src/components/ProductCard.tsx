@@ -1,4 +1,5 @@
 import { ArrowUpRight } from "lucide-react";
+import { TrackedOutboundLink } from "@/components/TrackedOutboundLink";
 import { getProductBuyLinks } from "@/lib/products";
 import type { Product } from "@/types/product";
 
@@ -36,7 +37,7 @@ export function ProductCard({ product }: ProductCardProps) {
       <span className={getTagClassName(product)}>{product.tag}</span>
       <div className={imageClassName}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={product.image_url || "/assets/mel-propolis.png"} alt={`Imagem do produto ${product.name}`} loading="lazy" />
+        <img src={product.image_url || "/assets/mel-propolis.png"} alt={product.name} loading="lazy" />
       </div>
       <div className="product-info">
         <small>{product.category} • {product.weight}</small>
@@ -47,7 +48,18 @@ export function ProductCard({ product }: ProductCardProps) {
             .filter((link) => link.href || link.unavailableLabel)
             .map((link) => (
               link.href ? (
-              <a key={link.label} href={link.href} target="_blank" rel="noopener noreferrer">
+              <TrackedOutboundLink
+                eventName="product_outbound_click"
+                eventProperties={{
+                  channel: link.channel,
+                  product_name: product.name,
+                  product_slug: product.slug
+                }}
+                href={link.href}
+                key={link.label}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <span className="buy-link-label">
                   {link.logoSrc ? (
                     // eslint-disable-next-line @next/next/no-img-element
@@ -58,7 +70,7 @@ export function ProductCard({ product }: ProductCardProps) {
                 <span className="buy-link-arrow" aria-hidden="true">
                   <ArrowUpRight />
                 </span>
-              </a>
+              </TrackedOutboundLink>
               ) : (
                 <span className="unavailable-buy-link" key={link.label}>
                   <span className="buy-link-label">

@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getPublicProducts } from "@/lib/products";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://tudoexpressbrasil.com.br";
+const siteUrl = "https://tudoexpressbrasil.com.br";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const products = await getPublicProducts();

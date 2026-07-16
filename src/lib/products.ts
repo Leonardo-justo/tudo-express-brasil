@@ -3,12 +3,20 @@ import { createSupabaseClient, isSupabaseConfigured } from "@/lib/supabase";
 import type { Product } from "@/types/product";
 
 export type ProductBuyLink = {
+  channel: "mercado_livre" | "shopee" | "whatsapp";
   logoAlt: string;
   logoSrc: string | null;
   label: string;
   href: string | null;
   unavailableLabel?: string;
 };
+
+const WHATSAPP_PHONE = "5517981468455";
+
+function getAutomaticWhatsappUrl(productName: string) {
+  const message = encodeURIComponent(`Olá! Tenho interesse no produto: ${productName}`);
+  return `https://wa.me/${WHATSAPP_PHONE}?text=${message}`;
+}
 
 function sortProducts(products: Product[]) {
   return [...products].sort((a, b) => {
@@ -118,6 +126,7 @@ export async function getProductSlugs(): Promise<string[]> {
 export function getProductBuyLinks(product: Product): ProductBuyLink[] {
   return [
     {
+      channel: "mercado_livre",
       logoAlt: "Logo do Mercado Livre",
       logoSrc: "/assets/logo-mercado-livre-transparente-trim.png",
       label: "Ver no Mercado Livre",
@@ -125,6 +134,7 @@ export function getProductBuyLinks(product: Product): ProductBuyLink[] {
       unavailableLabel: "Mercado Livre em breve"
     },
     {
+      channel: "shopee",
       logoAlt: "Logo da Shopee",
       logoSrc: "/assets/logo-shopee-oficial.jpg",
       label: "Ver na Shopee",
@@ -132,10 +142,11 @@ export function getProductBuyLinks(product: Product): ProductBuyLink[] {
       unavailableLabel: "Shopee em breve"
     },
     {
+      channel: "whatsapp",
       logoAlt: "WhatsApp",
       logoSrc: null,
       label: "Comprar pelo WhatsApp",
-      href: product.whatsapp_url
+      href: product.whatsapp_url || getAutomaticWhatsappUrl(product.name)
     }
   ];
 }
