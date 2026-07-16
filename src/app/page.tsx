@@ -24,6 +24,8 @@ export const dynamic = "force-dynamic";
 
 export default async function Home() {
   const products = await getPublicProducts();
+  const honeyProducts = products.filter((product) => product.category.toLowerCase().includes("onda mel"));
+  const utilityProducts = products.filter((product) => !product.category.toLowerCase().includes("onda mel"));
 
   const organizationJsonLd = {
     "@context": "https://schema.org",
@@ -125,7 +127,7 @@ export default async function Home() {
               <div><span className="eyebrow"><i /> Seleção Onda Mel</span><h2>Do apiário para a sua mesa</h2></div>
               <p>Mel puro em diferentes floradas e combinações para você encontrar o seu favorito.</p>
             </Reveal>
-            <ProductCarousel products={products} />
+            <ProductCarousel ariaLabel="Carrossel de produtos Onda Mel" products={honeyProducts} />
           </div>
         </section>
 
@@ -158,6 +160,16 @@ export default async function Home() {
                 </a>
               </div>
             </Reveal>
+          </div>
+        </section>
+
+        <section className="products utility-products section" id="utilidades">
+          <div className="container">
+            <Reveal className="section-head">
+              <div><span className="eyebrow"><i /> Utilidades selecionadas</span><h2>Produtos úteis para a rotina</h2></div>
+              <p>Itens práticos para casa, organização, cuidado pessoal e acessórios que resolvem pequenas necessidades do dia a dia.</p>
+            </Reveal>
+            <ProductCarousel ariaLabel="Carrossel de produtos úteis e utilidades" products={utilityProducts} />
           </div>
         </section>
 

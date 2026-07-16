@@ -6,10 +6,11 @@ import { ProductCard } from "@/components/ProductCard";
 import type { Product } from "@/types/product";
 
 type ProductCarouselProps = {
+  ariaLabel?: string;
   products: Product[];
 };
 
-export function ProductCarousel({ products }: ProductCarouselProps) {
+export function ProductCarousel({ ariaLabel = "Carrossel de produtos", products }: ProductCarouselProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [stepSize, setStepSize] = useState(302);
   const [transitionEnabled, setTransitionEnabled] = useState(true);
@@ -102,7 +103,7 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
           </div>
         ) : null}
       </div>
-      <div className="product-carousel" aria-label="Carrossel de produtos Onda Mel">
+      <div className="product-carousel" aria-label={ariaLabel}>
       <div
         ref={trackRef}
         className="product-carousel-track"
