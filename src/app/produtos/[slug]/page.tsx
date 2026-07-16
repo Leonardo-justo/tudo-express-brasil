@@ -80,6 +80,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
   const imageUrl = product.image_url.startsWith("http") ? product.image_url : `${siteUrl}${product.image_url}`;
   const links = getProductBuyLinks(product).filter((link) => link.href);
+  const getLinkClassName = (channel: string) =>
+    `product-detail-buy-link ${links.length === 1 || channel === "whatsapp" ? "product-buy-link-primary" : "product-buy-link-secondary"}`;
   const productJsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -130,6 +132,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                     }}
                     key={link.label}
                     href={link.href!}
+                    className={getLinkClassName(link.channel)}
                     target="_blank"
                     rel="noopener noreferrer"
                   >

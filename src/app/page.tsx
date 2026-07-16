@@ -199,12 +199,12 @@ export default async function Home() {
                 <a className="btn btn-light marketplace-cta" href={MERCADO_LIVRE_STORE_URL} target="_blank" rel="noopener noreferrer">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src="/assets/logo-mercado-livre-transparente-trim.png" alt="" />
-                  Explorar no Mercado Livre <ArrowRight className="inline-icon" aria-hidden="true" />
+                  <span>Explorar no Mercado Livre</span><ArrowRight className="inline-icon" aria-hidden="true" />
                 </a>
                 <a className="btn btn-light marketplace-cta" href={SHOPEE_STORE_URL} target="_blank" rel="noopener noreferrer">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src="/assets/logo-shopee-oficial.jpg" alt="" />
-                  Explorar na Shopee <ArrowRight className="inline-icon" aria-hidden="true" />
+                  <span>Explorar na Shopee</span><ArrowRight className="inline-icon" aria-hidden="true" />
                 </a>
               </div>
             </Reveal>
