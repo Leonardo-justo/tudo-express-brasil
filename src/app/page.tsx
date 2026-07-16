@@ -15,6 +15,7 @@ import {
 import { ProductCarousel } from "@/components/ProductCarousel";
 import { Reveal } from "@/components/Reveal";
 import { SiteHeader } from "@/components/SiteHeader";
+import { getGoogleReviews } from "@/lib/google-reviews";
 import { getPublicProducts } from "@/lib/products";
 import { MERCADO_LIVRE_STORE_URL, SHOPEE_STORE_URL } from "@/lib/store-links";
 
@@ -24,6 +25,7 @@ export const dynamic = "force-dynamic";
 
 export default async function Home() {
   const products = await getPublicProducts();
+  const googleReviews = await getGoogleReviews();
   const honeyProducts = products.filter((product) => product.category.toLowerCase().includes("onda mel"));
   const utilityProducts = products.filter((product) => !product.category.toLowerCase().includes("onda mel"));
 
@@ -56,7 +58,7 @@ export default async function Home() {
         name: product.name,
         image: product.image_url.startsWith("http") ? product.image_url : `${siteUrl}${product.image_url}`,
         brand: product.category,
-        url: product.mercado_livre_url || product.shopee_url || siteUrl
+        url: product.mercado_livre_url || product.shopee_url || `${siteUrl}/produtos/${product.slug}`
       }
     }))
   };
@@ -206,7 +208,7 @@ export default async function Home() {
               <a href="https://www.instagram.com/tudoexpressbrasil?igsh=MTV3dXhsamlocnU4Yw==" target="_blank" rel="noopener noreferrer"><span><Camera /></span>Instagram</a>
               <a href="https://www.tiktok.com/@tudoexpressbrasil" target="_blank" rel="noopener noreferrer"><span><Music2 /></span>TikTok</a>
               <a href="https://www.youtube.com/@TudoExpressBrasil/shorts" target="_blank" rel="noopener noreferrer"><span><Play /></span>YouTube</a>
-              <a href="https://www.google.com/maps/place//data=!4m3!3m2!1s0x94bc53903a9937eb:0xb78e26ae9f8c959!12e1?source=g.page.m.ia._&laa=nmx-review-solicitation-ia2" target="_blank" rel="noopener noreferrer"><span><Star /></span>Avalie no Google</a>
+              <a href={googleReviews.placeUrl} target="_blank" rel="noopener noreferrer"><span><Star /></span>Avalie no Google</a>
             </div>
           </Reveal>
         </section>
@@ -216,29 +218,30 @@ export default async function Home() {
             <Reveal className="section-head centered">
               <span className="eyebrow"><i /> Avaliações no Google</span>
               <h2>Quem compra recomenda.</h2>
-              <p>Alguns comentários de clientes que já passaram pela Tudo Express Brasil.</p>
+              <p>
+                {googleReviews.rating ? (
+                  <>Nota {googleReviews.rating.toFixed(1)} no Google{googleReviews.totalReviews ? ` com ${googleReviews.totalReviews} avaliações` : ""}.</>
+                ) : (
+                  <>Alguns comentários de clientes que já passaram pela Tudo Express Brasil.</>
+                )}
+              </p>
             </Reveal>
             <div className="reviews-grid">
-              {[
-                ["Jo Rodrigues", "Os produtos são excelentes, recomendo muito."],
-                ["Henrique Hilton Ribeiro", "Excelente produto e atendimento rápido."],
-                ["Charles Favaro", "Muito bom, compra tranquila e entrega acompanhada."],
-                ["Marcos", "Excelente! Voltarei a comprar."]
-              ].map(([name, text]) => (
-                <article className="review-card" key={name}>
-                  <div className="review-stars" aria-label="5 estrelas">
-                    {Array.from({ length: 5 }, (_, index) => (
+              {googleReviews.reviews.map((review) => (
+                <article className="review-card" key={`${review.authorName}-${review.text.slice(0, 20)}`}>
+                  <div className="review-stars" aria-label={`${review.rating} estrelas`}>
+                    {Array.from({ length: Math.round(review.rating) }, (_, index) => (
                       <Star key={index} />
                     ))}
                   </div>
-                  <p>{text}</p>
-                  <strong>{name}</strong>
-                  <small>Google</small>
+                  <p>{review.text}</p>
+                  <strong>{review.authorName}</strong>
+                  <small>{review.relativeTimeDescription || (googleReviews.source === "google" ? "Google" : "Google - exemplo")}</small>
                 </article>
               ))}
             </div>
             <div className="reviews-action">
-              <a className="btn btn-primary" href="https://www.google.com/maps/place//data=!4m3!3m2!1s0x94bc53903a9937eb:0xb78e26ae9f8c959!12e1?source=g.page.m.ia._&laa=nmx-review-solicitation-ia2" target="_blank" rel="noopener noreferrer">
+              <a className="btn btn-primary" href={googleReviews.placeUrl} target="_blank" rel="noopener noreferrer">
                 Avaliar no Google <ArrowRight className="inline-icon" aria-hidden="true" />
               </a>
             </div>
