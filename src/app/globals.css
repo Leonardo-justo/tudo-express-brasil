@@ -323,3 +323,12 @@
 .hero-actions>.btn-primary{max-width:260px!important}
 .hero-actions>.marketplace-cta{justify-items:start!important}
 .hero-actions>.marketplace-cta .inline-icon{justify-self:end!important}
+
+/* Refinamento: titulo e botoes do hero sem quebras estranhas */
+.hero-title-phrase{white-space:nowrap}
+.hero-actions{grid-template-columns:repeat(2,minmax(0,260px))!important;max-width:536px!important}
+.hero-actions>.btn-primary{width:100%!important;max-width:none!important;justify-self:stretch!important;white-space:nowrap!important}
+.hero-actions>.marketplace-cta{min-width:0!important}
+.hero-actions>.marketplace-cta span{font-size:14px!important;font-weight:900!important}
+@media(max-width:720px){.hero-actions{grid-template-columns:1fr 1fr!important}.hero-actions>.marketplace-cta span{font-size:13px!important}}
+@media(max-width:430px){.hero-title-phrase{white-space:normal}.hero-actions{grid-template-columns:1fr!important}.hero-actions>.btn-primary,.hero-actions>.marketplace-cta{width:100%!important}}

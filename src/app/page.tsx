@@ -122,7 +122,9 @@ export default async function Home() {
           <div className="container hero-grid">
             <Reveal className="hero-copy">
               <span className="eyebrow"><i /> Curadoria para a vida real</span>
-              <h1>Escolhas que fazem a <em>diferença</em> no seu dia.</h1>
+              <h1>
+                Escolhas que <span className="hero-title-phrase">fazem a <em>diferença</em></span> no seu dia.
+              </h1>
               <p>Produtos úteis, naturais e selecionados com cuidado — e a segurança de comprar nos maiores marketplaces do Brasil.</p>
               <div className="hero-actions">
                 <a className="btn btn-primary" href="#produtos">Conhecer produtos <ArrowRight className="inline-icon" aria-hidden="true" /></a>
