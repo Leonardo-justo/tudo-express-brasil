@@ -250,3 +250,13 @@
 .product-carousel-dots button,.review-carousel-dots button{width:7px!important;height:7px!important}
 .product-carousel-dots button.active,.review-carousel-dots button.active{width:20px!important}
 @media(max-width:720px){.product-info p{min-height:0!important}.social.section{padding-bottom:44px!important}.reviews{padding-top:48px!important}.product-carousel-dots,.review-carousel-dots{gap:4px!important}}
+
+/* Alinhamento dos botoes de marketplace e banner mobile */
+.marketplace-cta{display:inline-flex!important;align-items:center!important;justify-content:flex-start!important;gap:12px!important;line-height:1.15!important;overflow:visible!important}
+.marketplace-cta span{min-width:0;overflow:visible;text-overflow:clip}
+.marketplace-cta .inline-icon{display:block!important;flex:0 0 18px!important;width:18px!important;height:18px!important;margin-left:auto!important}
+.feature-actions{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;align-items:stretch!important}
+.feature-actions .marketplace-cta{width:100%!important;min-width:0!important;padding-inline:18px!important}
+.feature-media img{object-position:center top!important}
+@media(max-width:720px){.feature-actions{grid-template-columns:1fr!important}.feature-actions .marketplace-cta{min-height:58px!important;padding-inline:18px!important}.hero-actions .marketplace-cta{max-width:100%;min-height:58px!important}.feature-media{min-height:320px!important}.feature-media img{object-fit:cover!important;object-position:center center!important}.feature-copy{overflow:visible!important}}
+@media(max-width:420px){.feature-actions .marketplace-cta,.hero-actions .marketplace-cta{font-size:13px!important;gap:10px!important}.feature-actions .marketplace-cta img,.hero-actions .marketplace-cta img{flex-shrink:0!important}.marketplace-cta .inline-icon{flex-basis:17px!important;width:17px!important;height:17px!important}}
