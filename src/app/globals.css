@@ -155,6 +155,7 @@
 .admin-image-preview{display:flex;align-items:center;gap:14px;padding:13px;border:1px solid rgba(7,59,155,.1);border-radius:18px;background:linear-gradient(145deg,#f8fbff,#fffaf0)}
 .admin-image-preview img{width:86px;height:86px;object-fit:contain;border-radius:14px;background:#fff;padding:8px}
 .admin-image-preview strong,.admin-image-preview small{display:block}.admin-image-preview small{color:var(--muted);font-size:11px;margin-top:4px}
+.admin-section-title>div{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end}
 .product-page{min-height:100vh;background:linear-gradient(130deg,#fff 0%,#f4f8ff 70%,#fff8dc 100%);padding:34px 0 90px}
 .product-back{display:inline-flex;align-items:center;gap:9px;color:var(--blue);font-size:13px;font-weight:900;margin-bottom:28px}
 .product-back svg{width:18px;height:18px}.product-detail{padding-top:20px}.product-detail-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:54px;align-items:center}

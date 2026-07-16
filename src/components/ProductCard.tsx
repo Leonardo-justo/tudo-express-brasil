@@ -29,7 +29,7 @@ function getTagClassName(product: Product) {
 
 export function ProductCard({ product }: ProductCardProps) {
   const links = getProductBuyLinks(product);
-  const imageClassName = `product-image ${product.image_url.includes("mel-sache") ? "product-image-sache" : ""}`.trim();
+  const imageClassName = `product-image ${product.image_url.includes("sache") || product.image_url.includes("blister") ? "product-image-sache" : ""}`.trim();
 
   return (
     <article className="product-card reveal visible">

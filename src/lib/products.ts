@@ -10,15 +10,43 @@ export type ProductBuyLink = {
   unavailableLabel?: string;
 };
 
+function sortProducts(products: Product[]) {
+  return [...products].sort((a, b) => {
+    if (a.sort_order !== b.sort_order) {
+      return a.sort_order - b.sort_order;
+    }
+
+    return a.name.localeCompare(b.name, "pt-BR");
+  });
+}
+
+function mergeWithSeedProducts(products: Product[]) {
+  const productMap = new Map<string, Product>();
+
+  seedProducts.forEach((product) => {
+    if (product.is_active) {
+      productMap.set(product.slug, product);
+    }
+  });
+
+  products.forEach((product) => {
+    if (product.is_active) {
+      productMap.set(product.slug, product);
+    }
+  });
+
+  return sortProducts([...productMap.values()]);
+}
+
 export async function getPublicProducts(): Promise<Product[]> {
   if (!isSupabaseConfigured) {
-    return seedProducts;
+    return sortProducts(seedProducts.filter((product) => product.is_active));
   }
 
   const supabase = createSupabaseClient();
 
   if (!supabase) {
-    return seedProducts;
+    return sortProducts(seedProducts.filter((product) => product.is_active));
   }
 
   const { data, error } = await supabase
@@ -29,10 +57,10 @@ export async function getPublicProducts(): Promise<Product[]> {
     .order("created_at", { ascending: false });
 
   if (error || !data?.length) {
-    return seedProducts;
+    return sortProducts(seedProducts.filter((product) => product.is_active));
   }
 
-  return data as Product[];
+  return mergeWithSeedProducts(data as Product[]);
 }
 
 export async function getProductBySlug(slug: string): Promise<Product | null> {
@@ -78,11 +106,13 @@ export async function getProductSlugs(): Promise<string[]> {
     .select("slug")
     .eq("is_active", true);
 
+  const seedSlugs = seedProducts.filter((product) => product.is_active).map((product) => product.slug);
+
   if (error || !data?.length) {
     return seedProducts.filter((product) => product.is_active).map((product) => product.slug);
   }
 
-  return data.map((product) => product.slug as string);
+  return [...new Set([...seedSlugs, ...data.map((product) => product.slug as string)])];
 }
 
 export function getProductBuyLinks(product: Product): ProductBuyLink[] {
