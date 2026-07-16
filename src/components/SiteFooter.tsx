@@ -25,8 +25,8 @@ export function SiteFooter() {
             <h3>Navegue</h3>
             <Link href="/#produtos">Produtos</Link>
             <Link href="/#como-comprar">Como comprar</Link>
-            <Link href="/#sobre">Sobre nós</Link>
-            <Link href="/privacidade">Política de Privacidade</Link>
+            <Link href="/#sobre">Sobre n&oacute;s</Link>
+            <Link href="/privacidade">Pol&iacute;tica de Privacidade</Link>
           </div>
           <div>
             <h3>Atendimento</h3>
@@ -35,8 +35,8 @@ export function SiteFooter() {
           </div>
         </div>
         <div className="container footer-bottom">
-          <p>© {new Date().getFullYear()} Tudo Express Brasil. Todos os direitos reservados.</p>
-          <p>Compra processada com segurança pelos marketplaces parceiros.</p>
+          <p>&copy; {new Date().getFullYear()} Tudo Express Brasil. Todos os direitos reservados.</p>
+          <p>Compra processada com seguran&ccedil;a pelos marketplaces parceiros.</p>
         </div>
       </footer>
 
