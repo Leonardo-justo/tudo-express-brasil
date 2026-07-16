@@ -315,3 +315,11 @@
 
 /* Admin: ajuda contextual dos campos */
 .field-help{display:block;color:#6c7890;font-size:11px!important;font-weight:700!important;line-height:1.45;margin-top:2px}
+
+/* Alteracoes finais do cliente */
+.hero h1 em:after{display:none!important}
+.header-avatar img{transform:scaleX(-1)!important}
+.hero-actions{align-items:start!important}
+.hero-actions>.btn-primary{max-width:260px!important}
+.hero-actions>.marketplace-cta{justify-items:start!important}
+.hero-actions>.marketplace-cta .inline-icon{justify-self:end!important}

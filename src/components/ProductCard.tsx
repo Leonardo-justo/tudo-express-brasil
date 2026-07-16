@@ -29,10 +29,10 @@ function getTagClassName(product: Product) {
 }
 
 export function ProductCard({ product }: ProductCardProps) {
-  const links = getProductBuyLinks(product).filter((link) => link.href);
+  const links = getProductBuyLinks(product).filter((link) => link.href && link.channel !== "whatsapp");
   const imageClassName = `product-image ${product.image_url.includes("sache") || product.image_url.includes("blister") ? "product-image-sache" : ""}`.trim();
-  const getLinkClassName = (channel: string) =>
-    `product-buy-link ${links.length === 1 || channel === "whatsapp" ? "product-buy-link-primary" : "product-buy-link-secondary"}`;
+  const getLinkClassName = () =>
+    `product-buy-link ${links.length === 1 ? "product-buy-link-primary" : "product-buy-link-secondary"}`;
 
   return (
     <article className="product-card reveal visible">
@@ -56,7 +56,7 @@ export function ProductCard({ product }: ProductCardProps) {
                   product_slug: product.slug
                 }}
                 href={link.href!}
-                className={getLinkClassName(link.channel)}
+                className={getLinkClassName()}
                 key={link.label}
                 target="_blank"
                 rel="noopener noreferrer"
