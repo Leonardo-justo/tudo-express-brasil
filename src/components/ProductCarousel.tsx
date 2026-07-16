@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { ProductCard } from "@/components/ProductCard";
 import type { Product } from "@/types/product";
 
@@ -12,7 +12,10 @@ type ProductCarouselProps = {
 export function ProductCarousel({ products }: ProductCarouselProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [stepSize, setStepSize] = useState(302);
+  const [transitionEnabled, setTransitionEnabled] = useState(true);
   const trackRef = useRef<HTMLDivElement>(null);
+  const carouselProducts = useMemo(() => (products.length > 1 ? [...products, ...products] : products), [products]);
+  const normalizedIndex = products.length ? activeIndex % products.length : 0;
 
   useEffect(() => {
     if (products.length <= 1) {
@@ -20,7 +23,7 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
     }
 
     const timer = window.setInterval(() => {
-      setActiveIndex((currentIndex) => (currentIndex + 1) % products.length);
+      setActiveIndex((currentIndex) => currentIndex + 1);
     }, 4500);
 
     return () => window.clearInterval(timer);
@@ -44,12 +47,44 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
     return () => window.removeEventListener("resize", updateStepSize);
   }, [products.length]);
 
+  useEffect(() => {
+    if (!transitionEnabled) {
+      const frame = window.requestAnimationFrame(() => setTransitionEnabled(true));
+      return () => window.cancelAnimationFrame(frame);
+    }
+
+    return undefined;
+  }, [transitionEnabled]);
+
   const goToPrevious = () => {
-    setActiveIndex((currentIndex) => (currentIndex - 1 + products.length) % products.length);
+    if (products.length <= 1) {
+      return;
+    }
+
+    if (activeIndex === 0) {
+      setTransitionEnabled(false);
+      window.requestAnimationFrame(() => {
+        setActiveIndex(products.length);
+        window.requestAnimationFrame(() => {
+          setTransitionEnabled(true);
+          setActiveIndex(products.length - 1);
+        });
+      });
+      return;
+    }
+
+    setActiveIndex((currentIndex) => currentIndex - 1);
   };
 
   const goToNext = () => {
-    setActiveIndex((currentIndex) => (currentIndex + 1) % products.length);
+    setActiveIndex((currentIndex) => currentIndex + 1);
+  };
+
+  const handleTransitionEnd = () => {
+    if (products.length > 1 && activeIndex >= products.length) {
+      setTransitionEnabled(false);
+      setActiveIndex(0);
+    }
   };
 
   return (
@@ -71,10 +106,14 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
       <div
         ref={trackRef}
         className="product-carousel-track"
-        style={{ transform: `translateX(-${activeIndex * stepSize}px)` }}
+        onTransitionEnd={handleTransitionEnd}
+        style={{
+          transform: `translateX(-${activeIndex * stepSize}px)`,
+          transition: transitionEnabled ? undefined : "none"
+        }}
       >
-        {products.map((product) => (
-          <div className="product-carousel-item" key={product.id}>
+        {carouselProducts.map((product, index) => (
+          <div className="product-carousel-item" key={`${product.id}-${index}`}>
             <ProductCard product={product} />
           </div>
         ))}
@@ -85,7 +124,7 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
           {products.map((product, index) => (
             <button
               aria-label={`Ir para ${product.name}`}
-              className={index === activeIndex ? "active" : ""}
+              className={index === normalizedIndex ? "active" : ""}
               key={product.id}
               onClick={() => setActiveIndex(index)}
               type="button"

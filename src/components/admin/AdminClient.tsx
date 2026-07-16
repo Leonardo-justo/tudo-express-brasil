@@ -36,9 +36,11 @@ function slugify(value: string) {
 }
 
 function normalizeProduct(values: ProductFormValues) {
+  const automaticSlug = slugify(values.name);
+
   return {
     ...values,
-    slug: values.slug || slugify(values.name),
+    slug: values.id ? values.slug || automaticSlug : automaticSlug,
     mercado_livre_url: values.mercado_livre_url || null,
     shopee_url: values.shopee_url || null,
     whatsapp_url: values.whatsapp_url || null,
@@ -384,6 +386,7 @@ export function AdminClient() {
   }
 
   const imagePreviewUrl = previewUrl || form.image_url || "/assets/mel-propolis.png";
+  const slugPreview = form.id ? form.slug || slugify(form.name) : slugify(form.name);
 
   if (!isSupabaseConfigured || !supabase) {
     return (
@@ -460,8 +463,8 @@ export function AdminClient() {
             <input value={form.name} onChange={(event) => updateField("name", event.target.value)} required />
           </label>
           <label>
-            Slug
-            <input value={form.slug} onChange={(event) => updateField("slug", slugify(event.target.value))} required />
+            Slug automático
+            <input value={slugPreview} readOnly placeholder="gerado-automaticamente" />
           </label>
           <label>
             Descrição curta
