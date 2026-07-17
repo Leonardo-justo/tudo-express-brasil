@@ -1,12 +1,6 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
-import "./styles/01-foundation.css";
-import "./styles/02-admin.css";
-import "./styles/03-site-polish.css";
-import "./styles/04-product-detail-admin.css";
-import "./styles/05-reviews-footer.css";
-import "./styles/06-final-adjustments.css";
 
 const siteUrl = "https://tudoexpressbrasil.com.br";
 
