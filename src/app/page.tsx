@@ -186,7 +186,6 @@ export default async function Home() {
             <Reveal className="feature-media">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/assets/banner-suporte-universal.webp" alt="Suporte universal para celular e tablet" loading="lazy" />
-              <span className="feature-badge">Utilidade<br /><strong>todo dia</strong></span>
             </Reveal>
             <Reveal className="feature-copy">
               <span className="eyebrow eyebrow-light"><i /> Muito além do mel</span>
@@ -201,7 +200,7 @@ export default async function Home() {
                 <a className="btn btn-light marketplace-cta" href={MERCADO_LIVRE_STORE_URL} target="_blank" rel="noopener noreferrer">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src="/assets/logo-mercado-livre-transparente-trim.png" alt="" />
-                  <span>Explorar no Mercado Livre</span><ArrowRight className="inline-icon" aria-hidden="true" />
+                  <span>Explorar Mercado Livre</span><ArrowRight className="inline-icon" aria-hidden="true" />
                 </a>
                 <a className="btn btn-light marketplace-cta" href={SHOPEE_STORE_URL} target="_blank" rel="noopener noreferrer">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
