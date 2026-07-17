@@ -28,24 +28,6 @@ function sortProducts(products: Product[]) {
   });
 }
 
-function mergeWithSeedProducts(products: Product[]) {
-  const productMap = new Map<string, Product>();
-
-  seedProducts.forEach((product) => {
-    if (product.is_active) {
-      productMap.set(product.slug, product);
-    }
-  });
-
-  products.forEach((product) => {
-    if (product.is_active) {
-      productMap.set(product.slug, product);
-    }
-  });
-
-  return sortProducts([...productMap.values()]);
-}
-
 export async function getPublicProducts(): Promise<Product[]> {
   if (!isSupabaseConfigured) {
     return sortProducts(seedProducts.filter((product) => product.is_active));
@@ -64,11 +46,11 @@ export async function getPublicProducts(): Promise<Product[]> {
     .order("sort_order", { ascending: true })
     .order("created_at", { ascending: false });
 
-  if (error || !data?.length) {
-    return sortProducts(seedProducts.filter((product) => product.is_active));
+  if (error) {
+    return [];
   }
 
-  return mergeWithSeedProducts(data as Product[]);
+  return sortProducts((data as Product[]) || []);
 }
 
 export async function getProductBySlug(slug: string): Promise<Product | null> {
@@ -92,10 +74,10 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
     .maybeSingle();
 
   if (error) {
-    return fallbackProduct;
+    return null;
   }
 
-  return (data as Product | null) || fallbackProduct;
+  return (data as Product | null) || null;
 }
 
 export async function getProductSlugs(): Promise<string[]> {
@@ -114,13 +96,11 @@ export async function getProductSlugs(): Promise<string[]> {
     .select("slug")
     .eq("is_active", true);
 
-  const seedSlugs = seedProducts.filter((product) => product.is_active).map((product) => product.slug);
-
-  if (error || !data?.length) {
-    return seedProducts.filter((product) => product.is_active).map((product) => product.slug);
+  if (error) {
+    return [];
   }
 
-  return [...new Set([...seedSlugs, ...data.map((product) => product.slug as string)])];
+  return data?.map((product) => product.slug as string) || [];
 }
 
 export function getProductBuyLinks(product: Product): ProductBuyLink[] {
