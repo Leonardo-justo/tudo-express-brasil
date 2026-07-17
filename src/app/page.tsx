@@ -248,25 +248,25 @@ export default async function Home() {
           </div>
         </section>
 
-        <section className="social section">
-          <Reveal className="container social-box">
-            <div><span className="eyebrow eyebrow-light"><i /> Acompanhe de perto</span><h2>Novidades, dicas e<br />produtos em movimento.</h2></div>
-            <div className="social-links">
-              <a href="https://www.instagram.com/tudoexpressbrasil?igsh=MTV3dXhsamlocnU4Yw==" target="_blank" rel="noopener noreferrer"><span className="social-brand-icon"><InstagramIcon /></span>Instagram</a>
-              <a href="https://www.tiktok.com/@tudoexpressbrasil" target="_blank" rel="noopener noreferrer"><span className="social-brand-icon social-brand-icon-dark"><TikTokIcon /></span>TikTok</a>
-              <a href="https://www.youtube.com/@TudoExpressBrasil/shorts" target="_blank" rel="noopener noreferrer"><span className="social-brand-icon"><YouTubeIcon /></span>YouTube</a>
-              <a href={googleReviewsUrl} target="_blank" rel="noopener noreferrer"><span className="social-brand-icon"><GoogleIcon /></span>Avalie no Google</a>
-            </div>
-          </Reveal>
-        </section>
-
         <section className="about-summary section" id="sobre">
           <div className="container">
             <Reveal className="about-summary-card">
-              <span className="eyebrow"><i /> Sobre nós</span>
-              <p>
-                A Tudo Express Brasil nasceu para facilitar escolhas do dia a dia com produtos úteis, naturais e selecionados com cuidado. Atuamos como uma vitrine confiável, conectando você aos nossos canais oficiais no Mercado Livre, Shopee e redes sociais, sempre com foco em praticidade, segurança e bom atendimento.
-              </p>
+              <div className="about-summary-copy">
+                <span className="eyebrow"><i /> Sobre nós</span>
+                <p>
+                  A Tudo Express Brasil nasceu para facilitar escolhas do dia a dia com produtos úteis, naturais e selecionados com cuidado. Atuamos como uma vitrine confiável, conectando você aos nossos canais oficiais no Mercado Livre, Shopee e redes sociais, sempre com foco em praticidade, segurança e bom atendimento.
+                </p>
+              </div>
+              <div className="about-social">
+                <span className="eyebrow eyebrow-light"><i /> Acompanhe de perto</span>
+                <h2>Novidades, dicas e produtos em movimento.</h2>
+                <div className="social-links">
+                  <a href="https://www.instagram.com/tudoexpressbrasil?igsh=MTV3dXhsamlocnU4Yw==" target="_blank" rel="noopener noreferrer"><span className="social-brand-icon"><InstagramIcon /></span>Instagram</a>
+                  <a href="https://www.tiktok.com/@tudoexpressbrasil" target="_blank" rel="noopener noreferrer"><span className="social-brand-icon social-brand-icon-dark"><TikTokIcon /></span>TikTok</a>
+                  <a href="https://www.youtube.com/@TudoExpressBrasil/shorts" target="_blank" rel="noopener noreferrer"><span className="social-brand-icon"><YouTubeIcon /></span>YouTube</a>
+                  <a href={googleReviewsUrl} target="_blank" rel="noopener noreferrer"><span className="social-brand-icon"><GoogleIcon /></span>Avalie no Google</a>
+                </div>
+              </div>
             </Reveal>
           </div>
         </section>
