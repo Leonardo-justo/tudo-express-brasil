@@ -30,16 +30,9 @@ function getTagClassName(product: Product) {
 
 export function ProductCard({ product }: ProductCardProps) {
   const links = getProductBuyLinks(product).filter((link) => link.channel !== "whatsapp");
-  const availableLinks = links.filter((link) => link.href);
   const imageClassName = `product-image ${product.image_url.includes("sache") || product.image_url.includes("blister") ? "product-image-sache" : ""}`.trim();
   const getLinkClassName = (isAvailable: boolean) =>
-    `product-buy-link ${
-      isAvailable
-        ? availableLinks.length === 1
-          ? "product-buy-link-primary"
-          : "product-buy-link-secondary"
-        : "product-buy-link-disabled"
-    }`;
+    `product-buy-link ${isAvailable ? "product-buy-link-secondary" : "product-buy-link-disabled"}`;
 
   return (
     <article className="product-card reveal visible">
