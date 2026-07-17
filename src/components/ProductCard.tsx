@@ -29,10 +29,17 @@ function getTagClassName(product: Product) {
 }
 
 export function ProductCard({ product }: ProductCardProps) {
-  const links = getProductBuyLinks(product).filter((link) => link.href && link.channel !== "whatsapp");
+  const links = getProductBuyLinks(product).filter((link) => link.channel !== "whatsapp");
+  const availableLinks = links.filter((link) => link.href);
   const imageClassName = `product-image ${product.image_url.includes("sache") || product.image_url.includes("blister") ? "product-image-sache" : ""}`.trim();
-  const getLinkClassName = () =>
-    `product-buy-link ${links.length === 1 ? "product-buy-link-primary" : "product-buy-link-secondary"}`;
+  const getLinkClassName = (isAvailable: boolean) =>
+    `product-buy-link ${
+      isAvailable
+        ? availableLinks.length === 1
+          ? "product-buy-link-primary"
+          : "product-buy-link-secondary"
+        : "product-buy-link-disabled"
+    }`;
 
   return (
     <article className="product-card reveal visible">
@@ -45,9 +52,11 @@ export function ProductCard({ product }: ProductCardProps) {
         <small>{product.category} &bull; {product.weight}</small>
         <h3><a className="product-detail-link" href={`/produtos/${product.slug}`}>{product.name}</a></h3>
         <p>{product.short_description}</p>
-        {links.length ? (
-          <div className="product-links">
-            {links.map((link) => (
+        <div className="product-links">
+          {links.map((link) => {
+            const isAvailable = Boolean(link.href);
+
+            return isAvailable ? (
               <TrackedOutboundLink
                 eventName="product_outbound_click"
                 eventProperties={{
@@ -56,8 +65,8 @@ export function ProductCard({ product }: ProductCardProps) {
                   product_slug: product.slug
                 }}
                 href={link.href!}
-                className={getLinkClassName()}
-                key={link.label}
+                className={getLinkClassName(isAvailable)}
+                key={link.channel}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -72,9 +81,28 @@ export function ProductCard({ product }: ProductCardProps) {
                   <ArrowUpRight />
                 </span>
               </TrackedOutboundLink>
-            ))}
-          </div>
-        ) : null}
+            ) : (
+              <span
+                aria-disabled="true"
+                className={getLinkClassName(isAvailable)}
+                key={link.channel}
+                role="link"
+                title={`${link.label} indisponível no momento`}
+              >
+                <span className="buy-link-label">
+                  {link.logoSrc ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img className="marketplace-logo" src={link.logoSrc} alt={link.logoAlt} />
+                  ) : null}
+                  {link.label}
+                </span>
+                <span className="buy-link-arrow" aria-hidden="true">
+                  <ArrowUpRight />
+                </span>
+              </span>
+            );
+          })}
+        </div>
       </div>
     </article>
   );
