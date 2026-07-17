@@ -41,7 +41,7 @@ export function ProductGrid({ products, loading, onEdit, onDuplicate, onToggleAc
               <i /> {product.is_active ? "Ativo" : "Inativo"}
             </span>
             <details className="admin-card-menu" onClick={(event) => event.stopPropagation()}>
-              <summary aria-label={`Ações para ${product.name}`}>⋮</summary>
+              <summary aria-label={`Acoes para ${product.name}`}>⋮</summary>
               <div>
                 <button type="button" onClick={() => onEdit(product)}>Editar</button>
                 <button type="button" onClick={() => onDuplicate(product)}>Duplicar</button>
