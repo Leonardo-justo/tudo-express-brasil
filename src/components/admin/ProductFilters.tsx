@@ -1,10 +1,11 @@
+import { carouselCategories } from "@/components/admin/admin-product-utils";
+
 export type ProductStatusFilter = "all" | "active" | "inactive";
 
 type ProductFiltersProps = {
   search: string;
   category: string;
   status: ProductStatusFilter;
-  categories: string[];
   resultCount: number;
   onSearchChange: (value: string) => void;
   onCategoryChange: (value: string) => void;
@@ -15,7 +16,6 @@ export function ProductFilters({
   search,
   category,
   status,
-  categories,
   resultCount,
   onSearchChange,
   onCategoryChange,
@@ -34,11 +34,11 @@ export function ProductFilters({
           />
         </label>
         <label>
-          Categoria
+          Carrossel
           <select value={category} onChange={(event) => onCategoryChange(event.target.value)}>
-            <option value="all">Todas as categorias</option>
-            {categories.map((item) => (
-              <option key={item} value={item}>{item}</option>
+            <option value="all">Todos os carrosséis</option>
+            {carouselCategories.map((item) => (
+              <option key={item.value} value={item.value}>{item.label}</option>
             ))}
           </select>
         </label>

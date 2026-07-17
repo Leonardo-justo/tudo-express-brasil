@@ -6,7 +6,7 @@ import { DeleteConfirmDialog } from "@/components/admin/DeleteConfirmDialog";
 import { ProductDrawer } from "@/components/admin/ProductDrawer";
 import { ProductFilters, type ProductStatusFilter } from "@/components/admin/ProductFilters";
 import { ProductGrid } from "@/components/admin/ProductGrid";
-import { normalizeProduct, optimizeImage } from "@/components/admin/admin-product-utils";
+import { normalizeCarouselCategory, normalizeProduct, optimizeImage } from "@/components/admin/admin-product-utils";
 import { seedProducts } from "@/lib/seed-products";
 import { createSupabaseClient, isSupabaseConfigured } from "@/lib/supabase";
 import type { Product, ProductFormValues } from "@/types/product";
@@ -278,16 +278,12 @@ export function AdminClient() {
     setAdminMessage("Produto duplicado. Revise os dados e salve como novo item.", "info");
   }
 
-  const categories = useMemo(
-    () => Array.from(new Set(products.map((product) => product.category).filter(Boolean))).sort(),
-    [products]
-  );
   const activeProducts = products.filter((product) => product.is_active).length;
   const inactiveProducts = products.length - activeProducts;
   const filteredProducts = products.filter((product) => {
     const search = debouncedSearch.trim().toLowerCase();
     const matchesSearch = !search || product.name.toLowerCase().includes(search);
-    const matchesCategory = categoryFilter === "all" || product.category === categoryFilter;
+    const matchesCategory = categoryFilter === "all" || normalizeCarouselCategory(product.category) === categoryFilter;
     const matchesStatus =
       statusFilter === "all" ||
       (statusFilter === "active" && product.is_active) ||
@@ -394,7 +390,6 @@ export function AdminClient() {
           search={searchInput}
           category={categoryFilter}
           status={statusFilter}
-          categories={categories}
           resultCount={filteredProducts.length}
           onSearchChange={setSearchInput}
           onCategoryChange={setCategoryFilter}

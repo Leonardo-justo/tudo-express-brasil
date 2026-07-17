@@ -1,3 +1,4 @@
+import { normalizeCarouselCategory } from "@/components/admin/admin-product-utils";
 import type { Product } from "@/types/product";
 
 type ProductGridProps = {
@@ -51,7 +52,7 @@ export function ProductGrid({ products, loading, onEdit, onDuplicate, onToggleAc
           </div>
           <div className="admin-product-card-body">
             <h3>{product.name}</h3>
-            <small>{product.category} • {product.weight || "sem volume"} • ordem {product.sort_order}</small>
+            <small>{normalizeCarouselCategory(product.category)} • {product.weight || "sem volume"} • ordem {product.sort_order}</small>
             <div className="admin-link-badges" aria-label="Links cadastrados">
               <span className={product.mercado_livre_url ? "ok" : ""}>ML</span>
               <span className={product.shopee_url ? "ok" : ""}>Shopee</span>

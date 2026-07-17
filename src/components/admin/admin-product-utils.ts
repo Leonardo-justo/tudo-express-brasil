@@ -1,5 +1,22 @@
 import type { ProductFormValues } from "@/types/product";
 
+export const carouselCategories = [
+  {
+    value: "Onda Mel",
+    label: "Carrossel Onda Mel",
+    description: "Produtos de mel e linha Onda Mel."
+  },
+  {
+    value: "Utilidades",
+    label: "Carrossel Utilidades",
+    description: "Demais produtos, acessórios e itens úteis."
+  }
+] as const;
+
+export function normalizeCarouselCategory(category: string) {
+  return category.toLowerCase().includes("onda mel") ? "Onda Mel" : "Utilidades";
+}
+
 export const emptyProduct: ProductFormValues = {
   name: "",
   slug: "",

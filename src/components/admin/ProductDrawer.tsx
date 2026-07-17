@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { emptyProduct, slugify } from "@/components/admin/admin-product-utils";
+import { carouselCategories, emptyProduct, normalizeCarouselCategory, slugify } from "@/components/admin/admin-product-utils";
 import type { Product, ProductFormValues } from "@/types/product";
 
 type ProductDrawerProps = {
@@ -21,6 +21,7 @@ function productToForm(product: Product | null): ProductFormValues {
 
   return {
     ...product,
+    category: normalizeCarouselCategory(product.category),
     mercado_livre_url: product.mercado_livre_url || "",
     shopee_url: product.shopee_url || "",
     whatsapp_url: product.whatsapp_url || ""
@@ -52,7 +53,7 @@ function ProductDrawerPanel({ product, loading, onClose, onSave }: ProductDrawer
     }
 
     if (!form.category.trim()) {
-      fields.push("categoria/marca");
+      fields.push("carrossel");
     }
 
     return fields;
@@ -79,7 +80,7 @@ function ProductDrawerPanel({ product, loading, onClose, onSave }: ProductDrawer
   }
 
   function requestClose() {
-    if (dirty && !window.confirm("Descartar alterações não salvas?")) {
+    if (dirty && !window.confirm("Descartar alteracoes nao salvas?")) {
       return;
     }
 
@@ -119,18 +120,25 @@ function ProductDrawerPanel({ product, loading, onClose, onSave }: ProductDrawer
               <input value={form.name} onChange={(event) => updateField("name", event.target.value)} required />
             </label>
             <label>
-              Slug automático
+              Slug automatico
               <input value={slugPreview} readOnly placeholder="gerado-automaticamente" />
             </label>
             <label>
-              Descrição curta
+              Descricao curta
               <textarea value={form.short_description} onChange={(event) => updateField("short_description", event.target.value)} rows={3} />
             </label>
 
             <div className="form-row">
               <label>
-                Categoria/marca *
-                <input value={form.category} onChange={(event) => updateField("category", event.target.value)} required />
+                Carrossel onde aparece *
+                <select value={form.category} onChange={(event) => updateField("category", event.target.value)} required>
+                  {carouselCategories.map((item) => (
+                    <option key={item.value} value={item.value}>{item.label}</option>
+                  ))}
+                </select>
+                <small className="field-help">
+                  {carouselCategories.find((item) => item.value === form.category)?.description}
+                </small>
               </label>
               <label>
                 Peso/volume
@@ -164,18 +172,18 @@ function ProductDrawerPanel({ product, loading, onClose, onSave }: ProductDrawer
             </label>
             <div className="admin-image-preview">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={imagePreviewUrl} alt="Prévia do produto" />
+              <img src={imagePreviewUrl} alt="Previa do produto" />
               <div>
-                <strong>Prévia da imagem</strong>
-                <small>Uploads grandes são convertidos para WebP antes de salvar.</small>
+                <strong>Previa da imagem</strong>
+                <small>Uploads grandes sao convertidos para WebP antes de salvar.</small>
               </div>
             </div>
 
             <div className="admin-fieldset">
               <h3>Links de compra</h3>
-              <p>Preencha pelo menos um link quando o produto já estiver pronto para venda.</p>
+              <p>Preencha pelo menos um link quando o produto ja estiver pronto para venda.</p>
             </div>
-            {!hasBuyLink ? <p className="admin-warning">Produto sem link de compra. Você pode salvar assim e cadastrar os links depois.</p> : null}
+            {!hasBuyLink ? <p className="admin-warning">Produto sem link de compra. Voce pode salvar assim e cadastrar os links depois.</p> : null}
             <label>
               Link Mercado Livre
               <input value={form.mercado_livre_url || ""} onChange={(event) => updateField("mercado_livre_url", event.target.value)} placeholder="https://..." />
@@ -206,7 +214,7 @@ function ProductDrawerPanel({ product, loading, onClose, onSave }: ProductDrawer
           <footer className="admin-drawer-footer">
             <button className="btn btn-ghost" type="button" onClick={requestClose}>Cancelar</button>
             <button className="btn btn-primary" type="submit" disabled={!canSave}>
-              {loading ? "Salvando..." : product ? "Salvar alterações" : "Cadastrar produto"}
+              {loading ? "Salvando..." : product ? "Salvar alteracoes" : "Cadastrar produto"}
             </button>
           </footer>
         </form>
