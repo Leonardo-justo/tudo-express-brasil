@@ -2,7 +2,6 @@
   ArrowRight,
   Check,
   Heart,
-  PackageCheck,
   ShieldCheck,
   Star,
   Truck,
@@ -125,7 +124,7 @@ export default async function Home() {
               <h1>
                 Escolhas que <span className="hero-title-phrase">fazem a <em>diferença</em></span> no seu dia.
               </h1>
-              <p>Produtos úteis, naturais e selecionados com cuidado — e a segurança de comprar nos maiores marketplaces do Brasil.</p>
+              <p>Produtos úteis, naturais e selecionados com cuidado, com a segurança de comprar nos maiores marketplaces do Brasil.</p>
               <div className="hero-actions">
                 <a className="btn btn-primary" href="#produtos">Conhecer produtos <ArrowRight className="inline-icon" aria-hidden="true" /></a>
                 <a className="btn btn-ghost marketplace-cta" href={SHOPEE_STORE_URL} target="_blank" rel="noopener noreferrer">
@@ -153,10 +152,9 @@ export default async function Home() {
               <div className="honey-ring ring-one" />
               <div className="honey-ring ring-two" />
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img className="hero-product hero-product-main" src="/assets/mel-propolis.png" alt="Mel com própolis Onda Mel de 500 gramas" fetchPriority="high" />
+              <img className="hero-product hero-product-support" src="/assets/hero-suporte-celular.png" alt="Suporte universal para celular e tablet" fetchPriority="high" />
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img className="hero-product hero-product-side" src="/assets/mel-laranjeira.png" alt="Mel florada de laranjeira Onda Mel de 500 gramas" />
-              <div className="floating-card card-natural"><span><PackageCheck /></span><div><strong>100% natural</strong><small>Sabor e qualidade</small></div></div>
+              <img className="hero-product hero-product-cup" src="/assets/hero-copo-termico.png" alt="Copo térmico inox com tampa e abridor" />
               <div className="floating-card card-fast"><span><Zap /></span><div><strong>Compra fácil</strong><small>Em poucos cliques</small></div></div>
             </Reveal>
           </div>
