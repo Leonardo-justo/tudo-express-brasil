@@ -259,7 +259,7 @@ export default async function Home() {
               </div>
               <div className="about-social">
                 <span className="eyebrow eyebrow-light"><i /> Acompanhe de perto</span>
-                <h2>Novidades, dicas e produtos em movimento.</h2>
+                <h2>Dicas, novidades e ofertas para facilitar sua rotina.</h2>
                 <div className="social-links">
                   <a href="https://www.instagram.com/tudoexpressbrasil?igsh=MTV3dXhsamlocnU4Yw==" target="_blank" rel="noopener noreferrer"><span className="social-brand-icon"><InstagramIcon /></span>Instagram</a>
                   <a href="https://www.tiktok.com/@tudoexpressbrasil" target="_blank" rel="noopener noreferrer"><span className="social-brand-icon social-brand-icon-dark"><TikTokIcon /></span>TikTok</a>
