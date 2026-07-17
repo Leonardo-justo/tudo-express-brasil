@@ -359,3 +359,8 @@
 .feature-media{aspect-ratio:auto!important;min-height:470px!important;background:#063a9d!important}
 .feature-media img{height:100%!important;aspect-ratio:auto!important;object-fit:fill!important;background:transparent!important}
 @media(max-width:720px){.feature-media{min-height:320px!important}}
+
+/* Banner preenchendo o card inteiro, sem faixas */
+.feature-media{height:470px!important;min-height:470px!important;background:transparent!important}
+.feature-media img{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;max-width:none!important;object-fit:fill!important}
+@media(max-width:720px){.feature-media{height:320px!important;min-height:320px!important}}
