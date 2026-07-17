@@ -118,6 +118,8 @@ export function AdminClient() {
   const [messageKind, setMessageKind] = useState<MessageKind>("info");
   const [previewUrl, setPreviewUrl] = useState("/assets/mel-propolis.png");
   const [loading, setLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState<"all" | "active" | "inactive">("all");
 
   useEffect(() => {
     if (!supabase) {
@@ -387,6 +389,22 @@ export function AdminClient() {
 
   const imagePreviewUrl = previewUrl || form.image_url || "/assets/mel-propolis.png";
   const slugPreview = form.id ? form.slug || slugify(form.name) : slugify(form.name);
+  const activeProducts = products.filter((product) => product.is_active).length;
+  const inactiveProducts = products.length - activeProducts;
+  const filteredProducts = products.filter((product) => {
+    const search = searchTerm.trim().toLowerCase();
+    const matchesStatus =
+      statusFilter === "all" ||
+      (statusFilter === "active" && product.is_active) ||
+      (statusFilter === "inactive" && !product.is_active);
+    const matchesSearch =
+      !search ||
+      product.name.toLowerCase().includes(search) ||
+      product.category.toLowerCase().includes(search) ||
+      product.short_description.toLowerCase().includes(search);
+
+    return matchesStatus && matchesSearch;
+  });
 
   if (!isSupabaseConfigured || !supabase) {
     return (
@@ -451,20 +469,37 @@ export function AdminClient() {
         <p>Cadastre produtos, controle o que aparece no site e adicione links de compra do Mercado Livre, Shopee ou WhatsApp.</p>
       </section>
 
+      <section className="admin-overview" aria-label="Resumo dos produtos">
+        <div className="admin-stat-card">
+          <span>Total</span>
+          <strong>{products.length}</strong>
+          <small>produtos cadastrados</small>
+        </div>
+        <div className="admin-stat-card success">
+          <span>No site</span>
+          <strong>{activeProducts}</strong>
+          <small>visíveis para clientes</small>
+        </div>
+        <div className="admin-stat-card muted">
+          <span>Ocultos</span>
+          <strong>{inactiveProducts}</strong>
+          <small>não aparecem na vitrine</small>
+        </div>
+      </section>
+
       <div className="admin-grid">
         <form className="admin-card product-form" onSubmit={saveProduct}>
           <div className="admin-section-title">
             <h2>{form.id ? "Editar produto" : "Novo produto"}</h2>
             {form.id ? <button type="button" onClick={() => { setForm(emptyProduct); updateImageFile(null); }}>Limpar</button> : null}
           </div>
+          <p className="admin-form-intro">
+            Preencha apenas o essencial. Os campos técnicos ficam em opções avançadas para evitar alterações acidentais.
+          </p>
 
           <label>
             Nome do produto
             <input value={form.name} onChange={(event) => updateField("name", event.target.value)} required />
-          </label>
-          <label>
-            Slug automático
-            <input value={slugPreview} readOnly placeholder="gerado-automaticamente" />
           </label>
           <label>
             Descrição curta
@@ -484,27 +519,22 @@ export function AdminClient() {
 
           <div className="form-row">
             <label>
-              Etiqueta
+              Etiqueta no card
               <input value={form.tag} onChange={(event) => updateField("tag", event.target.value)} />
+              <small className="field-help">Ex.: Novo, Clássico, Prático, Promoção.</small>
             </label>
-            <label>
-              Cor da etiqueta
-              <select value={form.tag_variant} onChange={(event) => updateField("tag_variant", event.target.value as ProductFormValues["tag_variant"])}>
-                <option value="default">Amarela</option>
-                <option value="soft">Suave</option>
-                <option value="dark">Escura</option>
-                <option value="blue">Azul</option>
-              </select>
+            <label className="checkbox-label admin-active-toggle">
+              <input type="checkbox" checked={form.is_active} onChange={(event) => updateField("is_active", event.target.checked)} />
+              <span>
+                Produto ativo no site
+                <small className="field-help">Desmarque para esconder sem excluir.</small>
+              </span>
             </label>
           </div>
 
           <label>
             Imagem por upload
             <input type="file" accept="image/*" onChange={(event) => updateImageFile(event.target.files?.[0] || null)} />
-          </label>
-          <label>
-            Ou URL da imagem
-            <input value={form.image_url} onChange={(event) => updateField("image_url", event.target.value)} placeholder="/assets/mel-propolis.png" />
           </label>
           <div className="admin-image-preview">
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -515,33 +545,55 @@ export function AdminClient() {
             </div>
           </div>
 
+          <div className="admin-fieldset">
+            <h3>Links de compra</h3>
+            <p>Se algum link ficar vazio, o botão aparece desabilitado no card do produto.</p>
+          </div>
           <label>
             Link Mercado Livre
             <input value={form.mercado_livre_url || ""} onChange={(event) => updateField("mercado_livre_url", event.target.value)} placeholder="https://..." />
-            <small className="field-help">Se ficar vazio, o botão do Mercado Livre não aparece no card.</small>
+            <small className="field-help">Cole aqui o link do anúncio no Mercado Livre.</small>
           </label>
           <label>
             Link Shopee
             <input value={form.shopee_url || ""} onChange={(event) => updateField("shopee_url", event.target.value)} placeholder="https://..." />
-            <small className="field-help">Se ficar vazio, o botão da Shopee não aparece no card.</small>
-          </label>
-          <label>
-            Link WhatsApp
-            <input value={form.whatsapp_url || ""} onChange={(event) => updateField("whatsapp_url", event.target.value)} placeholder="https://wa.me/..." />
-            <small className="field-help">Opcional: se vazio, o site gera uma mensagem automática com o nome do produto.</small>
+            <small className="field-help">Cole aqui o link do anúncio na Shopee.</small>
           </label>
 
-          <div className="form-row">
+          <details className="admin-advanced">
+            <summary>Opções avançadas</summary>
             <label>
-              Ordem
-              <input type="number" value={form.sort_order} onChange={(event) => updateField("sort_order", Number(event.target.value))} />
-              <small className="field-help">Números menores aparecem primeiro no catálogo.</small>
+              Slug automático
+              <input value={slugPreview} readOnly placeholder="gerado-automaticamente" />
+              <small className="field-help">Usado na URL da página do produto. É gerado pelo nome.</small>
             </label>
-            <label className="checkbox-label">
-              <input type="checkbox" checked={form.is_active} onChange={(event) => updateField("is_active", event.target.checked)} />
-              Ativo no site
+            <label>
+              URL manual da imagem
+              <input value={form.image_url} onChange={(event) => updateField("image_url", event.target.value)} placeholder="/assets/mel-propolis.png" />
+              <small className="field-help">Use só se a imagem já estiver hospedada ou salva no projeto.</small>
             </label>
-          </div>
+            <label>
+              Link WhatsApp personalizado
+              <input value={form.whatsapp_url || ""} onChange={(event) => updateField("whatsapp_url", event.target.value)} placeholder="https://wa.me/..." />
+              <small className="field-help">Opcional: se vazio, o site gera uma mensagem automática com o nome do produto.</small>
+            </label>
+            <div className="form-row">
+              <label>
+                Ordem no catálogo
+                <input type="number" value={form.sort_order} onChange={(event) => updateField("sort_order", Number(event.target.value))} />
+                <small className="field-help">Números menores aparecem primeiro.</small>
+              </label>
+              <label>
+                Cor da etiqueta
+                <select value={form.tag_variant} onChange={(event) => updateField("tag_variant", event.target.value as ProductFormValues["tag_variant"])}>
+                  <option value="default">Amarela</option>
+                  <option value="soft">Suave</option>
+                  <option value="dark">Escura</option>
+                  <option value="blue">Azul</option>
+                </select>
+              </label>
+            </div>
+          </details>
 
           {message ? <p className={`admin-message ${messageKind}`}>{message}</p> : null}
           <button className="btn btn-primary" type="submit" disabled={loading}>
@@ -553,25 +605,55 @@ export function AdminClient() {
           <div className="admin-section-title">
             <h2>Produtos cadastrados</h2>
             <div>
-              <button type="button" onClick={() => void importSeedCatalog()} disabled={loading}>Importar catálogo base</button>
               <button type="button" onClick={() => void loadProducts()} disabled={loading}>Atualizar</button>
             </div>
           </div>
+          <div className="admin-list-tools">
+            <label>
+              Buscar produto
+              <input
+                value={searchTerm}
+                onChange={(event) => setSearchTerm(event.target.value)}
+                placeholder="Digite nome, categoria ou descrição"
+                type="search"
+              />
+            </label>
+            <label>
+              Status
+              <select value={statusFilter} onChange={(event) => setStatusFilter(event.target.value as typeof statusFilter)}>
+                <option value="all">Todos</option>
+                <option value="active">Ativos no site</option>
+                <option value="inactive">Ocultos</option>
+              </select>
+            </label>
+          </div>
 
           {products.length === 0 ? (
-            <p className="empty-list">Nenhum produto cadastrado ainda.</p>
+            <div className="admin-empty-state">
+              <p>Nenhum produto cadastrado ainda.</p>
+              <button type="button" onClick={() => void importSeedCatalog()} disabled={loading}>Importar catálogo base</button>
+            </div>
+          ) : filteredProducts.length === 0 ? (
+            <p className="empty-list">Nenhum produto encontrado com esse filtro.</p>
           ) : (
             <div className="admin-products">
-              {products.map((product) => (
+              {filteredProducts.map((product) => (
                 <article className={`admin-product${product.is_active ? "" : " inactive"}`} key={product.id}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={product.image_url || "/assets/mel-propolis.png"} alt={`Imagem do produto ${product.name}`} />
                   <div>
-                    <strong>{product.name}</strong>
+                    <div className="admin-product-head">
+                      <strong>{product.name}</strong>
+                      <span className={`admin-status-badge${product.is_active ? " active" : ""}`}>{product.is_active ? "No site" : "Oculto"}</span>
+                    </div>
                     <small>{product.category} • {product.weight || "sem peso"} • ordem {product.sort_order}</small>
                     <p>{product.short_description}</p>
+                    <div className="admin-link-badges" aria-label="Links cadastrados">
+                      <span className={product.mercado_livre_url ? "ok" : ""}>Mercado Livre</span>
+                      <span className={product.shopee_url ? "ok" : ""}>Shopee</span>
+                    </div>
                     <div className="admin-actions">
-                      <button type="button" onClick={() => editProduct(product)}>Editar</button>
+                      <button type="button" className="primary-action" onClick={() => editProduct(product)}>Editar</button>
                       <button type="button" onClick={() => duplicateProduct(product)}>Duplicar</button>
                       <button type="button" onClick={() => void toggleActive(product)}>{product.is_active ? "Desativar" : "Ativar"}</button>
                       <button type="button" className="danger" onClick={() => void removeProduct(product)}>Excluir</button>

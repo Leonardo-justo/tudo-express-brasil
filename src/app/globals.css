@@ -396,3 +396,29 @@
 .hero-visual .card-fast{right:10px!important;bottom:76px!important;z-index:6!important}
 @media(max-width:960px){.hero-product-support-bg{height:185px!important;left:-10px!important;bottom:104px!important}.hero-product-cup-right{height:154px!important;right:-42px!important;bottom:184px!important}.hero-visual .card-fast{right:2px!important;bottom:70px!important}}
 @media(max-width:520px){.hero-product-support-bg{height:138px!important;left:50px!important;bottom:98px!important}.hero-product-cup-right{height:112px!important;right:-38px!important;bottom:166px!important}.hero-visual .card-fast{right:0!important;bottom:56px!important}}
+
+/* Admin: experiencia simplificada para o cliente */
+.admin-overview{width:min(1180px,100%);margin:0 auto 24px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.admin-stat-card{border:1px solid rgba(7,59,155,.1);border-radius:20px;background:rgba(255,255,255,.92);box-shadow:0 14px 34px rgba(7,59,155,.07);padding:18px}
+.admin-stat-card span,.admin-stat-card small{display:block;color:var(--muted);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px}
+.admin-stat-card strong{display:block;color:var(--blue-deep);font-size:34px;line-height:1;margin:8px 0 6px;letter-spacing:-1.5px}
+.admin-stat-card.success strong{color:#087443}.admin-stat-card.muted strong{color:#6c7890}
+.admin-form-intro{margin:-4px 0 6px!important;color:var(--muted)!important;font-size:13px!important;line-height:1.55}
+.admin-fieldset{border:1px solid rgba(7,59,155,.1);border-radius:18px;background:linear-gradient(145deg,#f8fbff,#fff);padding:16px;margin:4px 0}
+.admin-fieldset h3{margin:0;color:var(--blue-deep);font-size:15px;letter-spacing:-.3px}.admin-fieldset p{margin:5px 0 0;color:var(--muted);font-size:12px}
+.admin-active-toggle{align-content:center!important}.admin-active-toggle span{display:grid;gap:2px}.admin-active-toggle .field-help{margin:0!important;text-transform:none!important;letter-spacing:0!important}
+.admin-advanced{border:1px dashed rgba(7,59,155,.22);border-radius:18px;background:#fbfdff;padding:0 16px}
+.admin-advanced summary{cursor:pointer;color:var(--blue);font-size:13px;font-weight:900;padding:15px 0}
+.admin-advanced label{margin-bottom:14px}.admin-advanced[open]{padding-bottom:4px}
+.admin-list-tools{display:grid;grid-template-columns:1fr 190px;gap:12px;margin-bottom:18px}
+.admin-list-tools label{display:grid;gap:7px;color:var(--ink);font-size:12px;font-weight:800}
+.admin-list-tools input,.admin-list-tools select{width:100%;border:1px solid var(--line);border-radius:13px;background:#fff;padding:12px 13px;color:var(--ink);outline:none;font:inherit;font-size:14px}
+.admin-empty-state{display:grid;justify-items:start;gap:12px;color:var(--muted);font-size:14px}.admin-empty-state button{border:1px solid var(--line);background:#fff;color:var(--blue);font-weight:800;border-radius:10px;padding:9px 12px;cursor:pointer}
+.admin-product-head{display:flex;align-items:start;justify-content:space-between;gap:12px}
+.admin-status-badge{flex:0 0 auto;border-radius:999px;background:#eef2f7;color:#6c7890;padding:5px 9px;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.7px}
+.admin-status-badge.active{background:#ecfdf3;color:#087443}
+.admin-link-badges{display:flex;flex-wrap:wrap;gap:6px;margin:-2px 0 12px}
+.admin-link-badges span{border-radius:999px;background:#f1f5f9;color:#94a3b8;padding:5px 8px;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.7px}
+.admin-link-badges span.ok{background:#eef5ff;color:var(--blue)}
+.admin-actions .primary-action{background:var(--blue)!important;color:#fff!important;border-color:var(--blue)!important}
+@media(max-width:900px){.admin-overview{grid-template-columns:1fr}.admin-list-tools{grid-template-columns:1fr}.admin-product-head{display:grid}}
