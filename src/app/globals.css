@@ -350,3 +350,7 @@
 .feature-actions .marketplace-cta img[src*="mercado-livre"]{width:32px!important;height:24px!important;max-width:32px!important}
 .feature-actions .marketplace-cta .inline-icon{width:18px!important;height:18px!important;flex:0 0 18px!important}
 @media(max-width:720px){.feature-media{min-height:260px!important}.feature-actions{grid-template-columns:1fr!important}.feature-actions .marketplace-cta span{font-size:13px!important}}
+
+/* Banner do suporte sem moldura azul */
+.feature-media{aspect-ratio:1536/864!important;min-height:0!important;background:transparent!important}
+.feature-media img{height:auto!important;aspect-ratio:1536/864!important;background:transparent!important}
