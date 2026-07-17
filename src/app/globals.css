@@ -536,3 +536,10 @@
 @media(max-width:1180px){.admin-product-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
 @media(max-width:860px){.admin-product-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}.admin-product-thumb{height:158px!important}.admin-product-thumb img{max-height:118px!important}}
 @media(max-width:520px){.admin-product-grid{grid-template-columns:1fr!important}.admin-product-card{min-height:270px!important}.admin-product-thumb{height:154px!important}}
+
+/* Menu dos cards do admin sem corte */
+.admin-product-card{overflow:visible!important}
+.admin-product-thumb{overflow:visible!important;z-index:5!important}
+.admin-product-card-body{position:relative;z-index:1!important}
+.admin-card-menu{z-index:30!important}
+.admin-card-menu-panel{z-index:40!important;top:36px!important;max-height:none!important}
