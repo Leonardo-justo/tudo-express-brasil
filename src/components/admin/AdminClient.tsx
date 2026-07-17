@@ -7,30 +7,10 @@ import { ProductDrawer } from "@/components/admin/ProductDrawer";
 import { ProductFilters, type ProductStatusFilter } from "@/components/admin/ProductFilters";
 import { ProductGrid } from "@/components/admin/ProductGrid";
 import { normalizeCarouselCategory, normalizeProduct, optimizeImage } from "@/components/admin/admin-product-utils";
-import { seedProducts } from "@/lib/seed-products";
 import { createSupabaseClient, isSupabaseConfigured } from "@/lib/supabase";
 import type { Product, ProductFormValues } from "@/types/product";
 
 type MessageKind = "success" | "error" | "info";
-
-function toProductInsert(product: Product) {
-  return {
-    name: product.name,
-    slug: product.slug,
-    short_description: product.short_description,
-    image_url: product.image_url,
-    category: product.category,
-    weight: product.weight,
-    tag: product.tag,
-    tag_variant: product.tag_variant,
-    mercado_livre_url: product.mercado_livre_url,
-    shopee_url: product.shopee_url,
-    whatsapp_url: product.whatsapp_url,
-    is_active: product.is_active,
-    is_featured: product.is_featured,
-    sort_order: product.sort_order
-  };
-}
 
 export function AdminClient() {
   const supabase = useMemo(() => createSupabaseClient(), []);
@@ -227,35 +207,6 @@ export function AdminClient() {
     setLoading(false);
   }
 
-  async function importSeedCatalog() {
-    if (!supabase) {
-      return;
-    }
-
-    setLoading(true);
-    setMessage("");
-
-    const existingSlugs = new Set(products.map((product) => product.slug));
-    const productsToImport = seedProducts.filter((product) => !existingSlugs.has(product.slug)).map(toProductInsert);
-
-    if (productsToImport.length === 0) {
-      setAdminMessage("Catálogo base já está cadastrado no Supabase.", "info");
-      setLoading(false);
-      return;
-    }
-
-    const { error } = await supabase.from("products").insert(productsToImport);
-
-    if (error) {
-      setAdminMessage("Não foi possível importar o catálogo base. Confira se este usuário é administrador.", "error");
-    } else {
-      setAdminMessage(`${productsToImport.length} produto(s) importado(s) para o Supabase.`, "success");
-      await loadProducts();
-    }
-
-    setLoading(false);
-  }
-
   function openCreateDrawer() {
     setEditingProduct(null);
     setDrawerOpen(true);
@@ -382,7 +333,6 @@ export function AdminClient() {
         <div className="admin-section-title">
           <h2>Produtos cadastrados</h2>
           <div>
-            <button type="button" onClick={() => void importSeedCatalog()} disabled={loading}>Importar catálogo base</button>
             <button type="button" onClick={() => void loadProducts()} disabled={loading}>Atualizar</button>
           </div>
         </div>

@@ -165,10 +165,7 @@ function ProductDrawerPanel({ product, loading, onClose, onSave }: ProductDrawer
             <label>
               Imagem por upload
               <input type="file" accept="image/*" onChange={(event) => updateImageFile(event.target.files?.[0] || null)} />
-            </label>
-            <label>
-              URL da imagem
-              <input value={form.image_url} onChange={(event) => updateField("image_url", event.target.value)} placeholder="/assets/mel-propolis.png" />
+              <small className="field-help">Use o upload para trocar a imagem. O caminho interno fica protegido para evitar erro no site.</small>
             </label>
             <div className="admin-image-preview">
               {/* eslint-disable-next-line @next/next/no-img-element */}
