@@ -181,7 +181,7 @@ export default async function Home() {
           </div>
         </section>
 
-        <section className="feature section" id="sobre">
+        <section className="feature section" id="curadoria">
           <div className="container feature-grid">
             <Reveal className="feature-media">
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -258,6 +258,17 @@ export default async function Home() {
               <a href={googleReviewsUrl} target="_blank" rel="noopener noreferrer"><span className="social-brand-icon"><GoogleIcon /></span>Avalie no Google</a>
             </div>
           </Reveal>
+        </section>
+
+        <section className="about-summary section" id="sobre">
+          <div className="container">
+            <Reveal className="about-summary-card">
+              <span className="eyebrow"><i /> Sobre nós</span>
+              <p>
+                A Tudo Express Brasil nasceu para facilitar escolhas do dia a dia com produtos úteis, naturais e selecionados com cuidado. Atuamos como uma vitrine confiável, conectando você aos nossos canais oficiais no Mercado Livre, Shopee e redes sociais, sempre com foco em praticidade, segurança e bom atendimento.
+              </p>
+            </Reveal>
+          </div>
         </section>
 
         <section className="reviews section" id="avaliacoes">

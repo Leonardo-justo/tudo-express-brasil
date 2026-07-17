@@ -364,3 +364,10 @@
 .feature-media{height:470px!important;min-height:470px!important;background:transparent!important}
 .feature-media img{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;max-width:none!important;object-fit:fill!important}
 @media(max-width:720px){.feature-media{height:320px!important;min-height:320px!important}}
+
+/* Sobre nos resumido */
+.about-summary{padding:82px 0 70px!important;background:linear-gradient(180deg,#fff,#f7faff)!important}
+.about-summary-card{max-width:900px;margin:0 auto;text-align:center;border:1px solid rgba(7,59,155,.1);border-radius:28px;background:#fff;padding:44px 52px;box-shadow:0 24px 55px rgba(7,59,155,.08)}
+.about-summary-card .eyebrow{justify-content:center}
+.about-summary-card p{margin:20px auto 0;color:#415373;font-size:18px;line-height:1.8;max-width:790px}
+@media(max-width:720px){.about-summary{padding:58px 0!important}.about-summary-card{padding:30px 22px;border-radius:22px}.about-summary-card p{font-size:15px;line-height:1.75}}
