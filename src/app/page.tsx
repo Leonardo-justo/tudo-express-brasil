@@ -2,7 +2,6 @@
   ArrowRight,
   Check,
   Heart,
-  PackageCheck,
   ShieldCheck,
   Star,
   Truck,
@@ -158,7 +157,6 @@ export default async function Home() {
               <img className="hero-product hero-product-side hero-product-support-bg" src="/assets/hero-suporte-celular-transparent.png" alt="Suporte universal para celular e tablet" />
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img className="hero-product hero-product-cup-right" src="/assets/hero-copo-termico-transparent.png" alt="Copo térmico inox com tampa e abridor" />
-              <div className="floating-card card-natural"><span><PackageCheck /></span><div><strong>100% natural</strong><small>Sabor e qualidade</small></div></div>
               <div className="floating-card card-fast"><span><Zap /></span><div><strong>Compra fácil</strong><small>Em poucos cliques</small></div></div>
             </Reveal>
           </div>
