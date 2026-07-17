@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import { normalizeCarouselCategory } from "@/components/admin/admin-product-utils";
 import type { Product } from "@/types/product";
 
@@ -11,6 +14,8 @@ type ProductGridProps = {
 };
 
 export function ProductGrid({ products, loading, onEdit, onDuplicate, onToggleActive, onDelete }: ProductGridProps) {
+  const [openMenuId, setOpenMenuId] = useState<string | null>(null);
+
   if (loading && products.length === 0) {
     return (
       <div className="admin-product-grid">
@@ -23,6 +28,11 @@ export function ProductGrid({ products, loading, onEdit, onDuplicate, onToggleAc
 
   if (products.length === 0) {
     return <p className="empty-list">Nenhum produto encontrado com esse filtro.</p>;
+  }
+
+  function runAction(action: () => void) {
+    setOpenMenuId(null);
+    action();
   }
 
   return (
@@ -40,15 +50,27 @@ export function ProductGrid({ products, loading, onEdit, onDuplicate, onToggleAc
             <span className={`admin-status-pill${product.is_active ? " active" : ""}`}>
               <i /> {product.is_active ? "Ativo" : "Inativo"}
             </span>
-            <details className="admin-card-menu" onClick={(event) => event.stopPropagation()}>
-              <summary aria-label={`Acoes para ${product.name}`}>⋮</summary>
-              <div>
-                <button type="button" onClick={() => onEdit(product)}>Editar</button>
-                <button type="button" onClick={() => onDuplicate(product)}>Duplicar</button>
-                <button type="button" onClick={() => onToggleActive(product)}>{product.is_active ? "Desativar" : "Ativar"}</button>
-                <button type="button" className="danger" onClick={() => onDelete(product)}>Excluir</button>
-              </div>
-            </details>
+            <div className="admin-card-menu" onClick={(event) => event.stopPropagation()}>
+              <button
+                className="admin-card-menu-trigger"
+                type="button"
+                aria-expanded={openMenuId === product.id}
+                aria-label={`Acoes para ${product.name}`}
+                onClick={() => setOpenMenuId((current) => (current === product.id ? null : product.id))}
+              >
+                ⋮
+              </button>
+              {openMenuId === product.id ? (
+                <div className="admin-card-menu-panel">
+                  <button type="button" onClick={() => runAction(() => onEdit(product))}>Editar</button>
+                  <button type="button" onClick={() => runAction(() => onDuplicate(product))}>Duplicar</button>
+                  <button type="button" onClick={() => runAction(() => onToggleActive(product))}>
+                    {product.is_active ? "Desativar" : "Ativar"}
+                  </button>
+                  <button type="button" className="danger" onClick={() => runAction(() => onDelete(product))}>Excluir</button>
+                </div>
+              ) : null}
+            </div>
           </div>
           <div className="admin-product-card-body">
             <h3>{product.name}</h3>
