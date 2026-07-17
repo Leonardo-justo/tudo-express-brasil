@@ -525,3 +525,16 @@
 @media(max-width:860px){.admin-product-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
 @media(max-width:720px){.product-carousel-item{width:230px!important;flex-basis:230px!important}.product-image{height:185px!important}.admin-product-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
 @media(max-width:520px){.product-carousel-item{width:calc(100vw - 52px)!important;flex-basis:calc(100vw - 52px)!important}.product-image{height:205px!important}.admin-product-grid{grid-template-columns:1fr!important}}
+
+/* Admin: cards um pouco maiores, imagens contidas no quadro */
+.admin-product-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:16px!important}
+.admin-product-card{min-height:282px!important}
+.admin-product-thumb{height:166px!important;overflow:hidden!important}
+.admin-product-thumb img{width:auto!important;height:auto!important;max-width:82%!important;max-height:124px!important;object-fit:contain!important;padding:0!important}
+.admin-product-card-body{min-height:116px!important;padding:13px 14px!important}
+.admin-product-card-body h3{font-size:15px!important;min-height:38px!important;display:-webkit-box!important;-webkit-line-clamp:2!important;-webkit-box-orient:vertical!important;white-space:normal!important;overflow:hidden!important}
+.admin-product-card-body small{min-height:24px!important}
+.admin-link-badges{margin-top:auto!important}
+@media(max-width:1180px){.admin-product-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
+@media(max-width:860px){.admin-product-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}.admin-product-thumb{height:158px!important}.admin-product-thumb img{max-height:118px!important}}
+@media(max-width:520px){.admin-product-grid{grid-template-columns:1fr!important}.admin-product-card{min-height:270px!important}.admin-product-thumb{height:154px!important}}
