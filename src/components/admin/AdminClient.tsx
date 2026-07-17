@@ -2,107 +2,34 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import { DeleteConfirmDialog } from "@/components/admin/DeleteConfirmDialog";
+import { ProductDrawer } from "@/components/admin/ProductDrawer";
+import { ProductFilters, type ProductStatusFilter } from "@/components/admin/ProductFilters";
+import { ProductGrid } from "@/components/admin/ProductGrid";
+import { normalizeProduct, optimizeImage } from "@/components/admin/admin-product-utils";
 import { seedProducts } from "@/lib/seed-products";
 import { createSupabaseClient, isSupabaseConfigured } from "@/lib/supabase";
 import type { Product, ProductFormValues } from "@/types/product";
 
 type MessageKind = "success" | "error" | "info";
 
-const emptyProduct: ProductFormValues = {
-  name: "",
-  slug: "",
-  short_description: "",
-  image_url: "",
-  category: "Onda Mel",
-  weight: "",
-  tag: "Novo",
-  tag_variant: "default",
-  mercado_livre_url: "",
-  shopee_url: "",
-  whatsapp_url: "",
-  is_active: true,
-  is_featured: true,
-  sort_order: 10
-};
-
-function slugify(value: string) {
-  return value
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)+/g, "");
-}
-
-function normalizeProduct(values: ProductFormValues) {
-  const automaticSlug = slugify(values.name);
-
+function toProductInsert(product: Product) {
   return {
-    ...values,
-    slug: values.id ? values.slug || automaticSlug : automaticSlug,
-    mercado_livre_url: values.mercado_livre_url || null,
-    shopee_url: values.shopee_url || null,
-    whatsapp_url: values.whatsapp_url || null,
-    image_url: values.image_url || "/assets/mel-propolis.png",
-    sort_order: Number(values.sort_order || 0)
+    name: product.name,
+    slug: product.slug,
+    short_description: product.short_description,
+    image_url: product.image_url,
+    category: product.category,
+    weight: product.weight,
+    tag: product.tag,
+    tag_variant: product.tag_variant,
+    mercado_livre_url: product.mercado_livre_url,
+    shopee_url: product.shopee_url,
+    whatsapp_url: product.whatsapp_url,
+    is_active: product.is_active,
+    is_featured: product.is_featured,
+    sort_order: product.sort_order
   };
-}
-
-function readFileAsDataUrl(file: File) {
-  return new Promise<string>((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(String(reader.result));
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
-}
-
-function loadImage(dataUrl: string) {
-  return new Promise<HTMLImageElement>((resolve, reject) => {
-    const image = new Image();
-    image.onload = () => resolve(image);
-    image.onerror = reject;
-    image.src = dataUrl;
-  });
-}
-
-async function optimizeImage(file: File) {
-  if (!file.type.startsWith("image/") || file.type.includes("gif") || file.type.includes("svg")) {
-    return file;
-  }
-
-  const dataUrl = await readFileAsDataUrl(file);
-  const image = await loadImage(dataUrl);
-  const maxSize = 1600;
-  const scale = Math.min(1, maxSize / Math.max(image.width, image.height));
-  const width = Math.max(1, Math.round(image.width * scale));
-  const height = Math.max(1, Math.round(image.height * scale));
-  const canvas = document.createElement("canvas");
-  canvas.width = width;
-  canvas.height = height;
-  const context = canvas.getContext("2d");
-
-  if (!context) {
-    return file;
-  }
-
-  context.drawImage(image, 0, 0, width, height);
-
-  return new Promise<File>((resolve) => {
-    canvas.toBlob(
-      (blob) => {
-        if (!blob) {
-          resolve(file);
-          return;
-        }
-
-        resolve(new File([blob], `${file.name.replace(/\.[^.]+$/, "")}.webp`, { type: "image/webp" }));
-      },
-      "image/webp",
-      0.84
-    );
-  });
 }
 
 export function AdminClient() {
@@ -112,14 +39,16 @@ export function AdminClient() {
   const [sessionReady, setSessionReady] = useState(false);
   const [signedIn, setSignedIn] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
-  const [form, setForm] = useState<ProductFormValues>(emptyProduct);
-  const [imageFile, setImageFile] = useState<File | null>(null);
   const [message, setMessage] = useState("");
   const [messageKind, setMessageKind] = useState<MessageKind>("info");
-  const [previewUrl, setPreviewUrl] = useState("/assets/mel-propolis.png");
   const [loading, setLoading] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [statusFilter, setStatusFilter] = useState<"all" | "active" | "inactive">("all");
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<Product | null>(null);
+  const [searchInput, setSearchInput] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState("all");
+  const [statusFilter, setStatusFilter] = useState<ProductStatusFilter>("all");
 
   useEffect(() => {
     if (!supabase) {
@@ -146,18 +75,14 @@ export function AdminClient() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [signedIn]);
 
+  useEffect(() => {
+    const timer = window.setTimeout(() => setDebouncedSearch(searchInput), 300);
+    return () => window.clearTimeout(timer);
+  }, [searchInput]);
+
   function setAdminMessage(text: string, kind: MessageKind = "info") {
     setMessage(text);
     setMessageKind(kind);
-  }
-
-  function updateImageFile(file: File | null) {
-    if (previewUrl.startsWith("blob:")) {
-      URL.revokeObjectURL(previewUrl);
-    }
-
-    setImageFile(file);
-    setPreviewUrl(file ? URL.createObjectURL(file) : "");
   }
 
   async function login(event: React.FormEvent<HTMLFormElement>) {
@@ -182,8 +107,9 @@ export function AdminClient() {
   async function logout() {
     await supabase?.auth.signOut();
     setProducts([]);
-    setForm(emptyProduct);
-    updateImageFile(null);
+    setDrawerOpen(false);
+    setEditingProduct(null);
+    setDeleteTarget(null);
   }
 
   async function loadProducts() {
@@ -208,12 +134,12 @@ export function AdminClient() {
     setLoading(false);
   }
 
-  async function uploadImage() {
-    if (!supabase || !imageFile) {
-      return form.image_url;
+  async function uploadImage(file: File | null, fallbackUrl: string) {
+    if (!supabase || !file) {
+      return fallbackUrl;
     }
 
-    const optimizedFile = await optimizeImage(imageFile);
+    const optimizedFile = await optimizeImage(file);
     const extension = optimizedFile.name.split(".").pop() || "webp";
     const fileName = `${crypto.randomUUID()}.${extension}`;
 
@@ -232,41 +158,37 @@ export function AdminClient() {
     return data.publicUrl;
   }
 
-  async function saveProduct(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-
+  async function saveProduct(values: ProductFormValues, imageFile: File | null) {
     if (!supabase) {
-      return;
+      return false;
     }
 
     setLoading(true);
     setMessage("");
 
     try {
-      const imageUrl = await uploadImage();
-      const payload = normalizeProduct({ ...form, image_url: imageUrl });
-
-      const { error } = await supabase
-        .from("products")
-        .upsert(payload, { onConflict: "id" });
+      const imageUrl = await uploadImage(imageFile, values.image_url);
+      const payload = normalizeProduct({ ...values, image_url: imageUrl });
+      const { error } = await supabase.from("products").upsert(payload, { onConflict: "id" });
 
       if (error) {
         throw error;
       }
 
-      setAdminMessage(form.id ? "Produto atualizado com sucesso." : "Produto cadastrado com sucesso.", "success");
-      setForm(emptyProduct);
-      updateImageFile(null);
+      setAdminMessage(values.id ? "Alterações salvas." : "Produto cadastrado com sucesso.", "success");
+      setEditingProduct(null);
       await loadProducts();
+      return true;
     } catch (error) {
       setAdminMessage(error instanceof Error ? error.message : "Não foi possível salvar o produto.", "error");
+      return false;
     } finally {
       setLoading(false);
     }
   }
 
   async function removeProduct(product: Product) {
-    if (!supabase || !window.confirm(`Excluir "${product.name}" definitivamente?`)) {
+    if (!supabase) {
       return;
     }
 
@@ -277,8 +199,9 @@ export function AdminClient() {
     if (error) {
       setAdminMessage("Não foi possível excluir o produto.", "error");
     } else {
+      setProducts((current) => current.filter((item) => item.id !== product.id));
+      setDeleteTarget(null);
       setAdminMessage("Produto excluído.", "success");
-      await loadProducts();
     }
 
     setLoading(false);
@@ -291,16 +214,14 @@ export function AdminClient() {
 
     setLoading(true);
 
-    const { error } = await supabase
-      .from("products")
-      .update({ is_active: !product.is_active })
-      .eq("id", product.id);
+    const nextStatus = !product.is_active;
+    const { error } = await supabase.from("products").update({ is_active: nextStatus }).eq("id", product.id);
 
     if (error) {
       setAdminMessage("Não foi possível alterar o status.", "error");
     } else {
-      setAdminMessage(product.is_active ? "Produto desativado." : "Produto ativado.", "success");
-      await loadProducts();
+      setProducts((current) => current.map((item) => item.id === product.id ? { ...item, is_active: nextStatus } : item));
+      setAdminMessage(nextStatus ? "Produto ativado." : "Produto desativado.", "success");
     }
 
     setLoading(false);
@@ -315,24 +236,7 @@ export function AdminClient() {
     setMessage("");
 
     const existingSlugs = new Set(products.map((product) => product.slug));
-    const productsToImport = seedProducts
-      .filter((product) => !existingSlugs.has(product.slug))
-      .map((product) => ({
-        name: product.name,
-        slug: product.slug,
-        short_description: product.short_description,
-        image_url: product.image_url,
-        category: product.category,
-        weight: product.weight,
-        tag: product.tag,
-        tag_variant: product.tag_variant,
-        mercado_livre_url: product.mercado_livre_url,
-        shopee_url: product.shopee_url,
-        whatsapp_url: product.whatsapp_url,
-        is_active: product.is_active,
-        is_featured: product.is_featured,
-        sort_order: product.sort_order
-      }));
+    const productsToImport = seedProducts.filter((product) => !existingSlugs.has(product.slug)).map(toProductInsert);
 
     if (productsToImport.length === 0) {
       setAdminMessage("Catálogo base já está cadastrado no Supabase.", "info");
@@ -352,58 +256,44 @@ export function AdminClient() {
     setLoading(false);
   }
 
-  function editProduct(product: Product) {
-    setForm({
-      ...product,
-      mercado_livre_url: product.mercado_livre_url || "",
-      shopee_url: product.shopee_url || "",
-      whatsapp_url: product.whatsapp_url || ""
-    });
-    updateImageFile(null);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+  function openCreateDrawer() {
+    setEditingProduct(null);
+    setDrawerOpen(true);
+  }
+
+  function openEditDrawer(product: Product) {
+    setEditingProduct(product);
+    setDrawerOpen(true);
   }
 
   function duplicateProduct(product: Product) {
-    setForm({
+    setEditingProduct({
       ...product,
-      id: undefined,
+      id: undefined as unknown as string,
       name: `${product.name} - cópia`,
       slug: `${product.slug}-copia`,
-      mercado_livre_url: product.mercado_livre_url || "",
-      shopee_url: product.shopee_url || "",
-      whatsapp_url: product.whatsapp_url || "",
       sort_order: product.sort_order + 1
     });
-    updateImageFile(null);
-    setAdminMessage("Produto duplicado no formulário. Revise os dados e salve como novo item.", "info");
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    setDrawerOpen(true);
+    setAdminMessage("Produto duplicado. Revise os dados e salve como novo item.", "info");
   }
 
-  function updateField<K extends keyof ProductFormValues>(field: K, value: ProductFormValues[K]) {
-    setForm((current) => ({
-      ...current,
-      [field]: value,
-      ...(field === "name" && !current.id ? { slug: slugify(String(value)) } : {})
-    }));
-  }
-
-  const imagePreviewUrl = previewUrl || form.image_url || "/assets/mel-propolis.png";
-  const slugPreview = form.id ? form.slug || slugify(form.name) : slugify(form.name);
+  const categories = useMemo(
+    () => Array.from(new Set(products.map((product) => product.category).filter(Boolean))).sort(),
+    [products]
+  );
   const activeProducts = products.filter((product) => product.is_active).length;
   const inactiveProducts = products.length - activeProducts;
   const filteredProducts = products.filter((product) => {
-    const search = searchTerm.trim().toLowerCase();
+    const search = debouncedSearch.trim().toLowerCase();
+    const matchesSearch = !search || product.name.toLowerCase().includes(search);
+    const matchesCategory = categoryFilter === "all" || product.category === categoryFilter;
     const matchesStatus =
       statusFilter === "all" ||
       (statusFilter === "active" && product.is_active) ||
       (statusFilter === "inactive" && !product.is_active);
-    const matchesSearch =
-      !search ||
-      product.name.toLowerCase().includes(search) ||
-      product.category.toLowerCase().includes(search) ||
-      product.short_description.toLowerCase().includes(search);
 
-    return matchesStatus && matchesSearch;
+    return matchesSearch && matchesCategory && matchesStatus;
   });
 
   if (!isSupabaseConfigured || !supabase) {
@@ -448,7 +338,7 @@ export function AdminClient() {
   }
 
   return (
-    <main className="admin-shell">
+    <main className="admin-shell admin-redesign">
       <header className="admin-topbar">
         <Link className="brand" href="/">
           <span className="brand-mark brand-logo-mark">
@@ -463,10 +353,13 @@ export function AdminClient() {
         </div>
       </header>
 
-      <section className="admin-hero">
-        <span className="eyebrow"><i /> Painel de produtos</span>
-        <h1>Gerencie a vitrine sem mexer no código.</h1>
-        <p>Cadastre produtos, controle o que aparece no site e adicione links de compra do Mercado Livre, Shopee ou WhatsApp.</p>
+      <section className="admin-hero admin-dashboard-hero">
+        <div>
+          <span className="eyebrow"><i /> Painel de produtos</span>
+          <h1>Gerencie a vitrine com poucos cliques.</h1>
+          <p>Cadastre, edite e organize os produtos que aparecem no site da Tudo Express Brasil.</p>
+        </div>
+        <button className="btn btn-primary admin-new-product" type="button" onClick={openCreateDrawer}>+ Novo produto</button>
       </section>
 
       <section className="admin-overview" aria-label="Resumo dos produtos">
@@ -487,184 +380,52 @@ export function AdminClient() {
         </div>
       </section>
 
-      <div className="admin-grid">
-        <form className="admin-card product-form" onSubmit={saveProduct}>
-          <div className="admin-section-title">
-            <h2>{form.id ? "Editar produto" : "Novo produto"}</h2>
-            {form.id ? <button type="button" onClick={() => { setForm(emptyProduct); updateImageFile(null); }}>Limpar</button> : null}
+      {message ? <p className={`admin-message ${messageKind} admin-toast`}>{message}</p> : null}
+
+      <section className="admin-card admin-products-panel">
+        <div className="admin-section-title">
+          <h2>Produtos cadastrados</h2>
+          <div>
+            <button type="button" onClick={() => void importSeedCatalog()} disabled={loading}>Importar catálogo base</button>
+            <button type="button" onClick={() => void loadProducts()} disabled={loading}>Atualizar</button>
           </div>
-          <p className="admin-form-intro">
-            Preencha apenas o essencial. Os campos técnicos ficam em opções avançadas para evitar alterações acidentais.
-          </p>
+        </div>
+        <ProductFilters
+          search={searchInput}
+          category={categoryFilter}
+          status={statusFilter}
+          categories={categories}
+          resultCount={filteredProducts.length}
+          onSearchChange={setSearchInput}
+          onCategoryChange={setCategoryFilter}
+          onStatusChange={setStatusFilter}
+        />
+        <ProductGrid
+          products={filteredProducts}
+          loading={loading}
+          onEdit={openEditDrawer}
+          onDuplicate={duplicateProduct}
+          onToggleActive={(product) => void toggleActive(product)}
+          onDelete={setDeleteTarget}
+        />
+      </section>
 
-          <label>
-            Nome do produto
-            <input value={form.name} onChange={(event) => updateField("name", event.target.value)} required />
-          </label>
-          <label>
-            Descrição curta
-            <textarea value={form.short_description} onChange={(event) => updateField("short_description", event.target.value)} rows={3} required />
-          </label>
-
-          <div className="form-row">
-            <label>
-              Categoria/marca
-              <input value={form.category} onChange={(event) => updateField("category", event.target.value)} />
-            </label>
-            <label>
-              Peso/volume
-              <input value={form.weight} onChange={(event) => updateField("weight", event.target.value)} />
-            </label>
-          </div>
-
-          <div className="form-row">
-            <label>
-              Etiqueta no card
-              <input value={form.tag} onChange={(event) => updateField("tag", event.target.value)} />
-              <small className="field-help">Ex.: Novo, Clássico, Prático, Promoção.</small>
-            </label>
-            <label className="checkbox-label admin-active-toggle">
-              <input type="checkbox" checked={form.is_active} onChange={(event) => updateField("is_active", event.target.checked)} />
-              <span>
-                Produto ativo no site
-                <small className="field-help">Desmarque para esconder sem excluir.</small>
-              </span>
-            </label>
-          </div>
-
-          <label>
-            Imagem por upload
-            <input type="file" accept="image/*" onChange={(event) => updateImageFile(event.target.files?.[0] || null)} />
-          </label>
-          <div className="admin-image-preview">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={imagePreviewUrl} alt="Prévia do produto" />
-            <div>
-              <strong>Prévia da imagem</strong>
-              <small>Uploads grandes são convertidos para WebP antes de salvar.</small>
-            </div>
-          </div>
-
-          <div className="admin-fieldset">
-            <h3>Links de compra</h3>
-            <p>Se algum link ficar vazio, o botão aparece desabilitado no card do produto.</p>
-          </div>
-          <label>
-            Link Mercado Livre
-            <input value={form.mercado_livre_url || ""} onChange={(event) => updateField("mercado_livre_url", event.target.value)} placeholder="https://..." />
-            <small className="field-help">Cole aqui o link do anúncio no Mercado Livre.</small>
-          </label>
-          <label>
-            Link Shopee
-            <input value={form.shopee_url || ""} onChange={(event) => updateField("shopee_url", event.target.value)} placeholder="https://..." />
-            <small className="field-help">Cole aqui o link do anúncio na Shopee.</small>
-          </label>
-
-          <details className="admin-advanced">
-            <summary>Opções avançadas</summary>
-            <label>
-              Slug automático
-              <input value={slugPreview} readOnly placeholder="gerado-automaticamente" />
-              <small className="field-help">Usado na URL da página do produto. É gerado pelo nome.</small>
-            </label>
-            <label>
-              URL manual da imagem
-              <input value={form.image_url} onChange={(event) => updateField("image_url", event.target.value)} placeholder="/assets/mel-propolis.png" />
-              <small className="field-help">Use só se a imagem já estiver hospedada ou salva no projeto.</small>
-            </label>
-            <label>
-              Link WhatsApp personalizado
-              <input value={form.whatsapp_url || ""} onChange={(event) => updateField("whatsapp_url", event.target.value)} placeholder="https://wa.me/..." />
-              <small className="field-help">Opcional: se vazio, o site gera uma mensagem automática com o nome do produto.</small>
-            </label>
-            <div className="form-row">
-              <label>
-                Ordem no catálogo
-                <input type="number" value={form.sort_order} onChange={(event) => updateField("sort_order", Number(event.target.value))} />
-                <small className="field-help">Números menores aparecem primeiro.</small>
-              </label>
-              <label>
-                Cor da etiqueta
-                <select value={form.tag_variant} onChange={(event) => updateField("tag_variant", event.target.value as ProductFormValues["tag_variant"])}>
-                  <option value="default">Amarela</option>
-                  <option value="soft">Suave</option>
-                  <option value="dark">Escura</option>
-                  <option value="blue">Azul</option>
-                </select>
-              </label>
-            </div>
-          </details>
-
-          {message ? <p className={`admin-message ${messageKind}`}>{message}</p> : null}
-          <button className="btn btn-primary" type="submit" disabled={loading}>
-            {loading ? "Salvando..." : form.id ? "Salvar alterações" : "Cadastrar produto"}
-          </button>
-        </form>
-
-        <section className="admin-card product-list">
-          <div className="admin-section-title">
-            <h2>Produtos cadastrados</h2>
-            <div>
-              <button type="button" onClick={() => void loadProducts()} disabled={loading}>Atualizar</button>
-            </div>
-          </div>
-          <div className="admin-list-tools">
-            <label>
-              Buscar produto
-              <input
-                value={searchTerm}
-                onChange={(event) => setSearchTerm(event.target.value)}
-                placeholder="Digite nome, categoria ou descrição"
-                type="search"
-              />
-            </label>
-            <label>
-              Status
-              <select value={statusFilter} onChange={(event) => setStatusFilter(event.target.value as typeof statusFilter)}>
-                <option value="all">Todos</option>
-                <option value="active">Ativos no site</option>
-                <option value="inactive">Ocultos</option>
-              </select>
-            </label>
-          </div>
-
-          {products.length === 0 ? (
-            <div className="admin-empty-state">
-              <p>Nenhum produto cadastrado ainda.</p>
-              <button type="button" onClick={() => void importSeedCatalog()} disabled={loading}>Importar catálogo base</button>
-            </div>
-          ) : filteredProducts.length === 0 ? (
-            <p className="empty-list">Nenhum produto encontrado com esse filtro.</p>
-          ) : (
-            <div className="admin-products">
-              {filteredProducts.map((product) => (
-                <article className={`admin-product${product.is_active ? "" : " inactive"}`} key={product.id}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={product.image_url || "/assets/mel-propolis.png"} alt={`Imagem do produto ${product.name}`} />
-                  <div>
-                    <div className="admin-product-head">
-                      <strong>{product.name}</strong>
-                      <span className={`admin-status-badge${product.is_active ? " active" : ""}`}>{product.is_active ? "No site" : "Oculto"}</span>
-                    </div>
-                    <small>{product.category} • {product.weight || "sem peso"} • ordem {product.sort_order}</small>
-                    <p>{product.short_description}</p>
-                    <div className="admin-link-badges" aria-label="Links cadastrados">
-                      <span className={product.mercado_livre_url ? "ok" : ""}>Mercado Livre</span>
-                      <span className={product.shopee_url ? "ok" : ""}>Shopee</span>
-                    </div>
-                    <div className="admin-actions">
-                      <button type="button" className="primary-action" onClick={() => editProduct(product)}>Editar</button>
-                      <button type="button" onClick={() => duplicateProduct(product)}>Duplicar</button>
-                      <button type="button" onClick={() => void toggleActive(product)}>{product.is_active ? "Desativar" : "Ativar"}</button>
-                      <button type="button" className="danger" onClick={() => void removeProduct(product)}>Excluir</button>
-                    </div>
-                  </div>
-                </article>
-              ))}
-            </div>
-          )}
-        </section>
-      </div>
+      <ProductDrawer
+        open={drawerOpen}
+        product={editingProduct}
+        loading={loading}
+        onClose={() => {
+          setDrawerOpen(false);
+          setEditingProduct(null);
+        }}
+        onSave={saveProduct}
+      />
+      <DeleteConfirmDialog
+        product={deleteTarget}
+        loading={loading}
+        onCancel={() => setDeleteTarget(null)}
+        onConfirm={(product) => void removeProduct(product)}
+      />
     </main>
   );
 }
