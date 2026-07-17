@@ -109,7 +109,7 @@ export function getProductBuyLinks(product: Product): ProductBuyLink[] {
       channel: "mercado_livre",
       logoAlt: "Logo do Mercado Livre",
       logoSrc: "/assets/logo-mercado-livre-transparente-trim.png",
-      label: "Ver no Mercado Livre",
+      label: "Mercado Livre",
       href: product.mercado_livre_url,
       unavailableLabel: "Mercado Livre em breve"
     },
@@ -117,7 +117,7 @@ export function getProductBuyLinks(product: Product): ProductBuyLink[] {
       channel: "shopee",
       logoAlt: "Logo da Shopee",
       logoSrc: "/assets/logo-shopee-oficial.jpg",
-      label: "Ver na Shopee",
+      label: "Shopee",
       href: product.shopee_url,
       unavailableLabel: "Shopee em breve"
     },

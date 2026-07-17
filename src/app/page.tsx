@@ -185,7 +185,7 @@ export default async function Home() {
           <div className="container feature-grid">
             <Reveal className="feature-media">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/assets/banner-suporte-clean-optimized.jpg" alt="Suporte universal para celular e tablet" loading="lazy" />
+              <img src="/assets/banner-suporte-universal.webp" alt="Suporte universal para celular e tablet" loading="lazy" />
               <span className="feature-badge">Utilidade<br /><strong>todo dia</strong></span>
             </Reveal>
             <Reveal className="feature-copy">
