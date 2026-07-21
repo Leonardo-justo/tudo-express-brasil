@@ -12,6 +12,7 @@ import { Reveal } from "@/components/Reveal";
 import { ReviewCarousel } from "@/components/ReviewCarousel";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
+import { normalizeCarouselCategory } from "@/lib/product-carousels";
 import { getPublicProducts } from "@/lib/products";
 import { MERCADO_LIVRE_STORE_URL, SHOPEE_STORE_URL } from "@/lib/store-links";
 
@@ -71,8 +72,9 @@ export const dynamic = "force-dynamic";
 
 export default async function Home() {
   const products = await getPublicProducts();
-  const honeyProducts = products.filter((product) => product.category.toLowerCase().includes("onda mel"));
-  const utilityProducts = products.filter((product) => !product.category.toLowerCase().includes("onda mel"));
+  const honeyProducts = products.filter((product) => normalizeCarouselCategory(product.category) === "Onda Mel");
+  const coffeeProducts = products.filter((product) => normalizeCarouselCategory(product.category) === "Café");
+  const utilityProducts = products.filter((product) => normalizeCarouselCategory(product.category) === "Utilidades");
 
   const organizationJsonLd = {
     "@context": "https://schema.org",
@@ -181,6 +183,28 @@ export default async function Home() {
           </div>
         </section>
 
+        <section className="products coffee-products section" id="cafes">
+          <div className="container">
+            <Reveal className="coffee-banner">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/assets/banner-cafe-honorio.png"
+                alt="Café Honório desde 1922, cafés especiais com grãos selecionados e torra artesanal"
+                loading="lazy"
+              />
+            </Reveal>
+            {coffeeProducts.length > 0 ? (
+              <>
+                <Reveal className="section-head coffee-section-head">
+                  <div><span className="eyebrow"><i /> Café Honório</span><h2>Sabor que eleva a sua experiência</h2></div>
+                  <p>Cafés especiais selecionados com cuidado, dos grãos à torra, para transformar cada xícara em um momento único.</p>
+                </Reveal>
+                <ProductCarousel ariaLabel="Carrossel de cafés especiais" products={coffeeProducts} />
+              </>
+            ) : null}
+          </div>
+        </section>
+
         <section className="feature section" id="curadoria">
           <div className="container feature-grid">
             <Reveal className="feature-media">
@@ -188,7 +212,7 @@ export default async function Home() {
               <img src="/assets/banner-suporte-universal.webp" alt="Suporte universal para celular e tablet" loading="lazy" />
             </Reveal>
             <Reveal className="feature-copy">
-              <span className="eyebrow eyebrow-light"><i /> Muito além do mel</span>
+              <span className="eyebrow eyebrow-light"><i /> Muito mais além</span>
               <h2>Produtos que resolvem.<br />Sem complicação.</h2>
               <p>Na Tudo Express Brasil, cada item entra na nossa seleção por um motivo: ser útil de verdade. Da cozinha ao home office, buscamos boas escolhas para tornar sua rotina mais prática.</p>
               <ul>

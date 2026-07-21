@@ -543,3 +543,14 @@
 .admin-product-card-body{position:relative;z-index:1!important}
 .admin-card-menu{z-index:30!important}
 .admin-card-menu-panel{z-index:40!important;top:36px!important;max-height:none!important}
+
+/* Café Honório: banner e terceiro carrossel de produtos */
+.coffee-products{padding-top:88px!important;background:linear-gradient(180deg,#f8fbff 0%,#fffaf0 54%,#f8fbff 100%)!important}
+.coffee-banner{overflow:hidden;margin-bottom:48px;border:1px solid rgba(120,78,24,.2);border-radius:28px;background:#100b06;box-shadow:0 28px 65px rgba(48,27,9,.2)}
+.coffee-banner:last-child{margin-bottom:0}
+.coffee-banner img{width:100%;height:auto;display:block}
+.coffee-section-head{margin-bottom:42px!important}
+.coffee-section-head .eyebrow{color:#7a4815}
+.coffee-section-head .eyebrow i{background:#d89c27}
+@media(max-width:720px){.coffee-products{padding-top:64px!important}.coffee-banner{margin-bottom:34px;border-radius:20px}.coffee-section-head{margin-bottom:32px!important}}
+@media(max-width:460px){.coffee-products{padding-top:52px!important}.coffee-banner{margin-bottom:28px;border-radius:16px}}
